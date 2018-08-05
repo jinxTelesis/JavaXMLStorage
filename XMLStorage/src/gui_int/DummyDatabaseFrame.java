@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DummyDatabaseFrame extends JFrame {
+	
+	private int mine = 10;
 
 	private JPanel contentPane;
 	private JTextField textField;
