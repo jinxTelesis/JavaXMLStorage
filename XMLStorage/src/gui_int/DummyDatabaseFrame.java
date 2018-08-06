@@ -223,31 +223,37 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblMod_5);
 		
 		textField_12 = new JTextField();
+		textField_12.setEditable(false);
 		textField_12.setBounds(273, 87, 30, 20);
 		contentPane.add(textField_12);
 		textField_12.setColumns(10);
 		
 		textField_13 = new JTextField();
+		textField_13.setEditable(false);
 		textField_13.setBounds(273, 112, 30, 20);
 		contentPane.add(textField_13);
 		textField_13.setColumns(10);
 		
 		textField_14 = new JTextField();
+		textField_14.setEditable(false);
 		textField_14.setBounds(273, 137, 30, 20);
 		contentPane.add(textField_14);
 		textField_14.setColumns(10);
 		
 		textField_15 = new JTextField();
+		textField_15.setEditable(false);
 		textField_15.setBounds(273, 162, 30, 20);
 		contentPane.add(textField_15);
 		textField_15.setColumns(10);
 		
 		textField_16 = new JTextField();
+		textField_16.setEditable(false);
 		textField_16.setBounds(273, 187, 30, 20);
 		contentPane.add(textField_16);
 		textField_16.setColumns(10);
 		
 		textField_17 = new JTextField();
+		textField_17.setEditable(false);
 		textField_17.setBounds(273, 212, 30, 20);
 		contentPane.add(textField_17);
 		textField_17.setColumns(10);
@@ -358,16 +364,19 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblNewLabel_7);
 		
 		textField_27 = new JTextField();
+		textField_27.setEditable(false);
 		textField_27.setBounds(369, 380, 86, 20);
 		contentPane.add(textField_27);
 		textField_27.setColumns(10);
 		
 		textField_28 = new JTextField();
+		textField_28.setEditable(false);
 		textField_28.setBounds(369, 409, 86, 20);
 		contentPane.add(textField_28);
 		textField_28.setColumns(10);
 		
 		textField_29 = new JTextField();
+		textField_29.setEditable(false);
 		textField_29.setBounds(369, 437, 86, 20);
 		contentPane.add(textField_29);
 		textField_29.setColumns(10);
