@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -148,10 +149,30 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent arg0) {
 				// //
 				String temp = strTF.getText();
-				int result = Integer.parseInt(temp);
+				int result;
+				try {
+					result = Integer.parseInt(temp);
+					if(result > 100)
+					{
+						result = 0;
+						JOptionPane.showMessageDialog(null, "You entered " + String.format( "%.2f", result) + "Please enter a value lower than 100 "  );
+					}
+					
+					if(result < 0)
+					{
+						result = 0;
+						JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a higher than zero");
+					}
+				}
+				catch (NumberFormatException ex) {
+					result = 0;
+					JOptionPane.showMessageDialog(null, "You entered invalid characters \n numbers only please");
+					strTF.setText("");
+				}
+				
 				
 				char1.setStrength(result);
-				System.out.println("this is the result" + result);
+				System.out.println("this is the result " + result);
 				
 				
 				// this how we set the data. 
