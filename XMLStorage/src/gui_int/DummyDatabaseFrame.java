@@ -198,7 +198,7 @@ public class DummyDatabaseFrame extends JFrame {
 		textField_11.setColumns(10);
 		
 		JLabel lblMod = new JLabel("Mod");
-		lblMod.setBounds(237, 87, 24, 20);
+		lblMod.setBounds(241, 87, 24, 20);
 		contentPane.add(lblMod);
 		
 		JLabel lblMod_1 = new JLabel("Mod");
@@ -306,7 +306,7 @@ public class DummyDatabaseFrame extends JFrame {
 		textField_23.setColumns(10);
 		
 		JButton btnAddCharacter = new JButton("Add Character");
-		btnAddCharacter.setBounds(273, 262, 108, 23);
+		btnAddCharacter.setBounds(241, 262, 140, 23);
 		contentPane.add(btnAddCharacter);
 		
 		JButton btnNewButton = new JButton("Remove Character");
@@ -314,7 +314,7 @@ public class DummyDatabaseFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(273, 292, 108, 23);
+		btnNewButton.setBounds(241, 292, 140, 23);
 		contentPane.add(btnNewButton);
 		
 		textField_24 = new JTextField();
