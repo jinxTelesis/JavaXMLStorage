@@ -62,12 +62,17 @@ public class CharacterStats {
 		this.weight = 165;
 		this.age = 18;
 		this.male = true;
-		this.favAtk = getFavAtk();
-		this.raAtk = getRaAtk();
-		this.spAtk = getSpAtk();
-		this.favDam = getFavDam();
-		this.raDam = getRaDam();
-		this.spDam = getSpDam();
+		// needs to call setters for Favweapon and atk first
+		setFavWeap(0); // this.favWeap set 
+		setRanWeap(0); // this.ranWeap set
+		setSpWeap(0); // this.spWeap set
+		setFavAtk(0); // this.favAtk set
+		setRaAtk(0); // this.raAtk set
+		setSpAtk(0); // this.spAtk set
+		setFavDam(0);// this.favDam set
+		setRaDam(0);// this.raDam set
+		setSpDam(0);// this.spDam set
+		
 		
 		
 	}
@@ -292,7 +297,7 @@ public class CharacterStats {
 		return favDam;
 	}
 
-	public void setFavDam(int favDam) {
+	private void setFavDam(int favDam) {
 		this.favDam = favDam + strMod + favWeap;
 	}
 
@@ -300,15 +305,15 @@ public class CharacterStats {
 		return raDam;
 	}
 
-	public void setRaDam(int raDam) {
+	private void setRaDam(int raDam) {
 		this.raDam = raDam + ranWeap;
 	}
 
-	public int getSpDam() {
+	private int getSpDam() {
 		return spDam;
 	}
 
-	public void setSpDam(int spDam) {
+	private void setSpDam(int spDam) {
 		this.spDam = spDam + spWeap;
 	}
 	

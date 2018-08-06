@@ -14,43 +14,45 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class DummyDatabaseFrame extends JFrame {
 	
 	private int mine = 10;
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
+	private JTextField charNaTF;
+	private JTextField strTF;
+	private JTextField conTF;
+	private JTextField dexTF;
+	private JTextField intTF;
+	private JTextField wisTF;
+	private JTextField chaTF;
+	private JTextField weightTF;
+	private JTextField ageTF;
+	private JTextField favWeapTF;
+	private JTextField RanWeapTF;
+	private JTextField spWeapTF;
 	private JTextField textField_12;
 	private JTextField textField_13;
 	private JTextField textField_14;
 	private JTextField textField_15;
 	private JTextField textField_16;
 	private JTextField textField_17;
-	private JTextField textField_18;
-	private JTextField textField_19;
-	private JTextField textField_20;
-	private JTextField textField_21;
-	private JTextField textField_22;
-	private JTextField textField_23;
-	private JTextField textField_24;
-	private JTextField textField_25;
-	private JTextField textField_26;
-	private JTextField textField_27;
-	private JTextField textField_28;
-	private JTextField textField_29;
-	private JTextField textField_30;
+	private JTextField strTotTF;
+	private JTextField dexTotTF;
+	private JTextField conTotTF;
+	private JTextField intTotTF;
+	private JTextField wisTotTF;
+	private JTextField chaTotTF;
+	private JTextField favAtkTF;
+	private JTextField ranAtkTF;
+	private JTextField spAtkTF;
+	private JTextField FavDamDiTF;
+	private JTextField RanDamDiTF;
+	private JTextField spDamDiTF;
+	private JTextField bBABTF;
 
 	/**
 	 * Launch the application.
@@ -69,6 +71,8 @@ public class DummyDatabaseFrame extends JFrame {
 	}
 
 	public DummyDatabaseFrame() {
+		CharacterStats char1 = new CharacterStats();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
@@ -133,70 +137,84 @@ public class DummyDatabaseFrame extends JFrame {
 		lblNewLabel_1.setBounds(37, 437, 100, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(165, 62, 216, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		charNaTF = new JTextField();
+		charNaTF.setBounds(165, 62, 216, 20);
+		contentPane.add(charNaTF);
+		charNaTF.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_1.setBounds(165, 87, 50, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		strTF = new JTextField();
+		strTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// //
+				String temp = strTF.getText();
+				int result = Integer.parseInt(temp);
+				
+				char1.setStrength(result);
+				System.out.println("this is the result" + result);
+				
+				
+				// this how we set the data. 
+			}
+		});
+		strTF.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		strTF.setBounds(165, 87, 50, 20);
+		contentPane.add(strTF);
+		strTF.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(165, 137, 50, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		conTF = new JTextField();
+		conTF.setBounds(165, 137, 50, 20);
+		contentPane.add(conTF);
+		conTF.setColumns(10);
 		
 		JLabel label = new JLabel("");
 		label.setBounds(181, 107, 46, 14);
 		contentPane.add(label);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(165, 112, 50, 20);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		dexTF = new JTextField();
+		dexTF.setBounds(165, 112, 50, 20);
+		contentPane.add(dexTF);
+		dexTF.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(165, 162, 50, 20);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
+		intTF = new JTextField();
+		intTF.setBounds(165, 162, 50, 20);
+		contentPane.add(intTF);
+		intTF.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(165, 187, 50, 20);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
+		wisTF = new JTextField();
+		wisTF.setBounds(165, 187, 50, 20);
+		contentPane.add(wisTF);
+		wisTF.setColumns(10);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(165, 212, 50, 20);
-		contentPane.add(textField_6);
-		textField_6.setColumns(10);
+		chaTF = new JTextField();
+		chaTF.setBounds(165, 212, 50, 20);
+		contentPane.add(chaTF);
+		chaTF.setColumns(10);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(165, 262, 50, 20);
-		contentPane.add(textField_7);
-		textField_7.setColumns(10);
+		weightTF = new JTextField();
+		weightTF.setBounds(165, 262, 50, 20);
+		contentPane.add(weightTF);
+		weightTF.setColumns(10);
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(165, 292, 50, 20);
-		contentPane.add(textField_8);
-		textField_8.setColumns(10);
+		ageTF = new JTextField();
+		ageTF.setBounds(165, 292, 50, 20);
+		contentPane.add(ageTF);
+		ageTF.setColumns(10);
 		
-		textField_9 = new JTextField();
-		textField_9.setBounds(165, 380, 50, 20);
-		contentPane.add(textField_9);
-		textField_9.setColumns(10);
+		favWeapTF = new JTextField();
+		favWeapTF.setBounds(165, 380, 50, 20);
+		contentPane.add(favWeapTF);
+		favWeapTF.setColumns(10);
 		
-		textField_10 = new JTextField();
-		textField_10.setBounds(165, 409, 50, 20);
-		contentPane.add(textField_10);
-		textField_10.setColumns(10);
+		RanWeapTF = new JTextField();
+		RanWeapTF.setBounds(165, 409, 50, 20);
+		contentPane.add(RanWeapTF);
+		RanWeapTF.setColumns(10);
 		
-		textField_11 = new JTextField();
-		textField_11.setBounds(165, 437, 50, 20);
-		contentPane.add(textField_11);
-		textField_11.setColumns(10);
+		spWeapTF = new JTextField();
+		spWeapTF.setBounds(165, 437, 50, 20);
+		contentPane.add(spWeapTF);
+		spWeapTF.setColumns(10);
 		
 		JLabel lblMod = new JLabel("Mod");
 		lblMod.setBounds(241, 87, 24, 20);
@@ -282,35 +300,35 @@ public class DummyDatabaseFrame extends JFrame {
 		lblTotal_5.setBounds(313, 212, 25, 20);
 		contentPane.add(lblTotal_5);
 		
-		textField_18 = new JTextField();
-		textField_18.setBounds(348, 87, 33, 20);
-		contentPane.add(textField_18);
-		textField_18.setColumns(10);
+		strTotTF = new JTextField();
+		strTotTF.setBounds(348, 87, 33, 20);
+		contentPane.add(strTotTF);
+		strTotTF.setColumns(10);
 		
-		textField_19 = new JTextField();
-		textField_19.setBounds(348, 112, 33, 20);
-		contentPane.add(textField_19);
-		textField_19.setColumns(10);
+		dexTotTF = new JTextField();
+		dexTotTF.setBounds(348, 112, 33, 20);
+		contentPane.add(dexTotTF);
+		dexTotTF.setColumns(10);
 		
-		textField_20 = new JTextField();
-		textField_20.setBounds(348, 137, 33, 20);
-		contentPane.add(textField_20);
-		textField_20.setColumns(10);
+		conTotTF = new JTextField();
+		conTotTF.setBounds(348, 137, 33, 20);
+		contentPane.add(conTotTF);
+		conTotTF.setColumns(10);
 		
-		textField_21 = new JTextField();
-		textField_21.setBounds(348, 162, 33, 20);
-		contentPane.add(textField_21);
-		textField_21.setColumns(10);
+		intTotTF = new JTextField();
+		intTotTF.setBounds(348, 162, 33, 20);
+		contentPane.add(intTotTF);
+		intTotTF.setColumns(10);
 		
-		textField_22 = new JTextField();
-		textField_22.setBounds(348, 187, 33, 20);
-		contentPane.add(textField_22);
-		textField_22.setColumns(10);
+		wisTotTF = new JTextField();
+		wisTotTF.setBounds(348, 187, 33, 20);
+		contentPane.add(wisTotTF);
+		wisTotTF.setColumns(10);
 		
-		textField_23 = new JTextField();
-		textField_23.setBounds(348, 212, 33, 20);
-		contentPane.add(textField_23);
-		textField_23.setColumns(10);
+		chaTotTF = new JTextField();
+		chaTotTF.setBounds(348, 212, 33, 20);
+		contentPane.add(chaTotTF);
+		chaTotTF.setColumns(10);
 		
 		JButton btnAddCharacter = new JButton("Add Character");
 		btnAddCharacter.setBounds(241, 262, 140, 23);
@@ -324,20 +342,20 @@ public class DummyDatabaseFrame extends JFrame {
 		btnNewButton.setBounds(241, 292, 140, 23);
 		contentPane.add(btnNewButton);
 		
-		textField_24 = new JTextField();
-		textField_24.setBounds(273, 380, 30, 20);
-		contentPane.add(textField_24);
-		textField_24.setColumns(10);
+		favAtkTF = new JTextField();
+		favAtkTF.setBounds(273, 380, 30, 20);
+		contentPane.add(favAtkTF);
+		favAtkTF.setColumns(10);
 		
-		textField_25 = new JTextField();
-		textField_25.setBounds(273, 409, 30, 20);
-		contentPane.add(textField_25);
-		textField_25.setColumns(10);
+		ranAtkTF = new JTextField();
+		ranAtkTF.setBounds(273, 409, 30, 20);
+		contentPane.add(ranAtkTF);
+		ranAtkTF.setColumns(10);
 		
-		textField_26 = new JTextField();
-		textField_26.setBounds(273, 434, 30, 20);
-		contentPane.add(textField_26);
-		textField_26.setColumns(10);
+		spAtkTF = new JTextField();
+		spAtkTF.setBounds(273, 434, 30, 20);
+		contentPane.add(spAtkTF);
+		spAtkTF.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Atk");
 		lblNewLabel_2.setBounds(240, 383, 46, 14);
@@ -363,23 +381,23 @@ public class DummyDatabaseFrame extends JFrame {
 		lblNewLabel_7.setBounds(320, 437, 46, 14);
 		contentPane.add(lblNewLabel_7);
 		
-		textField_27 = new JTextField();
-		textField_27.setEditable(false);
-		textField_27.setBounds(369, 380, 86, 20);
-		contentPane.add(textField_27);
-		textField_27.setColumns(10);
+		FavDamDiTF = new JTextField();
+		FavDamDiTF.setEditable(false);
+		FavDamDiTF.setBounds(369, 380, 86, 20);
+		contentPane.add(FavDamDiTF);
+		FavDamDiTF.setColumns(10);
 		
-		textField_28 = new JTextField();
-		textField_28.setEditable(false);
-		textField_28.setBounds(369, 409, 86, 20);
-		contentPane.add(textField_28);
-		textField_28.setColumns(10);
+		RanDamDiTF = new JTextField();
+		RanDamDiTF.setEditable(false);
+		RanDamDiTF.setBounds(369, 409, 86, 20);
+		contentPane.add(RanDamDiTF);
+		RanDamDiTF.setColumns(10);
 		
-		textField_29 = new JTextField();
-		textField_29.setEditable(false);
-		textField_29.setBounds(369, 437, 86, 20);
-		contentPane.add(textField_29);
-		textField_29.setColumns(10);
+		spDamDiTF = new JTextField();
+		spDamDiTF.setEditable(false);
+		spDamDiTF.setBounds(369, 437, 86, 20);
+		contentPane.add(spDamDiTF);
+		spDamDiTF.setColumns(10);
 		
 		JButton btnNextCharacter = new JButton("Next Character");
 		btnNextCharacter.addActionListener(new ActionListener() {
@@ -402,10 +420,10 @@ public class DummyDatabaseFrame extends JFrame {
 		btnNewButton_2.setBounds(197, 22, 129, 23);
 		contentPane.add(btnNewButton_2);
 		
-		textField_30 = new JTextField();
-		textField_30.setBounds(369, 339, 86, 20);
-		contentPane.add(textField_30);
-		textField_30.setColumns(10);
+		bBABTF = new JTextField();
+		bBABTF.setBounds(369, 339, 86, 20);
+		contentPane.add(bBABTF);
+		bBABTF.setColumns(10);
 		
 		JLabel lblBab = new JLabel("   BAB");
 		lblBab.setBounds(329, 342, 30, 14);
