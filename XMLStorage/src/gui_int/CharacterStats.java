@@ -43,7 +43,7 @@ public class CharacterStats {
 	private int raDam;
 	private int spDam;
 	
-	public CharacterStats() {
+	public CharacterStats() { // need to set getters before used
 		++CharNumInc;
 		this.ChName = "Unamed Character"; // add a static
 		this.strength = defaultStats;
