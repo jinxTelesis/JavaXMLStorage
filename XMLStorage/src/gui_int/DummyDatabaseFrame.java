@@ -55,6 +55,7 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField spDamDiTF;
 	private JTextField bBABTF;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -148,42 +149,27 @@ public class DummyDatabaseFrame extends JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				// //
-				String temp = strTF.getText();
-				int result;
-				try {
-					result = Integer.parseInt(temp);
-					if(result > 100)
-					{
-						result = 0;
-						JOptionPane.showMessageDialog(null, "You entered " + String.format( "%.2f", result) + "Please enter a value lower than 100 "  );
-					}
-					
-					if(result < 0)
-					{
-						result = 0;
-						JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a higher than zero");
-					}
-				}
-				catch (NumberFormatException ex) {
-					result = 0;
-					JOptionPane.showMessageDialog(null, "You entered invalid characters \n numbers only please");
-					strTF.setText("");
-				}
-				
-				
-				char1.setStrength(result);
-				System.out.println("this is the result " + result);
-				
-				
-				// this how we set the data. 
+				char1.setStrength(returnTextData(strTF));
+				System.out.println("Worked!" + char1.getStrength());
 			}
+			
 		});
+		
 		strTF.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		strTF.setBounds(165, 87, 50, 20);
 		contentPane.add(strTF);
 		strTF.setColumns(10);
 		
 		conTF = new JTextField();
+		conTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				char1.setConstituion(returnTextData(conTF));
+				System.out.println("Worked!" + char1.getConstituion());
+				
+			}
+		});
 		conTF.setBounds(165, 137, 50, 20);
 		contentPane.add(conTF);
 		conTF.setColumns(10);
@@ -193,26 +179,89 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(label);
 		
 		dexTF = new JTextField();
+		dexTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				////JTextField tF, CharacterStats charObj
+				char1.setDexterity(returnTextData(dexTF));
+				System.out.println("Worked!" + char1.getDexterity());
+			}
+				
+		});
 		dexTF.setBounds(165, 112, 50, 20);
 		contentPane.add(dexTF);
 		dexTF.setColumns(10);
 		
 		intTF = new JTextField();
+		intTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				char1.setIntelligence(returnTextData(intTF));
+				System.out.println("Worked!" + char1.getIntelligence());
+			}
+		});
 		intTF.setBounds(165, 162, 50, 20);
 		contentPane.add(intTF);
 		intTF.setColumns(10);
 		
 		wisTF = new JTextField();
+		wisTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				char1.setWisdom(returnTextData(wisTF));
+				System.out.println("Worked!" + char1.getWisdom());
+			}
+		});
 		wisTF.setBounds(165, 187, 50, 20);
 		contentPane.add(wisTF);
 		wisTF.setColumns(10);
 		
 		chaTF = new JTextField();
+		chaTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				char1.setCharisma(returnTextData(chaTF));
+				System.out.println("Worked!" + char1.getCharisma());
+				
+			}
+		});
+		
+		
 		chaTF.setBounds(165, 212, 50, 20);
 		contentPane.add(chaTF);
 		chaTF.setColumns(10);
 		
 		weightTF = new JTextField();
+		weightTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				double result = 0.0;
+				try {
+					result = Double.parseDouble(weightTF.getText());
+					if(result > 100)
+					{
+						result = 0.0;
+						JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a value lower than 100 ");
+					}
+					
+					if(result < 0)
+						{
+							result = 0.0;
+							JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a higher than zero");
+						}
+				}
+				catch (NumberFormatException ex)
+				{
+					result = 0.0;
+					JOptionPane.showMessageDialog(null, "You entered invalid characters \n numbers only please");
+					weightTF.setText("");
+				}
+				
+				char1.setWeight(result);
+				System.out.println(char1.getWeight());
+				
+			}
+		});
 		weightTF.setBounds(165, 262, 50, 20);
 		contentPane.add(weightTF);
 		weightTF.setColumns(10);
@@ -450,4 +499,33 @@ public class DummyDatabaseFrame extends JFrame {
 		lblBab.setBounds(329, 342, 30, 14);
 		contentPane.add(lblBab);
 	}
+	
+	private static int returnTextData(JTextField tF) { // add calls to each now
+		//String temp = tF.getText();
+		int result = 0;
+		try {
+			result = Integer.parseInt(tF.getText());
+			if(result > 100)
+			{
+				result = 0;
+				JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a value lower than 100 ");
+			}
+			
+			if(result < 0)
+				{
+					result = 0;
+					JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a higher than zero");
+				}
+		}
+		catch (NumberFormatException ex)
+		{
+			result = 0;
+			JOptionPane.showMessageDialog(null, "You entered invalid characters \n numbers only please");
+			tF.setText("");
+		}
+		
+		return result;
+	}
+	
+
 }
