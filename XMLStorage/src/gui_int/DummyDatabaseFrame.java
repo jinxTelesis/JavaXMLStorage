@@ -267,6 +267,13 @@ public class DummyDatabaseFrame extends JFrame {
 		weightTF.setColumns(10);
 		
 		ageTF = new JTextField();
+		ageTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				char1.setAge(returnTextData(ageTF));
+				System.out.println("Worked!" + char1.getCharisma());
+			}
+		});
 		ageTF.setBounds(165, 292, 50, 20);
 		contentPane.add(ageTF);
 		ageTF.setColumns(10);
