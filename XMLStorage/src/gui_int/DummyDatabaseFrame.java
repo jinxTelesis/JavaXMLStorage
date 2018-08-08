@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.IllegalFormatConversionException;
 
 public class DummyDatabaseFrame extends JFrame {
 	
@@ -541,19 +542,24 @@ public class DummyDatabaseFrame extends JFrame {
 			if(result > 100)
 			{
 				result = 0;
-				JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a value lower than 100 ");
+				JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "." + "\nPlease enter a value lower than 100 ");
 			}
 			
 			if(result < 0)
 				{
 					result = 0;
-					JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a higher than zero");
+					JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "." + "\nPlease enter a value higher than zero");
 				}
 		}
 		catch (NumberFormatException ex)
 		{
 			result = 0;
-			JOptionPane.showMessageDialog(null, "You entered invalid characters \n numbers only please");
+			JOptionPane.showMessageDialog(null, "You entered invalid characters \n positive numbers only please");
+			tF.setText("");
+		}
+		catch(IllegalFormatConversionException ex1) {
+			result = 0;
+			JOptionPane.showMessageDialog(null, "You entered a negative value \n please only enter positive numbers");
 			tF.setText("");
 		}
 		
