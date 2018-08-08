@@ -140,6 +140,7 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		charNaTF = new JTextField();
+		charNaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		charNaTF.setBounds(165, 62, 216, 20);
 		contentPane.add(charNaTF);
 		charNaTF.setColumns(10);
@@ -155,12 +156,13 @@ public class DummyDatabaseFrame extends JFrame {
 			
 		});
 		
-		strTF.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		strTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		strTF.setBounds(165, 87, 50, 20);
 		contentPane.add(strTF);
 		strTF.setColumns(10);
 		
 		conTF = new JTextField();
+		conTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		conTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -174,11 +176,8 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(conTF);
 		conTF.setColumns(10);
 		
-		JLabel label = new JLabel("");
-		label.setBounds(181, 107, 46, 14);
-		contentPane.add(label);
-		
 		dexTF = new JTextField();
+		dexTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		dexTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -193,6 +192,7 @@ public class DummyDatabaseFrame extends JFrame {
 		dexTF.setColumns(10);
 		
 		intTF = new JTextField();
+		intTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		intTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -205,6 +205,7 @@ public class DummyDatabaseFrame extends JFrame {
 		intTF.setColumns(10);
 		
 		wisTF = new JTextField();
+		wisTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		wisTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -217,6 +218,7 @@ public class DummyDatabaseFrame extends JFrame {
 		wisTF.setColumns(10);
 		
 		chaTF = new JTextField();
+		chaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		chaTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -232,6 +234,7 @@ public class DummyDatabaseFrame extends JFrame {
 		chaTF.setColumns(10);
 		
 		weightTF = new JTextField();
+		weightTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		weightTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -267,6 +270,7 @@ public class DummyDatabaseFrame extends JFrame {
 		weightTF.setColumns(10);
 		
 		ageTF = new JTextField();
+		ageTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		ageTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -279,130 +283,145 @@ public class DummyDatabaseFrame extends JFrame {
 		ageTF.setColumns(10);
 		
 		favWeapTF = new JTextField();
+		favWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		favWeapTF.setBounds(165, 380, 50, 20);
 		contentPane.add(favWeapTF);
 		favWeapTF.setColumns(10);
 		
 		RanWeapTF = new JTextField();
+		RanWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		RanWeapTF.setBounds(165, 409, 50, 20);
 		contentPane.add(RanWeapTF);
 		RanWeapTF.setColumns(10);
 		
 		spWeapTF = new JTextField();
+		spWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		spWeapTF.setBounds(165, 437, 50, 20);
 		contentPane.add(spWeapTF);
 		spWeapTF.setColumns(10);
 		
 		JLabel lblMod = new JLabel("Mod");
-		lblMod.setBounds(241, 87, 24, 20);
+		lblMod.setBounds(228, 87, 24, 20);
 		contentPane.add(lblMod);
 		
 		JLabel lblMod_1 = new JLabel("Mod");
-		lblMod_1.setBounds(241, 112, 22, 14);
+		lblMod_1.setBounds(228, 112, 24, 14);
 		contentPane.add(lblMod_1);
 		
 		JLabel lblMod_2 = new JLabel("Mod");
-		lblMod_2.setBounds(241, 137, 22, 14);
+		lblMod_2.setBounds(228, 137, 24, 14);
 		contentPane.add(lblMod_2);
 		
 		JLabel lblMod_3 = new JLabel("Mod");
-		lblMod_3.setBounds(241, 162, 22, 14);
+		lblMod_3.setBounds(228, 162, 24, 14);
 		contentPane.add(lblMod_3);
 		
 		JLabel lblMod_4 = new JLabel("Mod");
-		lblMod_4.setBounds(241, 187, 22, 14);
+		lblMod_4.setBounds(228, 187, 24, 14);
 		contentPane.add(lblMod_4);
 		
 		JLabel lblMod_5 = new JLabel("Mod");
-		lblMod_5.setBounds(241, 212, 22, 14);
+		lblMod_5.setBounds(228, 212, 24, 14);
 		contentPane.add(lblMod_5);
 		
 		textField_12 = new JTextField();
+		textField_12.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_12.setEditable(false);
-		textField_12.setBounds(273, 87, 30, 20);
+		textField_12.setBounds(260, 87, 30, 20);
 		contentPane.add(textField_12);
 		textField_12.setColumns(10);
 		
 		textField_13 = new JTextField();
+		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_13.setEditable(false);
-		textField_13.setBounds(273, 112, 30, 20);
+		textField_13.setBounds(260, 112, 30, 20);
 		contentPane.add(textField_13);
 		textField_13.setColumns(10);
 		
 		textField_14 = new JTextField();
+		textField_14.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_14.setEditable(false);
-		textField_14.setBounds(273, 137, 30, 20);
+		textField_14.setBounds(260, 137, 30, 20);
 		contentPane.add(textField_14);
 		textField_14.setColumns(10);
 		
 		textField_15 = new JTextField();
+		textField_15.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_15.setEditable(false);
-		textField_15.setBounds(273, 162, 30, 20);
+		textField_15.setBounds(260, 162, 30, 20);
 		contentPane.add(textField_15);
 		textField_15.setColumns(10);
 		
 		textField_16 = new JTextField();
+		textField_16.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_16.setEditable(false);
-		textField_16.setBounds(273, 187, 30, 20);
+		textField_16.setBounds(260, 187, 30, 20);
 		contentPane.add(textField_16);
 		textField_16.setColumns(10);
 		
 		textField_17 = new JTextField();
+		textField_17.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_17.setEditable(false);
-		textField_17.setBounds(273, 212, 30, 20);
+		textField_17.setBounds(260, 212, 30, 20);
 		contentPane.add(textField_17);
 		textField_17.setColumns(10);
 		
 		JLabel lblTotal = new JLabel("Total");
-		lblTotal.setBounds(313, 87, 25, 20);
+		lblTotal.setBounds(308, 87, 30, 20);
 		contentPane.add(lblTotal);
 		
 		JLabel lblTotal_1 = new JLabel("Total");
-		lblTotal_1.setBounds(313, 112, 25, 20);
+		lblTotal_1.setBounds(308, 112, 30, 20);
 		contentPane.add(lblTotal_1);
 		
 		JLabel lblTotal_2 = new JLabel("Total");
-		lblTotal_2.setBounds(313, 137, 25, 20);
+		lblTotal_2.setBounds(308, 137, 30, 20);
 		contentPane.add(lblTotal_2);
 		
 		JLabel lblTotal_3 = new JLabel("Total");
-		lblTotal_3.setBounds(313, 165, 25, 20);
+		lblTotal_3.setBounds(308, 165, 30, 20);
 		contentPane.add(lblTotal_3);
 		
 		JLabel lblTotal_4 = new JLabel("Total");
-		lblTotal_4.setBounds(313, 187, 25, 20);
+		lblTotal_4.setBounds(308, 187, 30, 20);
 		contentPane.add(lblTotal_4);
 		
 		JLabel lblTotal_5 = new JLabel("Total");
-		lblTotal_5.setBounds(313, 212, 25, 20);
+		lblTotal_5.setBounds(308, 212, 30, 20);
 		contentPane.add(lblTotal_5);
 		
 		strTotTF = new JTextField();
+		strTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		strTotTF.setBounds(348, 87, 33, 20);
 		contentPane.add(strTotTF);
 		strTotTF.setColumns(10);
 		
 		dexTotTF = new JTextField();
+		dexTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		dexTotTF.setBounds(348, 112, 33, 20);
 		contentPane.add(dexTotTF);
 		dexTotTF.setColumns(10);
 		
 		conTotTF = new JTextField();
+		conTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		conTotTF.setBounds(348, 137, 33, 20);
 		contentPane.add(conTotTF);
 		conTotTF.setColumns(10);
 		
 		intTotTF = new JTextField();
+		intTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		intTotTF.setBounds(348, 162, 33, 20);
 		contentPane.add(intTotTF);
 		intTotTF.setColumns(10);
 		
 		wisTotTF = new JTextField();
+		wisTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		wisTotTF.setBounds(348, 187, 33, 20);
 		contentPane.add(wisTotTF);
 		wisTotTF.setColumns(10);
 		
 		chaTotTF = new JTextField();
+		chaTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		chaTotTF.setBounds(348, 212, 33, 20);
 		contentPane.add(chaTotTF);
 		chaTotTF.setColumns(10);
@@ -420,16 +439,19 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		favAtkTF = new JTextField();
+		favAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		favAtkTF.setBounds(273, 380, 30, 20);
 		contentPane.add(favAtkTF);
 		favAtkTF.setColumns(10);
 		
 		ranAtkTF = new JTextField();
+		ranAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		ranAtkTF.setBounds(273, 409, 30, 20);
 		contentPane.add(ranAtkTF);
 		ranAtkTF.setColumns(10);
 		
 		spAtkTF = new JTextField();
+		spAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		spAtkTF.setBounds(273, 434, 30, 20);
 		contentPane.add(spAtkTF);
 		spAtkTF.setColumns(10);
@@ -447,30 +469,33 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Damage");
-		lblNewLabel_5.setBounds(320, 383, 46, 14);
+		lblNewLabel_5.setBounds(315, 383, 50, 14);
 		contentPane.add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Damage");
-		lblNewLabel_6.setBounds(320, 412, 46, 14);
+		lblNewLabel_6.setBounds(315, 412, 50, 14);
 		contentPane.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Damage");
-		lblNewLabel_7.setBounds(320, 437, 46, 14);
+		lblNewLabel_7.setBounds(315, 437, 50, 14);
 		contentPane.add(lblNewLabel_7);
 		
 		FavDamDiTF = new JTextField();
+		FavDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		FavDamDiTF.setEditable(false);
 		FavDamDiTF.setBounds(369, 380, 86, 20);
 		contentPane.add(FavDamDiTF);
 		FavDamDiTF.setColumns(10);
 		
 		RanDamDiTF = new JTextField();
+		RanDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		RanDamDiTF.setEditable(false);
 		RanDamDiTF.setBounds(369, 409, 86, 20);
 		contentPane.add(RanDamDiTF);
 		RanDamDiTF.setColumns(10);
 		
 		spDamDiTF = new JTextField();
+		spDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		spDamDiTF.setEditable(false);
 		spDamDiTF.setBounds(369, 437, 86, 20);
 		contentPane.add(spDamDiTF);
@@ -485,11 +510,11 @@ public class DummyDatabaseFrame extends JFrame {
 		btnNextCharacter.setBounds(165, 338, 121, 23);
 		contentPane.add(btnNextCharacter);
 		
-		JButton btnNewButton_1 = new JButton("Save Character");
+		JButton btnNewButton_1 = new JButton("Save File");
 		btnNewButton_1.setBounds(38, 22, 142, 23);
 		contentPane.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Load Character");
+		JButton btnNewButton_2 = new JButton("Load File");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -498,12 +523,13 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		bBABTF = new JTextField();
+		bBABTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		bBABTF.setBounds(369, 339, 86, 20);
 		contentPane.add(bBABTF);
 		bBABTF.setColumns(10);
 		
 		JLabel lblBab = new JLabel("   BAB");
-		lblBab.setBounds(329, 342, 30, 14);
+		lblBab.setBounds(320, 342, 40, 14);
 		contentPane.add(lblBab);
 	}
 	
