@@ -142,7 +142,7 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		charNaTF = new JTextField();
 		charNaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		charNaTF.setBounds(165, 62, 216, 20);
+		charNaTF.setBounds(165, 62, 210, 20);
 		contentPane.add(charNaTF);
 		charNaTF.setColumns(10);
 		
@@ -150,9 +150,10 @@ public class DummyDatabaseFrame extends JFrame {
 		strTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// //
+				if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
 				char1.setStrength(returnTextData(strTF));
 				System.out.println("Worked!" + char1.getStrength());
+				}
 			}
 			
 		});
@@ -302,128 +303,128 @@ public class DummyDatabaseFrame extends JFrame {
 		spWeapTF.setColumns(10);
 		
 		JLabel lblMod = new JLabel("Mod");
-		lblMod.setBounds(228, 87, 24, 20);
+		lblMod.setBounds(310, 87, 26, 20);
 		contentPane.add(lblMod);
 		
 		JLabel lblMod_1 = new JLabel("Mod");
-		lblMod_1.setBounds(228, 112, 24, 14);
+		lblMod_1.setBounds(310, 112, 26, 20);
 		contentPane.add(lblMod_1);
 		
 		JLabel lblMod_2 = new JLabel("Mod");
-		lblMod_2.setBounds(228, 137, 24, 14);
+		lblMod_2.setBounds(310, 137, 26, 14);
 		contentPane.add(lblMod_2);
 		
 		JLabel lblMod_3 = new JLabel("Mod");
-		lblMod_3.setBounds(228, 162, 24, 14);
+		lblMod_3.setBounds(310, 162, 26, 14);
 		contentPane.add(lblMod_3);
 		
 		JLabel lblMod_4 = new JLabel("Mod");
-		lblMod_4.setBounds(228, 187, 24, 14);
+		lblMod_4.setBounds(310, 187, 26, 14);
 		contentPane.add(lblMod_4);
 		
 		JLabel lblMod_5 = new JLabel("Mod");
-		lblMod_5.setBounds(228, 212, 24, 14);
+		lblMod_5.setBounds(310, 212, 26, 14);
 		contentPane.add(lblMod_5);
 		
 		textField_12 = new JTextField();
 		textField_12.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_12.setEditable(false);
-		textField_12.setBounds(260, 87, 30, 20);
+		textField_12.setBounds(345, 87, 30, 20);
 		contentPane.add(textField_12);
 		textField_12.setColumns(10);
 		
 		textField_13 = new JTextField();
 		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_13.setEditable(false);
-		textField_13.setBounds(260, 112, 30, 20);
+		textField_13.setBounds(345, 112, 30, 20);
 		contentPane.add(textField_13);
 		textField_13.setColumns(10);
 		
 		textField_14 = new JTextField();
 		textField_14.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_14.setEditable(false);
-		textField_14.setBounds(260, 137, 30, 20);
+		textField_14.setBounds(345, 135, 30, 20);
 		contentPane.add(textField_14);
 		textField_14.setColumns(10);
 		
 		textField_15 = new JTextField();
 		textField_15.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_15.setEditable(false);
-		textField_15.setBounds(260, 162, 30, 20);
+		textField_15.setBounds(345, 160, 30, 20);
 		contentPane.add(textField_15);
 		textField_15.setColumns(10);
 		
 		textField_16 = new JTextField();
 		textField_16.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_16.setEditable(false);
-		textField_16.setBounds(260, 187, 30, 20);
+		textField_16.setBounds(345, 185, 30, 20);
 		contentPane.add(textField_16);
 		textField_16.setColumns(10);
 		
 		textField_17 = new JTextField();
 		textField_17.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		textField_17.setEditable(false);
-		textField_17.setBounds(260, 212, 30, 20);
+		textField_17.setBounds(345, 210, 30, 20);
 		contentPane.add(textField_17);
 		textField_17.setColumns(10);
 		
-		JLabel lblTotal = new JLabel("Total");
-		lblTotal.setBounds(308, 87, 30, 20);
+		JLabel lblTotal = new JLabel("Magic");
+		lblTotal.setBounds(225, 87, 36, 20);
 		contentPane.add(lblTotal);
 		
-		JLabel lblTotal_1 = new JLabel("Total");
-		lblTotal_1.setBounds(308, 112, 30, 20);
+		JLabel lblTotal_1 = new JLabel("Magic");
+		lblTotal_1.setBounds(225, 112, 36, 20);
 		contentPane.add(lblTotal_1);
 		
-		JLabel lblTotal_2 = new JLabel("Total");
-		lblTotal_2.setBounds(308, 137, 30, 20);
+		JLabel lblTotal_2 = new JLabel("Magic");
+		lblTotal_2.setBounds(225, 137, 36, 20);
 		contentPane.add(lblTotal_2);
 		
-		JLabel lblTotal_3 = new JLabel("Total");
-		lblTotal_3.setBounds(308, 165, 30, 20);
+		JLabel lblTotal_3 = new JLabel("Magic");
+		lblTotal_3.setBounds(225, 165, 36, 20);
 		contentPane.add(lblTotal_3);
 		
-		JLabel lblTotal_4 = new JLabel("Total");
-		lblTotal_4.setBounds(308, 187, 30, 20);
+		JLabel lblTotal_4 = new JLabel("Magic");
+		lblTotal_4.setBounds(225, 187, 36, 20);
 		contentPane.add(lblTotal_4);
 		
-		JLabel lblTotal_5 = new JLabel("Total");
-		lblTotal_5.setBounds(308, 212, 30, 20);
+		JLabel lblTotal_5 = new JLabel("Magic");
+		lblTotal_5.setBounds(225, 212, 36, 20);
 		contentPane.add(lblTotal_5);
 		
 		strTotTF = new JTextField();
 		strTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		strTotTF.setBounds(348, 87, 33, 20);
+		strTotTF.setBounds(266, 87, 30, 20);
 		contentPane.add(strTotTF);
 		strTotTF.setColumns(10);
 		
 		dexTotTF = new JTextField();
 		dexTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		dexTotTF.setBounds(348, 112, 33, 20);
+		dexTotTF.setBounds(266, 112, 30, 20);
 		contentPane.add(dexTotTF);
 		dexTotTF.setColumns(10);
 		
 		conTotTF = new JTextField();
 		conTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		conTotTF.setBounds(348, 137, 33, 20);
+		conTotTF.setBounds(266, 137, 30, 20);
 		contentPane.add(conTotTF);
 		conTotTF.setColumns(10);
 		
 		intTotTF = new JTextField();
 		intTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		intTotTF.setBounds(348, 162, 33, 20);
+		intTotTF.setBounds(266, 162, 30, 20);
 		contentPane.add(intTotTF);
 		intTotTF.setColumns(10);
 		
 		wisTotTF = new JTextField();
 		wisTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		wisTotTF.setBounds(348, 187, 33, 20);
+		wisTotTF.setBounds(266, 187, 30, 20);
 		contentPane.add(wisTotTF);
 		wisTotTF.setColumns(10);
 		
 		chaTotTF = new JTextField();
 		chaTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		chaTotTF.setBounds(348, 212, 33, 20);
+		chaTotTF.setBounds(266, 212, 30, 20);
 		contentPane.add(chaTotTF);
 		chaTotTF.setColumns(10);
 		
@@ -538,18 +539,7 @@ public class DummyDatabaseFrame extends JFrame {
 		//String temp = tF.getText();
 		int result = 0;
 		try {
-			result = Integer.parseInt(tF.getText());
-			if(result > 100)
-			{
-				result = 0;
-				JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "." + "\nPlease enter a value lower than 100 ");
-			}
-			
-			if(result < 0)
-				{
-					result = 0;
-					JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "." + "\nPlease enter a value higher than zero");
-				}
+			result = Integer.parseInt(removePlusSign(tF.getText(),tF));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -557,14 +547,34 @@ public class DummyDatabaseFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "You entered invalid characters \n positive numbers only please");
 			tF.setText("");
 		}
-		catch(IllegalFormatConversionException ex1) {
+		
+		if(result > 100)
+		{
 			result = 0;
-			JOptionPane.showMessageDialog(null, "You entered a negative value \n please only enter positive numbers");
 			tF.setText("");
+			JOptionPane.showMessageDialog(null, "Please enter a value lower than 100!");
+		}
+		
+		if(result < 0)
+		{
+			result = 0;
+			tF.setText("");
+			JOptionPane.showMessageDialog(null, "Please enter positive numbers only!");
 		}
 		
 		return result;
 	}
+	
+	private static String removePlusSign(String s, JTextField tF)
+	{
+		if(s.substring(0).equalsIgnoreCase("+"));
+		{
+			s = s.replace("+", "");
+			tF.setText(s);
+		}
+		return s;
+	}
+	
 	
 
 }
