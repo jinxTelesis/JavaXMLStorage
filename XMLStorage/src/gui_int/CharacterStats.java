@@ -43,6 +43,13 @@ public class CharacterStats {
 	private int raDam;
 	private int spDam;
 	
+	private int maStr;
+	private int maDex;
+	private int maCon;
+	private int maInt;
+	private int maWis;
+	private int maCha;
+	
 	public CharacterStats() { // need to set getters before used
 		++CharNumInc;
 		this.ChName = "Unamed Character"; // add a static
@@ -76,7 +83,81 @@ public class CharacterStats {
 		
 		
 	}
+	
+	public int getMaStr() {
+		return maStr;
+	}
 
+	public void setMaStr(int maStr) {
+		if(maStr < 0)
+		{
+			maStr = 0;
+		}
+		this.maStr = maStr;
+	}
+
+	public int getMaDex() {
+		return maDex;
+	}
+
+	public void setMaDex(int maDex) {
+		if(maDex < 0)
+		{
+			maDex = 0;
+		}
+		this.maDex = maDex;
+	}
+
+	public int getMaCon() {
+		return maCon;
+	}
+
+	public void setMaCon(int maCon) {
+		if(maCon < 0)
+		{
+			maCon = 0;
+		}
+		this.maCon = maCon;
+	}
+
+	public int getMaInt() {
+		return maInt;
+	}
+
+	public void setMaInt(int maInt) {
+		if(maInt < 0)
+		{
+			maInt = 0;
+		}
+		this.maInt = maInt;
+	}
+
+	public int getMaWis() {
+		return maWis;
+	}
+
+	public void setMaWis(int maWis) {
+		if(maWis < 0)
+		{
+			maWis = 0;
+		}
+		
+		this.maWis = maWis;
+	}
+
+	public int getMaCha() {
+		return maCha;
+	}
+
+	public void setMaCha(int maCha) {
+		if(maCha < 0)
+		{
+			maCha = 0;
+		}
+		this.maCha = maCha;
+	}
+	// maSetter // Getter end
+	
 	public static int getDefaultStats() {
 		return defaultStats;
 	}

@@ -22,6 +22,9 @@ import java.util.IllegalFormatConversionException;
 public class DummyDatabaseFrame extends JFrame {
 	
 	private int mine = 10;
+	private int statMin = 0;
+	private int statMax = 100;
+	
 
 	private JPanel contentPane;
 	private JTextField charNaTF;
@@ -34,7 +37,7 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField weightTF;
 	private JTextField ageTF;
 	private JTextField favWeapTF;
-	private JTextField RanWeapTF;
+	private JTextField ranWeapTF;
 	private JTextField spWeapTF;
 	private JTextField textField_12;
 	private JTextField textField_13;
@@ -42,12 +45,12 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField textField_15;
 	private JTextField textField_16;
 	private JTextField textField_17;
-	private JTextField strTotTF;
-	private JTextField dexTotTF;
-	private JTextField conTotTF;
-	private JTextField intTotTF;
-	private JTextField wisTotTF;
-	private JTextField chaTotTF;
+	private JTextField strMTF;
+	private JTextField dexMTF;
+	private JTextField conMTF;
+	private JTextField intMTF;
+	private JTextField wisMTF;
+	private JTextField chaMTF;
 	private JTextField favAtkTF;
 	private JTextField ranAtkTF;
 	private JTextField spAtkTF;
@@ -75,6 +78,8 @@ public class DummyDatabaseFrame extends JFrame {
 
 	public DummyDatabaseFrame() {
 		CharacterStats char1 = new CharacterStats();
+		
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -141,6 +146,15 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		charNaTF = new JTextField();
+		charNaTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!charNaTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
 		charNaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		charNaTF.setBounds(165, 62, 210, 20);
 		contentPane.add(charNaTF);
@@ -247,7 +261,7 @@ public class DummyDatabaseFrame extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(!weightTF.getText().equals("")) {
+				if(!weightTF.getText().equals("")) { // this needs testing not sure if brackets in right place others are correct
 				double result = 0.0;
 				try {
 					result = Double.parseDouble(weightTF.getText());
@@ -297,18 +311,46 @@ public class DummyDatabaseFrame extends JFrame {
 		ageTF.setColumns(10);
 		
 		favWeapTF = new JTextField();
+		favWeapTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!favWeapTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
 		favWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		favWeapTF.setBounds(165, 380, 50, 20);
 		contentPane.add(favWeapTF);
 		favWeapTF.setColumns(10);
 		
-		RanWeapTF = new JTextField();
-		RanWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		RanWeapTF.setBounds(165, 409, 50, 20);
-		contentPane.add(RanWeapTF);
-		RanWeapTF.setColumns(10);
+		ranWeapTF = new JTextField();
+		ranWeapTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!ranWeapTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
+		ranWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		ranWeapTF.setBounds(165, 409, 50, 20);
+		contentPane.add(ranWeapTF);
+		ranWeapTF.setColumns(10);
 		
 		spWeapTF = new JTextField();
+		spWeapTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!spWeapTF.getText().equals(""))
+				{
+					// add parsing
+				}
+				
+			}
+		});
 		spWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		spWeapTF.setBounds(165, 437, 50, 20);
 		contentPane.add(spWeapTF);
@@ -404,41 +446,98 @@ public class DummyDatabaseFrame extends JFrame {
 		lblTotal_5.setBounds(225, 212, 36, 20);
 		contentPane.add(lblTotal_5);
 		
-		strTotTF = new JTextField();
-		strTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		strTotTF.setBounds(266, 87, 30, 20);
-		contentPane.add(strTotTF);
-		strTotTF.setColumns(10);
+		strMTF = new JTextField();
+		strMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(strMTF.getText().equals(""))
+				{
+					
+					char1.setMaStr(returnTextData(strMTF, statMin, statMax));
+					System.out.println(char1.getMaStr());
+				}
+			}
+		});
+		strMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		strMTF.setBounds(266, 87, 30, 20);
+		contentPane.add(strMTF);
+		strMTF.setColumns(10);
 		
-		dexTotTF = new JTextField();
-		dexTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		dexTotTF.setBounds(266, 112, 30, 20);
-		contentPane.add(dexTotTF);
-		dexTotTF.setColumns(10);
+		dexMTF = new JTextField();
+		dexMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(dexMTF.getText().equals(""))
+				{
+					char1.setMaDex(returnTextData(dexMTF, statMin, statMax));
+					System.out.println(char1.getMaDex());
+				}
+			}
+		});
+		dexMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		dexMTF.setBounds(266, 112, 30, 20);
+		contentPane.add(dexMTF);
+		dexMTF.setColumns(10);
 		
-		conTotTF = new JTextField();
-		conTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		conTotTF.setBounds(266, 137, 30, 20);
-		contentPane.add(conTotTF);
-		conTotTF.setColumns(10);
+		conMTF = new JTextField();
+		conMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(conMTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
+		conMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		conMTF.setBounds(266, 137, 30, 20);
+		contentPane.add(conMTF);
+		conMTF.setColumns(10);
 		
-		intTotTF = new JTextField();
-		intTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		intTotTF.setBounds(266, 162, 30, 20);
-		contentPane.add(intTotTF);
-		intTotTF.setColumns(10);
+		intMTF = new JTextField();
+		intMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(intMTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
+		intMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		intMTF.setBounds(266, 162, 30, 20);
+		contentPane.add(intMTF);
+		intMTF.setColumns(10);
 		
-		wisTotTF = new JTextField();
-		wisTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		wisTotTF.setBounds(266, 187, 30, 20);
-		contentPane.add(wisTotTF);
-		wisTotTF.setColumns(10);
+		wisMTF = new JTextField();
+		wisMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(wisMTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
+		wisMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		wisMTF.setBounds(266, 187, 30, 20);
+		contentPane.add(wisMTF);
+		wisMTF.setColumns(10);
 		
-		chaTotTF = new JTextField();
-		chaTotTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		chaTotTF.setBounds(266, 212, 30, 20);
-		contentPane.add(chaTotTF);
-		chaTotTF.setColumns(10);
+		chaMTF = new JTextField();
+		chaMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(chaMTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
+		chaMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		chaMTF.setBounds(266, 212, 30, 20);
+		contentPane.add(chaMTF);
+		chaMTF.setColumns(10);
 		
 		JButton btnAddCharacter = new JButton("Add Character");
 		btnAddCharacter.setBounds(241, 262, 140, 23);
@@ -453,18 +552,45 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		favAtkTF = new JTextField();
+		favAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!favAtkTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
 		favAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		favAtkTF.setBounds(273, 380, 30, 20);
 		contentPane.add(favAtkTF);
 		favAtkTF.setColumns(10);
 		
 		ranAtkTF = new JTextField();
+		ranAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!ranAtkTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
 		ranAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		ranAtkTF.setBounds(273, 409, 30, 20);
 		contentPane.add(ranAtkTF);
 		ranAtkTF.setColumns(10);
 		
 		spAtkTF = new JTextField();
+		spAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!spAtkTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
 		spAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		spAtkTF.setBounds(273, 434, 30, 20);
 		contentPane.add(spAtkTF);
@@ -537,6 +663,15 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		bBABTF = new JTextField();
+		bBABTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!bBABTF.getText().equals(""))
+				{
+					// add parsing
+				}
+			}
+		});
 		bBABTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		bBABTF.setBounds(369, 339, 86, 20);
 		contentPane.add(bBABTF);
@@ -568,6 +703,36 @@ public class DummyDatabaseFrame extends JFrame {
 		}
 		
 		if(result < 0)
+		{
+			result = 0;
+			tF.setText("");
+			JOptionPane.showMessageDialog(null, "Please enter positive numbers only!");
+		}
+		
+		return result;
+	}
+	
+	private static int returnTextData(JTextField tF, int min, int max) { // add calls to each now
+		//String temp = tF.getText();
+		int result = 0;
+		try {
+			result = Integer.parseInt(removePlusSign(tF.getText(),tF));
+		}
+		catch (NumberFormatException ex)
+		{
+			result = 0;
+			JOptionPane.showMessageDialog(null, "You entered invalid characters \n positive numbers only please");
+			tF.setText("");
+		}
+		
+		if(result > max)
+		{
+			result = 0;
+			tF.setText("");
+			JOptionPane.showMessageDialog(null, "Please enter a value lower than 100!");
+		}
+		
+		if(result < min)
 		{
 			result = 0;
 			tF.setText("");
