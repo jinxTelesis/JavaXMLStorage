@@ -23,6 +23,7 @@ public class DummyDatabaseFrame extends JFrame {
 	
 	private int mine = 10;
 	private int statMin = 0;
+	private int statMaMin = -20;
 	private int statMax = 100;
 	
 
@@ -257,31 +258,37 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		weightTF = new JTextField();
 		weightTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		weightTF.addFocusListener(new FocusAdapter() {
+		weightTF.addFocusListener(new FocusAdapter() {			
 			@Override
 			public void focusLost(FocusEvent e) {
+				double maxWeight = 1000000.0;
 				
-				if(!weightTF.getText().equals("")) { // this needs testing not sure if brackets in right place others are correct
+				if(!weightTF.getText().equals("")) {
+					
+					// this needs testing not sure if brackets in right place others are correct
 				double result = 0.0;
 				try {
-					result = Double.parseDouble(weightTF.getText());
-					if(result > 100)
-					{
-						result = 0.0;
-						JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a value lower than 100 ");
-					}
-					
-					if(result < 0)
-						{
-							result = 0.0;
-							JOptionPane.showMessageDialog(null, "You entered " + String.format("%.2f", result) + "Please enter a higher than zero");
-						}
+					result = Double.parseDouble(removePlusSign(weightTF.getText(), weightTF));
 				}
 				catch (NumberFormatException ex)
 				{
-					result = 0.0;
-					JOptionPane.showMessageDialog(null, "You entered invalid characters \n numbers only please");
+					result = 0;
+					JOptionPane.showMessageDialog(null, "You entered invalid characters \n please enter again!");
 					weightTF.setText("");
+				}
+				
+				if(result > maxWeight) // hardcode
+				{
+					result = 0;
+					weightTF.setText("");
+					JOptionPane.showMessageDialog(null, "Please enter a value lower than " + maxWeight + "!");
+				}
+				
+				if(result < 0)
+				{
+					result = 0;
+					weightTF.setText("");
+					JOptionPane.showMessageDialog(null, "Please enter positive numbers only!");
 				}
 				
 				char1.setWeight(result);
@@ -300,8 +307,9 @@ public class DummyDatabaseFrame extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(!ageTF.getText().equals("")) {
-				char1.setAge(returnTextData(ageTF));
-				System.out.println("Worked!" + char1.getCharisma());
+					
+				char1.setAge((returnTextData(ageTF,0,1000)));
+				System.out.println("Worked!" + char1.getAge());
 				}
 			}
 		});
@@ -316,7 +324,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!favWeapTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setFavWeap(returnTextData(favWeapTF,0,100));
+					System.out.println("Worked!" + char1.getFavWeap());
 				}
 			}
 		});
@@ -331,7 +340,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!ranWeapTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setRanWeap(returnTextData(ranWeapTF,0,100));
+					System.out.println("Worked!" + char1.getRanWeap());
 				}
 			}
 		});
@@ -346,7 +356,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!spWeapTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setSpWeap(returnTextData(spWeapTF, 0,100));
+					System.out.println("Worked!" + char1.getSpWeap());
 				}
 				
 			}
@@ -450,10 +461,10 @@ public class DummyDatabaseFrame extends JFrame {
 		strMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(strMTF.getText().equals(""))
+				if(!strMTF.getText().equals(""))
 				{
 					
-					char1.setMaStr(returnTextData(strMTF, statMin, statMax));
+					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
 					System.out.println(char1.getMaStr());
 				}
 			}
@@ -467,9 +478,9 @@ public class DummyDatabaseFrame extends JFrame {
 		dexMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(dexMTF.getText().equals(""))
+				if(!dexMTF.getText().equals(""))
 				{
-					char1.setMaDex(returnTextData(dexMTF, statMin, statMax));
+					char1.setMaDex(returnTextData(dexMTF, statMaMin, statMax));
 					System.out.println(char1.getMaDex());
 				}
 			}
@@ -483,9 +494,10 @@ public class DummyDatabaseFrame extends JFrame {
 		conMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(conMTF.getText().equals(""))
+				if(!conMTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setMaCon(returnTextData(conMTF,statMaMin,statMax));
+					System.out.println(char1.getMaCon());
 				}
 			}
 		});
@@ -498,9 +510,10 @@ public class DummyDatabaseFrame extends JFrame {
 		intMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(intMTF.getText().equals(""))
+				if(!intMTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setMaInt(returnTextData(intMTF,statMaMin,statMax));
+					System.out.println(char1.getMaInt());
 				}
 			}
 		});
@@ -513,9 +526,10 @@ public class DummyDatabaseFrame extends JFrame {
 		wisMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(wisMTF.getText().equals(""))
+				if(!wisMTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setMaWis(returnTextData(intMTF,statMaMin,statMax));
+					System.out.println(char1.getMaWis());
 				}
 			}
 		});
@@ -528,9 +542,10 @@ public class DummyDatabaseFrame extends JFrame {
 		chaMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(chaMTF.getText().equals(""))
+				if(!chaMTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setMaCha(returnTextData(chaMTF,statMaMin,statMax));
+					System.out.println(char1.getMaCha());
 				}
 			}
 		});
@@ -668,7 +683,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!bBABTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setBAB(returnTextData(bBABTF, -5,100));
+					System.out.println("Worked!" + char1.getBAB());
 				}
 			}
 		});
@@ -682,7 +698,7 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblBab);
 	}
 	
-	private static int returnTextData(JTextField tF) { // add calls to each now
+	private static int returnTextData(JTextField tF) { // add calls to each now // might want to just remove this
 		//String temp = tF.getText();
 		int result = 0;
 		try {
@@ -721,7 +737,7 @@ public class DummyDatabaseFrame extends JFrame {
 		catch (NumberFormatException ex)
 		{
 			result = 0;
-			JOptionPane.showMessageDialog(null, "You entered invalid characters \n positive numbers only please");
+			JOptionPane.showMessageDialog(null, "You entered invalid characters \n Please enter again");
 			tF.setText("");
 		}
 		
@@ -729,14 +745,14 @@ public class DummyDatabaseFrame extends JFrame {
 		{
 			result = 0;
 			tF.setText("");
-			JOptionPane.showMessageDialog(null, "Please enter a value lower than 100!");
+			JOptionPane.showMessageDialog(null, "Please enter a value lower than " + max + "!");
 		}
 		
 		if(result < min)
 		{
 			result = 0;
 			tF.setText("");
-			JOptionPane.showMessageDialog(null, "Please enter positive numbers only!");
+			JOptionPane.showMessageDialog(null, "Value too low! Please enter a value higher than" + min +"!");
 		}
 		
 		return result;

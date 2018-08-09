@@ -89,9 +89,9 @@ public class CharacterStats {
 	}
 
 	public void setMaStr(int maStr) {
-		if(maStr < 0)
+		if(maStr < -100)
 		{
-			maStr = 0;
+			maStr = -99;
 		}
 		this.maStr = maStr;
 	}
@@ -101,9 +101,9 @@ public class CharacterStats {
 	}
 
 	public void setMaDex(int maDex) {
-		if(maDex < 0)
+		if(maDex < -100)
 		{
-			maDex = 0;
+			maDex = -99;
 		}
 		this.maDex = maDex;
 	}
@@ -113,9 +113,9 @@ public class CharacterStats {
 	}
 
 	public void setMaCon(int maCon) {
-		if(maCon < 0)
+		if(maCon < -100)
 		{
-			maCon = 0;
+			maCon = -99;
 		}
 		this.maCon = maCon;
 	}
@@ -125,9 +125,9 @@ public class CharacterStats {
 	}
 
 	public void setMaInt(int maInt) {
-		if(maInt < 0)
+		if(maInt < -100)
 		{
-			maInt = 0;
+			maInt = -99;
 		}
 		this.maInt = maInt;
 	}
@@ -137,9 +137,9 @@ public class CharacterStats {
 	}
 
 	public void setMaWis(int maWis) {
-		if(maWis < 0)
+		if(maWis < -100)
 		{
-			maWis = 0;
+			maWis = -99;
 		}
 		
 		this.maWis = maWis;
@@ -150,9 +150,9 @@ public class CharacterStats {
 	}
 
 	public void setMaCha(int maCha) {
-		if(maCha < 0)
+		if(maCha < -100)
 		{
-			maCha = 0;
+			maCha = 99;
 		}
 		this.maCha = maCha;
 	}
