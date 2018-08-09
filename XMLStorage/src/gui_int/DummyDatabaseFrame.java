@@ -168,10 +168,10 @@ public class DummyDatabaseFrame extends JFrame {
 		conTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				
+				if(!conTF.getText().equals("")) {
 				char1.setConstituion(returnTextData(conTF));
 				System.out.println("Worked!" + char1.getConstituion());
-				
+				}
 			}
 		});
 		conTF.setBounds(165, 137, 50, 20);
@@ -183,9 +183,10 @@ public class DummyDatabaseFrame extends JFrame {
 		dexTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				////JTextField tF, CharacterStats charObj
+				if(!dexTF.getText().equals("")) {
 				char1.setDexterity(returnTextData(dexTF));
 				System.out.println("Worked!" + char1.getDexterity());
+				}
 			}
 				
 		});
@@ -198,8 +199,10 @@ public class DummyDatabaseFrame extends JFrame {
 		intTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				if(!intTF.getText().equals("")) {
 				char1.setIntelligence(returnTextData(intTF));
 				System.out.println("Worked!" + char1.getIntelligence());
+				}
 			}
 		});
 		intTF.setBounds(165, 162, 50, 20);
@@ -211,8 +214,10 @@ public class DummyDatabaseFrame extends JFrame {
 		wisTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				if(!wisTF.getText().equals("")) {
 				char1.setWisdom(returnTextData(wisTF));
 				System.out.println("Worked!" + char1.getWisdom());
+				}
 			}
 		});
 		wisTF.setBounds(165, 187, 50, 20);
@@ -224,9 +229,10 @@ public class DummyDatabaseFrame extends JFrame {
 		chaTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				if(!chaTF.getText().equals("")) {
 				char1.setCharisma(returnTextData(chaTF));
 				System.out.println("Worked!" + char1.getCharisma());
-				
+				}
 			}
 		});
 		
@@ -240,6 +246,8 @@ public class DummyDatabaseFrame extends JFrame {
 		weightTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				
+				if(!weightTF.getText().equals("")) {
 				double result = 0.0;
 				try {
 					result = Double.parseDouble(weightTF.getText());
@@ -264,9 +272,10 @@ public class DummyDatabaseFrame extends JFrame {
 				
 				char1.setWeight(result);
 				System.out.println(char1.getWeight());
-				
+				}
 			}
 		});
+		
 		weightTF.setBounds(165, 262, 50, 20);
 		contentPane.add(weightTF);
 		weightTF.setColumns(10);
@@ -276,10 +285,13 @@ public class DummyDatabaseFrame extends JFrame {
 		ageTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				if(!ageTF.getText().equals("")) {
 				char1.setAge(returnTextData(ageTF));
 				System.out.println("Worked!" + char1.getCharisma());
+				}
 			}
 		});
+		
 		ageTF.setBounds(165, 292, 50, 20);
 		contentPane.add(ageTF);
 		ageTF.setColumns(10);
