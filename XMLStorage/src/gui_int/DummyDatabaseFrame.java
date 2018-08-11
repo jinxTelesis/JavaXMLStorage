@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.IllegalFormatConversionException;
+import java.math.*;
+//import components.DocumentSizeFilter; add documents filter later
 
 public class DummyDatabaseFrame extends JFrame {
 	
@@ -40,12 +42,12 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField favWeapTF;
 	private JTextField ranWeapTF;
 	private JTextField spWeapTF;
-	private JTextField textField_12;
-	private JTextField textField_13;
-	private JTextField textField_14;
-	private JTextField textField_15;
-	private JTextField textField_16;
-	private JTextField textField_17;
+	private JTextField strMod;
+	private JTextField dexMod;
+	private JTextField conMod;
+	private JTextField intMod;
+	private JTextField wisMod;
+	private JTextField chaMod;
 	private JTextField strMTF;
 	private JTextField dexMTF;
 	private JTextField conMTF;
@@ -152,7 +154,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!charNaTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setChName(charNaTF.getText());
+					System.out.println("Worked!" + char1.getChName());
 				}
 			}
 		});
@@ -168,6 +171,20 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
 				char1.setStrength(returnTextData(strTF));
 				System.out.println("Worked!" + char1.getStrength());
+				if(!(char1.getStrength() == 0))
+				{
+					// call function to get str + magic assume zero if not set
+					char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
+					if(char1.getStrMod() > 0)
+					{
+						strMod.setText("+" + Integer.toString(char1.getStrMod()));
+					}
+					else
+					{
+						strMod.setText(Integer.toString(char1.getStrMod()));
+					}
+
+				}
 				}
 			}
 			
@@ -186,6 +203,19 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!conTF.getText().equals("")) {
 				char1.setConstituion(returnTextData(conTF));
 				System.out.println("Worked!" + char1.getConstituion());
+				if(!(char1.getConstituion() == 0))
+				{
+					char1.setChaMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+					if(char1.getConMod() > 0)
+					{
+						conMod.setText("+" + Integer.toString(char1.getConMod()));
+					}
+					else
+					{
+						conMod.setText(Integer.toString(char1.getConMod()));
+					}
+
+				}
 				}
 			}
 		});
@@ -391,47 +421,47 @@ public class DummyDatabaseFrame extends JFrame {
 		lblMod_5.setBounds(310, 212, 26, 14);
 		contentPane.add(lblMod_5);
 		
-		textField_12 = new JTextField();
-		textField_12.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textField_12.setEditable(false);
-		textField_12.setBounds(345, 87, 30, 20);
-		contentPane.add(textField_12);
-		textField_12.setColumns(10);
+		strMod = new JTextField();
+		strMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		strMod.setEditable(false);
+		strMod.setBounds(345, 87, 30, 20);
+		contentPane.add(strMod);
+		strMod.setColumns(10);
 		
-		textField_13 = new JTextField();
-		textField_13.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textField_13.setEditable(false);
-		textField_13.setBounds(345, 112, 30, 20);
-		contentPane.add(textField_13);
-		textField_13.setColumns(10);
+		dexMod = new JTextField();
+		dexMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		dexMod.setEditable(false);
+		dexMod.setBounds(345, 112, 30, 20);
+		contentPane.add(dexMod);
+		dexMod.setColumns(10);
 		
-		textField_14 = new JTextField();
-		textField_14.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textField_14.setEditable(false);
-		textField_14.setBounds(345, 135, 30, 20);
-		contentPane.add(textField_14);
-		textField_14.setColumns(10);
+		conMod = new JTextField();
+		conMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		conMod.setEditable(false);
+		conMod.setBounds(345, 135, 30, 20);
+		contentPane.add(conMod);
+		conMod.setColumns(10);
 		
-		textField_15 = new JTextField();
-		textField_15.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textField_15.setEditable(false);
-		textField_15.setBounds(345, 160, 30, 20);
-		contentPane.add(textField_15);
-		textField_15.setColumns(10);
+		intMod = new JTextField();
+		intMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		intMod.setEditable(false);
+		intMod.setBounds(345, 160, 30, 20);
+		contentPane.add(intMod);
+		intMod.setColumns(10);
 		
-		textField_16 = new JTextField();
-		textField_16.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textField_16.setEditable(false);
-		textField_16.setBounds(345, 185, 30, 20);
-		contentPane.add(textField_16);
-		textField_16.setColumns(10);
+		wisMod = new JTextField();
+		wisMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		wisMod.setEditable(false);
+		wisMod.setBounds(345, 185, 30, 20);
+		contentPane.add(wisMod);
+		wisMod.setColumns(10);
 		
-		textField_17 = new JTextField();
-		textField_17.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		textField_17.setEditable(false);
-		textField_17.setBounds(345, 210, 30, 20);
-		contentPane.add(textField_17);
-		textField_17.setColumns(10);
+		chaMod = new JTextField();
+		chaMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		chaMod.setEditable(false);
+		chaMod.setBounds(345, 210, 30, 20);
+		contentPane.add(chaMod);
+		chaMod.setColumns(10);
 		
 		JLabel lblTotal = new JLabel("Magic");
 		lblTotal.setBounds(225, 87, 36, 20);
@@ -572,7 +602,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!favAtkTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setFavAtk(returnTextData(favAtkTF, -5,100));
+					System.out.println("Worked!" + char1.getFavAtk());
 				}
 			}
 		});
@@ -587,7 +618,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!ranAtkTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setRaAtk(returnTextData(ranAtkTF,-5,100));
+					System.out.println("Worked!" + char1.getRaAtk());
 				}
 			}
 		});
@@ -602,7 +634,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!spAtkTF.getText().equals(""))
 				{
-					// add parsing
+					char1.setSpWeap(returnTextData(spAtkTF,-5,100));
+					System.out.println("Worked!" + char1.getSpAtk());
 				}
 			}
 		});
@@ -766,6 +799,13 @@ public class DummyDatabaseFrame extends JFrame {
 			tF.setText(s);
 		}
 		return s;
+	}
+	
+	private static int calcMod(int stat, int mag) {
+		int result = 0;
+		
+		
+		return result;
 	}
 	
 	
