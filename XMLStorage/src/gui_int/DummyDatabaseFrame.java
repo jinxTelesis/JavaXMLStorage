@@ -12,6 +12,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.Font;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -128,13 +130,18 @@ public class DummyDatabaseFrame extends JFrame {
 		lblAge.setBounds(37, 292, 100, 14);
 		contentPane.add(lblAge);
 		
+		ButtonGroup group = new ButtonGroup();
+		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
+		group.add(rdbtnMale);
 		rdbtnMale.setBounds(37, 313, 100, 23);
 		contentPane.add(rdbtnMale);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Female");
-		rdbtnNewRadioButton.setBounds(37, 338, 100, 23);
-		contentPane.add(rdbtnNewRadioButton);
+		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		group.add(rdbtnFemale);
+		rdbtnMale.setSelected(true);
+		rdbtnFemale.setBounds(37, 338, 100, 23);
+		contentPane.add(rdbtnFemale);
 		
 		JLabel lblFavoriteWeapon = new JLabel("Favorite Weapon");
 		lblFavoriteWeapon.setBounds(37, 383, 100, 14);
@@ -408,6 +415,8 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setFavWeap(returnTextData(favWeapTF,0,100));
 					System.out.println("Worked!" + char1.getFavWeap());
+					char1.calcFavDam();
+					FavDamDiTF.setText(Integer.toString(char1.getFavDam()));
 				}
 			}
 		});
@@ -424,6 +433,8 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setRanWeap(returnTextData(ranWeapTF,0,100));
 					System.out.println("Worked!" + char1.getRanWeap());
+					char1.calcRaDam();
+					RanDamDiTF.setText(Integer.toString(char1.getRaDam()));
 				}
 			}
 		});
@@ -440,6 +451,9 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setSpWeap(returnTextData(spWeapTF, 0,100));
 					System.out.println("Worked!" + char1.getSpWeap());
+					char1.calcSpDam();
+					spDamDiTF.setText(Integer.toString(char1.getSpDam()));
+					
 				}
 				
 			}
