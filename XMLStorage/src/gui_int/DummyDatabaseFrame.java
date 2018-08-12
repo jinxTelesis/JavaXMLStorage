@@ -21,6 +21,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.IllegalFormatConversionException;
 import java.math.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 //import components.DocumentSizeFilter; add documents filter later
 
 public class DummyDatabaseFrame extends JFrame {
@@ -133,11 +135,21 @@ public class DummyDatabaseFrame extends JFrame {
 		ButtonGroup group = new ButtonGroup();
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				char1.setMale(true);
+			}
+		});
 		group.add(rdbtnMale);
 		rdbtnMale.setBounds(37, 313, 100, 23);
 		contentPane.add(rdbtnMale);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				char1.setMale(false);
+			}
+		});
 		group.add(rdbtnFemale);
 		rdbtnMale.setSelected(true);
 		rdbtnFemale.setBounds(37, 338, 100, 23);
