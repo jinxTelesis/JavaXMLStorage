@@ -205,7 +205,7 @@ public class DummyDatabaseFrame extends JFrame {
 				System.out.println("Worked!" + char1.getConstituion());
 				if(!(char1.getConstituion() == 0))
 				{
-					char1.setChaMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+					char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
 					if(char1.getConMod() > 0)
 					{
 						conMod.setText("+" + Integer.toString(char1.getConMod()));
@@ -231,6 +231,19 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!dexTF.getText().equals("")) {
 				char1.setDexterity(returnTextData(dexTF));
 				System.out.println("Worked!" + char1.getDexterity());
+				if(!(char1.getDexterity() == 0))
+				{
+					char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						dexMod.setText("+" + Integer.toString(char1.getDexMod()));
+					}
+					else
+					{
+						dexMod.setText(Integer.toString(char1.getDexMod()));
+					}
+
+				}
 				}
 			}
 				
@@ -247,6 +260,19 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!intTF.getText().equals("")) {
 				char1.setIntelligence(returnTextData(intTF));
 				System.out.println("Worked!" + char1.getIntelligence());
+				if(!(char1.getIntelligence() == 0))
+				{
+					char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						intMod.setText("+" + Integer.toString(char1.getIntMod()));
+					}
+					else
+					{
+						intMod.setText(Integer.toString(char1.getIntMod()));
+					}
+
+				}
 				}
 			}
 		});
@@ -262,6 +288,19 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!wisTF.getText().equals("")) {
 				char1.setWisdom(returnTextData(wisTF));
 				System.out.println("Worked!" + char1.getWisdom());
+				if(!(char1.getWisdom() == 0))
+				{
+					char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						wisMod.setText("+" + Integer.toString(char1.getWisMod()));
+					}
+					else
+					{
+						wisMod.setText(Integer.toString(char1.getWisMod()));
+					}
+
+				}
 				}
 			}
 		});
@@ -277,6 +316,19 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!chaTF.getText().equals("")) {
 				char1.setCharisma(returnTextData(chaTF));
 				System.out.println("Worked!" + char1.getCharisma());
+				if(!(char1.getCharisma() == 0))
+				{
+					char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						chaMod.setText("+" + Integer.toString(char1.getChaMod()));
+					}
+					else
+					{
+						chaMod.setText(Integer.toString(char1.getChaMod()));
+					}
+
+				}
 				}
 			}
 		});
@@ -496,6 +548,23 @@ public class DummyDatabaseFrame extends JFrame {
 					
 					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
 					System.out.println(char1.getMaStr());
+					if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
+						//char1.setStrength(returnTextData(strTF));
+						//System.out.println("Worked!" + char1.getStrength());
+						if(!(char1.getStrength() == 0))
+						{
+							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
+							if(char1.getStrMod() > 0)
+							{
+								strMod.setText("+" + Integer.toString(char1.getStrMod()));
+							}
+							else
+							{
+								strMod.setText(Integer.toString(char1.getStrMod()));
+							}
+
+						}
+					}
 				}
 			}
 		});
@@ -512,6 +581,19 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setMaDex(returnTextData(dexMTF, statMaMin, statMax));
 					System.out.println(char1.getMaDex());
+					if(!(char1.getDexterity() == 0))
+					{
+						char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							dexMod.setText("+" + Integer.toString(char1.getDexMod()));
+						}
+						else
+						{
+							dexMod.setText(Integer.toString(char1.getDexMod()));
+						}
+
+					}
 				}
 			}
 		});
