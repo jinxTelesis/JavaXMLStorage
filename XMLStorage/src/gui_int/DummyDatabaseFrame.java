@@ -610,6 +610,19 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setMaCon(returnTextData(conMTF,statMaMin,statMax));
 					System.out.println(char1.getMaCon());
+					if(!(char1.getConstituion() == 0))
+					{
+						char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+						if(char1.getConMod() > 0)
+						{
+							conMod.setText("+" + Integer.toString(char1.getConMod()));
+						}
+						else
+						{
+							conMod.setText(Integer.toString(char1.getConMod()));
+						}
+
+					}
 				}
 			}
 		});
@@ -626,6 +639,19 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setMaInt(returnTextData(intMTF,statMaMin,statMax));
 					System.out.println(char1.getMaInt());
+					if(!(char1.getIntelligence() == 0))
+					{
+						char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							intMod.setText("+" + Integer.toString(char1.getIntMod()));
+						}
+						else
+						{
+							intMod.setText(Integer.toString(char1.getIntMod()));
+						}
+
+					}
 				}
 			}
 		});
@@ -642,6 +668,19 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setMaWis(returnTextData(intMTF,statMaMin,statMax));
 					System.out.println(char1.getMaWis());
+					if(!(char1.getWisdom() == 0))
+					{
+						char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							wisMod.setText("+" + Integer.toString(char1.getWisMod()));
+						}
+						else
+						{
+							wisMod.setText(Integer.toString(char1.getWisMod()));
+						}
+
+					}
 				}
 			}
 		});
@@ -658,6 +697,19 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setMaCha(returnTextData(chaMTF,statMaMin,statMax));
 					System.out.println(char1.getMaCha());
+					if(!(char1.getCharisma() == 0))
+					{
+						char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							chaMod.setText("+" + Integer.toString(char1.getChaMod()));
+						}
+						else
+						{
+							chaMod.setText(Integer.toString(char1.getChaMod()));
+						}
+
+					}
 				}
 			}
 		});
@@ -882,14 +934,4 @@ public class DummyDatabaseFrame extends JFrame {
 		}
 		return s;
 	}
-	
-	private static int calcMod(int stat, int mag) {
-		int result = 0;
-		
-		
-		return result;
-	}
-	
-	
-
 }
