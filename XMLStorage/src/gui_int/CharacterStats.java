@@ -350,8 +350,6 @@ public class CharacterStats {
 	public int getFavAtk() {
 		return favAtk;
 	}
-	
-	// special maybe make
 
 	public void setFavAtk(int favAtk) {
 		
@@ -397,10 +395,4 @@ public class CharacterStats {
 	public void calcSpDam() {
 		this.spDam = dexMod + spWeap;
 	}
-	
-	
-	
-	
-	
-
 }

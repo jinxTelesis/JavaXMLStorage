@@ -204,6 +204,7 @@ public class DummyDatabaseFrame extends JFrame {
 					}
 
 				}
+				updateFavDam(favWeapTF,char1, FavDamDiTF);
 				}
 			}
 			
@@ -248,21 +249,24 @@ public class DummyDatabaseFrame extends JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				if(!dexTF.getText().equals("")) {
-				char1.setDexterity(returnTextData(dexTF));
-				System.out.println("Worked!" + char1.getDexterity());
-				if(!(char1.getDexterity() == 0))
-				{
-					char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
-					if(char1.getDexMod() > 0)
+					char1.setDexterity(returnTextData(dexTF));
+					System.out.println("Worked!" + char1.getDexterity());
+					if(!(char1.getDexterity() == 0))
 					{
-						dexMod.setText("+" + Integer.toString(char1.getDexMod()));
-					}
-					else
-					{
-						dexMod.setText(Integer.toString(char1.getDexMod()));
-					}
+						char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							dexMod.setText("+" + Integer.toString(char1.getDexMod()));
+						}
+						else
+						{
+							dexMod.setText(Integer.toString(char1.getDexMod()));
+						}
 
-				}
+					}
+					
+				updateRanDam(ranWeapTF, char1, RanDamDiTF);
+				updateSpDam(spWeapTF, char1, spDamDiTF);
 				}
 			}
 				
@@ -420,16 +424,11 @@ public class DummyDatabaseFrame extends JFrame {
 		ageTF.setColumns(10);
 		
 		favWeapTF = new JTextField();
-		favWeapTF.addFocusListener(new FocusAdapter() {
+		favWeapTF.addFocusListener(new FocusAdapter() { // write a function
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(!favWeapTF.getText().equals(""))
-				{
-					char1.setFavWeap(returnTextData(favWeapTF,0,100));
-					System.out.println("Worked!" + char1.getFavWeap());
-					char1.calcFavDam();
-					FavDamDiTF.setText(Integer.toString(char1.getFavDam()));
-				}
+				updateFavDam(favWeapTF,char1, FavDamDiTF);
+
 			}
 		});
 		favWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -441,13 +440,7 @@ public class DummyDatabaseFrame extends JFrame {
 		ranWeapTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(!ranWeapTF.getText().equals(""))
-				{
-					char1.setRanWeap(returnTextData(ranWeapTF,0,100));
-					System.out.println("Worked!" + char1.getRanWeap());
-					char1.calcRaDam();
-					RanDamDiTF.setText(Integer.toString(char1.getRaDam()));
-				}
+				updateRanDam(ranWeapTF, char1, RanDamDiTF);
 			}
 		});
 		ranWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -459,15 +452,7 @@ public class DummyDatabaseFrame extends JFrame {
 		spWeapTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(!spWeapTF.getText().equals(""))
-				{
-					char1.setSpWeap(returnTextData(spWeapTF, 0,100));
-					System.out.println("Worked!" + char1.getSpWeap());
-					char1.calcSpDam();
-					spDamDiTF.setText(Integer.toString(char1.getSpDam()));
-					
-				}
-				
+				updateSpDam(spWeapTF, char1, spDamDiTF);				
 			}
 		});
 		spWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -575,8 +560,6 @@ public class DummyDatabaseFrame extends JFrame {
 					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
 					System.out.println(char1.getMaStr());
 					if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
-						//char1.setStrength(returnTextData(strTF));
-						//System.out.println("Worked!" + char1.getStrength());
 						if(!(char1.getStrength() == 0))
 						{
 							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
@@ -591,6 +574,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 						}
 					}
+					updateFavDam(favWeapTF,char1, FavDamDiTF); // update for weapon damage
 				}
 			}
 		});
@@ -620,6 +604,8 @@ public class DummyDatabaseFrame extends JFrame {
 						}
 
 					}
+					updateRanDam(ranWeapTF, char1, RanDamDiTF);
+					updateSpDam(spWeapTF, char1, spDamDiTF);
 				}
 			}
 		});
@@ -960,4 +946,47 @@ public class DummyDatabaseFrame extends JFrame {
 		}
 		return s;
 	}
+	
+	private static void updateFavDam(JTextField tf,CharacterStats char1, JTextField disTF) //maybe this should be polymorphic
+	{
+		if(!tf.getText().equals(""))
+		{
+			char1.setFavWeap(returnTextData(tf,0,100));
+			System.out.println("Worked!" + char1.getFavWeap());
+			char1.calcFavDam();
+			disTF.setText(Integer.toString(char1.getFavDam()));
+		}
+	}
+	
+	private static void updateRanDam(JTextField tf, CharacterStats char1, JTextField disTF)
+	{
+		if(!tf.getText().equals(""))
+		{
+			char1.setRanWeap(returnTextData(tf,0,100));
+			System.out.println("Worked!" + char1.getRanWeap());
+			char1.calcRaDam();
+			disTF.setText(Integer.toString(char1.getRaDam()));
+		}
+	}
+	
+	private static void updateSpDam(JTextField tf, CharacterStats char1, JTextField disTF)
+	{
+		if(!tf.getText().equals(""))
+		{
+			char1.setSpWeap(returnTextData(tf,0,100));
+			System.out.println("Worked!" + char1.getRanWeap());
+			char1.calcSpDam();
+			disTF.setText(Integer.toString(char1.getSpDam()));
+		}
+	}
+//	if(!spWeapTF.getText().equals(""))
+//	{
+//		char1.setSpWeap(returnTextData(spWeapTF, 0,100));
+//		System.out.println("Worked!" + char1.getSpWeap());
+//		char1.calcSpDam();
+//		spDamDiTF.setText(Integer.toString(char1.getSpDam()));
+//		
+//	}
+
+
 }
