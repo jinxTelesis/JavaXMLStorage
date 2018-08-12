@@ -43,6 +43,13 @@ public class CharacterStats {
 	private int raDam;
 	private int spDam;
 	
+	private int maStr;
+	private int maDex;
+	private int maCon;
+	private int maInt;
+	private int maWis;
+	private int maCha;
+	
 	public CharacterStats() { // need to set getters before used
 		++CharNumInc;
 		this.ChName = "Unamed Character"; // add a static
@@ -76,7 +83,81 @@ public class CharacterStats {
 		
 		
 	}
+	
+	public int getMaStr() {
+		return maStr;
+	}
 
+	public void setMaStr(int maStr) {
+		if(maStr < -100)
+		{
+			maStr = -99;
+		}
+		this.maStr = maStr;
+	}
+
+	public int getMaDex() {
+		return maDex;
+	}
+
+	public void setMaDex(int maDex) {
+		if(maDex < -100)
+		{
+			maDex = -99;
+		}
+		this.maDex = maDex;
+	}
+
+	public int getMaCon() {
+		return maCon;
+	}
+
+	public void setMaCon(int maCon) {
+		if(maCon < -100)
+		{
+			maCon = -99;
+		}
+		this.maCon = maCon;
+	}
+
+	public int getMaInt() {
+		return maInt;
+	}
+
+	public void setMaInt(int maInt) {
+		if(maInt < -100)
+		{
+			maInt = -99;
+		}
+		this.maInt = maInt;
+	}
+
+	public int getMaWis() {
+		return maWis;
+	}
+
+	public void setMaWis(int maWis) {
+		if(maWis < -100)
+		{
+			maWis = -99;
+		}
+		
+		this.maWis = maWis;
+	}
+
+	public int getMaCha() {
+		return maCha;
+	}
+
+	public void setMaCha(int maCha) {
+		if(maCha < -100)
+		{
+			maCha = 99;
+		}
+		this.maCha = maCha;
+	}
+	// maSetter // Getter end
+	
 	public static int getDefaultStats() {
 		return defaultStats;
 	}
