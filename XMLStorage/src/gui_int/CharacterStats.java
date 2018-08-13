@@ -76,9 +76,9 @@ public class CharacterStats {
 		setFavAtk(0); // this.favAtk set
 		setRaAtk(0); // this.raAtk set
 		setSpAtk(0); // this.spAtk set
-		setFavDam(0);// this.favDam set
-		setRaDam(0);// this.raDam set
-		setSpDam(0);// this.spDam set
+		//setFavDam(0);// this.favDam set
+		//setRaDam(0);// this.raDam set
+		//setSpDam(0);// this.spDam set
 		
 		
 		
@@ -314,9 +314,9 @@ public class CharacterStats {
 
 	public void setFavWeap(int favWeap) {
 		if(favWeap == 0) {
-			favWeap = 4 + strMod;
+			favWeap = 4;
 		}
-		this.favWeap = favWeap + strMod;
+		this.favWeap = favWeap;
 	}
 
 	public int getRanWeap() {
@@ -350,8 +350,6 @@ public class CharacterStats {
 	public int getFavAtk() {
 		return favAtk;
 	}
-	
-	// special maybe make
 
 	public void setFavAtk(int favAtk) {
 		
@@ -378,29 +376,23 @@ public class CharacterStats {
 		return favDam;
 	}
 
-	private void setFavDam(int favDam) {
-		this.favDam = favDam + strMod + favWeap;
+	public void calcFavDam() {
+		this.favDam = strMod + favWeap;
 	}
 
 	public int getRaDam() {
 		return raDam;
 	}
 
-	private void setRaDam(int raDam) {
-		this.raDam = raDam + ranWeap;
+	public void calcRaDam() {
+		this.raDam = dexMod + ranWeap;
 	}
 
-	private int getSpDam() {
+	public int getSpDam() {
 		return spDam;
 	}
 
-	private void setSpDam(int spDam) {
-		this.spDam = spDam + spWeap;
+	public void calcSpDam() {
+		this.spDam = dexMod + spWeap;
 	}
-	
-	
-	
-	
-	
-
 }
