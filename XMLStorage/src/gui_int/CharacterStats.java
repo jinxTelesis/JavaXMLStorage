@@ -49,6 +49,10 @@ public class CharacterStats {
 	private int maInt;
 	private int maWis;
 	private int maCha;
+	private int level;
+	private int hitdie;
+	private int hitdice[];
+	
 	
 	public CharacterStats() { // need to set getters before used
 		++CharNumInc;
@@ -83,6 +87,16 @@ public class CharacterStats {
 		
 		
 	}
+	
+	public int[] createHitDie(int size) { // put this in the action listener not the class i think
+		if(size > 100)
+		{
+			size = 99;
+		}
+		int hitDie[] = new int[size];
+		return hitDie;
+	}
+	
 	
 	public int getMaStr() {
 		return maStr;
@@ -394,5 +408,64 @@ public class CharacterStats {
 
 	public void calcSpDam() {
 		this.spDam = dexMod + spWeap;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		if(level > 20)
+		{
+			this.level = 20;
+		}
+		this.level = level;
+	}
+
+	public int[] getHitdice() {
+		return hitdice;
+	}
+
+	public void setHitdice(int hitdice[]) {
+		this.hitdice = hitdice;
+	}
+
+	public int getHitdie() {
+		return hitdie;
+	}
+
+	public void setHitdie(int hitdie) throws InvalidHitDie {
+		if(hitdie < 4)
+		{
+			throw new InvalidHitDie("Hitdie must be 4 or greater");
+		}
+		
+		if(hitdie == 5)
+		{
+			throw new InvalidHitDie("Hitdie can't be 5");
+		}
+		
+		if(hitdie == 7)
+		{
+			throw new InvalidHitDie("Hitdie can't be 7");
+		}
+		
+		if(hitdie == 9)
+		{
+			throw new InvalidHitDie("Hitdie can't be 9");
+		}
+		
+		if(hitdie == 11)
+		{
+			throw new InvalidHitDie("Hitdie can't be 11");
+		}
+		
+		if(hitdie > 12)
+		{
+			throw new InvalidHitDie("HitDie can't be greater than 12");
+		}
+		
+		
+		this.hitdie = hitdie;
 	}
 }
