@@ -6,6 +6,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import jdk.internal.org.xml.sax.SAXException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
@@ -22,9 +32,11 @@ import java.awt.event.FocusEvent;
 import java.util.IllegalFormatConversionException;
 import java.math.*;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JComboBox;
 //import components.DocumentSizeFilter; add documents filter later
+import org.w3c.dom.NodeList;
 
 public class DummyDatabaseFrame extends JFrame {
 	
@@ -70,10 +82,7 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField tFHitDie;
 	private JTextField tFHP;
 
-	
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -847,8 +856,136 @@ public class DummyDatabaseFrame extends JFrame {
 		btnNewButton_2.setBounds(197, 22, 129, 23);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// parse selected file
 				
+				
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				try {
+					DocumentBuilder builder = factory.newDocumentBuilder();
+					Document doc = builder.parse("Timmy.xml");
+					NodeList characterList = doc.getElementsByTagName("character");
+					
+					for(int i = 0;i<characterList.getLength();i++)
+					{
+						System.out.println("got here 1");
+						Node c = characterList.item(i);
+						if(c.getNodeType()==Node.ELEMENT_NODE) {
+							Element stats = (Element) c;
+							String chname = stats.getAttribute("id");
+							NodeList statsList = stats.getChildNodes();
+							
+							Node statsAtt = statsList.item(1); // only every other item has a value
+							String temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setChName(temp);
+	
+							statsAtt = statsList.item(3);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setStrength(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(5);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setDexterity(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(7);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setConstituion(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(9);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setIntelligence(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(11);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setWisdom(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(13);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setCharisma(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(15);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setBAB(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(17);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setWeight(Double.valueOf(temp));
+							
+							statsAtt = statsList.item(19);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setAge(Integer.valueOf(temp));
+							
+							statsAtt = statsList.item(21);
+							temp = returnNode(statsAtt);
+							//System.out.println(temp);
+							char1.setMale(Boolean.parseBoolean(temp));
+							if(char1.isMale() == true)
+							{
+								System.out.println("male");
+							}
+							else
+							{
+								System.out.println("female");
+							}
+							
+							
+							
+//							if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
+//								Element attributes = (Element) statsAtt;
+//								System.out.println(attributes.getTextContent());
+//							}
+							
+//							for(int x = 0;x<statsList.getLength();x++)
+//							{
+//								Node statsAtt = statsList.item(x);
+//								if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
+//									Element attributes = (Element) statsAtt;
+//									System.out.println(attributes.getTextContent());
+//								}
+//							}
+						}
+					}
+				}
+				catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e)
+				{
+					e.printStackTrace();
+				}
+
+//				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//				try {
+//					DocumentBuilder builder = factory.newDocumentBuilder();
+//					Document doc = builder.parse("Jim.xml");
+//					NodeList adventurerList = doc.getElementsByTagName("adventurers");
+//					
+//					for(int i = 0;i<adventurerList.getLength();i++)
+//					{	System.out.println("got here");
+//						Node c = adventurerList.item(i);
+//						if(c.getNodeType()==Node.ELEMENT_NODE) {
+//							Element character = (Element) c;
+//							String id = character.getAttribute("id");
+//							NodeList statsN = character.getChildNodes();
+//							for(int j =0;j<statsN.getLength();j++) {
+//								Node sec = statsN.item(j);
+//								if(sec.getNodeType()==Node.ELEMENT_NODE) {
+//									Element attributes = (Element) sec;
+//									System.out.println("Character's stats are " + 
+//									attributes.getTagName() + "= " + attributes.getTextContent());
+//								}
+//							}
+//						}
+//					}
+//				}
+//				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e) {
+//					e.printStackTrace();
+//				}
 			}
 		});
 		contentPane.add(btnNewButton_2);
@@ -1052,5 +1189,16 @@ public class DummyDatabaseFrame extends JFrame {
 			char1.calcSpDam();
 			disTF.setText(Integer.toString(char1.getSpDam()));
 		}
+	}
+	
+	private static String returnNode(Node statsAtt) {
+		String s = "";
+		
+		if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
+			Element attributes = (Element) statsAtt;
+			s = attributes.getTextContent();
+		}
+		
+		return s;
 	}
 }

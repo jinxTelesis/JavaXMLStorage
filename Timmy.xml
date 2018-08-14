@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<character id="1">
+<chname>Jim</chname>
+<strength>12</strength>
+<dexterity>14</dexterity>
+<constitution>15</constitution>
+<intelligence>11</intelligence>
+<wisdom>13</wisdom>
+<charisma>9</charisma>
+<BAB>3</BAB>
+<weight>101.05</weight>
+<age>17</age>
+<gender>true</gender>
+<favweap>6</favweap>
+<ranweap>8</ranweap>
+<spweap>6</spweap>
+<favatk>4</favatk>
+<ranatk>5</ranatk>
+<spatk>6</spatk>
+<mastr>2</mastr>
+<madex>0</madex>
+<macon>4</macon>
+<maint>0</maint>
+<mawis>0</mawis>
+<macha>0</macha>
+<level>5</level>
+<hitdie>10</hitdie>
+<int-array>
+<item>8</item>
+<item>8</item>
+<item>7</item>
+<item>3</item>
+<item>2</item>
+</int-array>
+</character>
