@@ -998,6 +998,12 @@ public class DummyDatabaseFrame extends JFrame {
 				CharacterStats char2 = new CharacterStats();
 				char2 = charB.unmarshall();
 				CharacterStats char1 = new CharacterStats(char2);
+				
+				// this returns an object, discarded right now
+				 refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie);
+				
 				//System.out.println("Char name" + char3.getChName());
 				
 				/*
@@ -1246,12 +1252,55 @@ public class DummyDatabaseFrame extends JFrame {
 	
 	private static CharacterStats refreshDisplay(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
 			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,
-			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod,
-			JTextField wisMod, JTextField chaMod, JTextField weightTf, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
+			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod, JTextField intMod,
+			JTextField wisMod, JTextField chaMod, JTextField weightTF, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
 			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
-			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF) {
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie) {
 		
+		chObj.calcFavDam();
+		chObj.calcRaDam();
+		chObj.calcSpDam();
+		// maybe move mod calculations
+		// add calculate hp?
+		// add calculate hp
+		// add calculate hp
+		// add calculate hp
+		// add calculate hp
 		
+		charNatTFL.setText(chObj.getChName());
+		strTF.setText(Integer.toString(chObj.getStrength()));
+		dexTF.setText(Integer.toString(chObj.getDexterity()));
+		conTF.setText(Integer.toString(chObj.getConstituion()));
+		intTF.setText(Integer.toString(chObj.getIntelligence()));
+		wisTF.setText(Integer.toString(chObj.getWisdom()));
+		chaTF.setText(Integer.toString(chObj.getCharisma()));
+		strMTF.setText(Integer.toString(chObj.getMaStr()));
+		dexMTF.setText(Integer.toString(chObj.getMaDex()));
+		conMTF.setText(Integer.toString(chObj.getMaCon()));
+		intMTF.setText(Integer.toString(chObj.getMaInt()));
+		wisMTF.setText(Integer.toString(chObj.getMaWis()));
+		chaMTF.setText(Integer.toString(chObj.getChaMod()));
+		strMod.setText(Integer.toString(chObj.getStrMod()));
+		dexMod.setText(Integer.toString(chObj.getDexMod()));
+		conMod.setText(Integer.toString(chObj.getConMod()));
+		intMod.setText(Integer.toString(chObj.getIntMod()));
+		wisMod.setText(Integer.toString(chObj.getWisMod()));
+		chaMod.setText(Integer.toString(chObj.getChaMod()));
+		weightTF.setText(Double.toString(chObj.getWeight()));
+		ageTF.setText(Integer.toString(chObj.getAge()));
+		// radio button not done yet
+		favWeapTF.setText(Integer.toString(chObj.getFavWeap()));
+		ranWeapTF.setText(Integer.toString(chObj.getRanWeap()));
+		spWeapTF.setText(Integer.toString(chObj.getSpWeap()));
+		favAtkTF.setText(Integer.toString(chObj.getFavAtk()));
+		ranAtkTF.setText(Integer.toString(chObj.getRaAtk()));
+		spAtkTF.setText(Integer.toString(chObj.getSpAtk()));
+		bBABTF.setText(Integer.toString(chObj.getLevel()));
+		FavDamnDiTF.setText(Integer.toString(chObj.getFavDam()));
+		RanDamDiTF.setText(Integer.toString(chObj.getRaDam()));
+		spDamDiTF.setText(Integer.toString(chObj.getSpDam()));
+		tFLevel.setText(Integer.toString(chObj.getLevel()));
+		tFHitDie.setText(Integer.toString(chObj.getHitdie()));
 		
 		return chObj;
 	}
