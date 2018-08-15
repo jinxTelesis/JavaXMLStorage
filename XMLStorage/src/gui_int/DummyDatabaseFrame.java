@@ -997,7 +997,8 @@ public class DummyDatabaseFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				CharacterStats char2 = new CharacterStats();
 				char2 = charB.unmarshall();
-			
+				CharacterStats char1 = new CharacterStats(char2);
+				//System.out.println("Char name" + char3.getChName());
 				
 				/*
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -1240,6 +1241,19 @@ public class DummyDatabaseFrame extends JFrame {
 		});
 		
 		
+	}
+	// prob have to add a hit dice later
+	
+	private static CharacterStats refreshDisplay(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
+			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,
+			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod,
+			JTextField wisMod, JTextField chaMod, JTextField weightTf, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
+			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF) {
+		
+		
+		
+		return chObj;
 	}
 	
 	private static int returnTextData(JTextField tF) { // add calls to each now // might want to just remove this

@@ -89,6 +89,39 @@ public class CharacterStats implements Serializable{
 	public CharacterStats(CharacterStats obj) { // test this first
 		this();
 		this.ChName = obj.ChName;
+		this.strength = obj.strength;
+		this.dexterity = obj.dexterity;
+		this.constituion = obj.constituion;
+		this.intelligence = obj.intelligence;
+		this.wisdom = obj.wisdom;
+		this.charisma = obj.charisma;
+		this.strMod = obj.strMod;
+		this.dexMod = obj.dexMod;
+		this.conMod = obj.conMod;
+		this.intMod = obj.intMod;
+		this.wisMod = obj.wisMod;
+		this.chaMod = obj.chaMod;
+		this.BAB = obj.BAB;
+		this.weight = obj.weight;
+		this.age = obj.age;
+		this.male = obj.male;
+		this.maStr = obj.maStr;
+		this.maDex = obj.maDex;
+		this.maCon = obj.maCon;
+		this.maInt = obj.maInt;
+		this.maWis = obj.maWis;
+		this.favAtk = obj.favAtk;
+		this.spAtk = obj.spAtk;
+		this.raAtk = obj.raAtk;
+		this.favWeap = obj.favWeap;
+		this.ranWeap = obj.ranWeap;
+		this.spWeap = obj.spWeap;
+		this.level = obj.level;
+		this.hitdie = obj.hitdie;
+		this.hitdice = obj.hitdice;
+		this.calcFavDam();
+		this.calcRaDam();
+		this.calcSpDam();
 	}
 	
 	public int[] createHitDie(int size) { // put this in the action listener not the class i think
