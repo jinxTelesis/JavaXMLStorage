@@ -1,5 +1,6 @@
 package gui_int;
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -87,6 +88,9 @@ public class DummyDatabaseFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					CharacterStatsJAXB obj = new CharacterStatsJAXB();
+					obj.marshal();
+					obj.unmarshall();
 					DummyDatabaseFrame frame = new DummyDatabaseFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -907,6 +911,11 @@ public class DummyDatabaseFrame extends JFrame {
 		tFLevel.setColumns(10);
 		
 		tFHitDie = new JTextField();
+		
+		// need to update error for hitdie exception removed for marshalling
+		// need to update error for hitdie exception removed for marshalling
+		// need to update error for hitdie exception removed for marshalling
+		
 		tFHitDie.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -918,11 +927,11 @@ public class DummyDatabaseFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "You entered invalid characters \n Please enter again");
 						tFHitDie.setText("");
 						//e1.printStackTrace();
-					} catch (InvalidHitDie e1) {
-						JOptionPane.showMessageDialog(null, "Invalid hit die check your character sheet again");
-						tFHitDie.setText("");
+					}// catch (InvalidHitDie e1) {
+					//	JOptionPane.showMessageDialog(null, "Invalid hit die check your character sheet again");
+					//	tFHitDie.setText("");
 						//e1.printStackTrace();
-					}
+					//}
 				}
 			}
 		});
@@ -967,6 +976,11 @@ public class DummyDatabaseFrame extends JFrame {
 					
 					for(int i = 0;i<characterList.getLength();i++)
 					{
+						
+						// remove this section later
+						// remove this section later
+						// remove this section later
+						
 						System.out.println("got here 1");
 						Node c = characterList.item(i);
 						if(c.getNodeType()==Node.ELEMENT_NODE) {
@@ -1132,12 +1146,13 @@ public class DummyDatabaseFrame extends JFrame {
 							} catch (NumberFormatException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-							} catch (InvalidHitDie e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
 							}
 							System.out.println(temp);
 							tFHitDie.setText(temp);
+							
+							// remove this section later
+							// remove this section later
+							// remove this section later
 							
 							
 							

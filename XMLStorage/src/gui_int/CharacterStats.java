@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name="CharacterStats")
 public class CharacterStats implements Serializable{
 	
-	private static int CharNumInc;
+	//private static int CharNumInc;
 	private static int defaultStats;
 	
 	static {
@@ -59,7 +59,7 @@ public class CharacterStats implements Serializable{
 	
 	
 	public CharacterStats() { // need to set getters before used
-		++CharNumInc;
+		//++CharNumInc;
 		this.ChName = "Unamed Character"; // add a static
 		this.strength = defaultStats;
 		this.dexterity = defaultStats;
@@ -180,7 +180,7 @@ public class CharacterStats implements Serializable{
 		this.maCha = maCha;
 	}
 	// maybe hold off on this one???
-	@XmlElement
+	//@XmlElement
 	public static int getDefaultStats() {
 		return defaultStats;
 	}
@@ -458,7 +458,7 @@ public class CharacterStats implements Serializable{
 		this.level = level;
 	}
 	
-	@XmlElement
+	//@XmlElement
 	public int[] getHitdice() {
 		return hitdice;
 	}
@@ -472,35 +472,42 @@ public class CharacterStats implements Serializable{
 		return hitdie;
 	}
 
-	public void setHitdie(int hitdie) throws InvalidHitDie {
+	public void setHitdie(int hitdie) {
 		if(hitdie < 4)
 		{
-			throw new InvalidHitDie("Hitdie must be 4 or greater");
+			hitdie = 4;
+			System.out.println("Hitdie must be at least 4");
 		}
 		
 		if(hitdie == 5)
 		{
-			throw new InvalidHitDie("Hitdie can't be 5");
+			hitdie = 6;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
+			//throw new InvalidHitDie("Hitdie can't be 5");
 		}
 		
 		if(hitdie == 7)
 		{
-			throw new InvalidHitDie("Hitdie can't be 7");
+			hitdie = 8;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
 		}
 		
 		if(hitdie == 9)
 		{
-			throw new InvalidHitDie("Hitdie can't be 9");
+			hitdie = 10;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
 		}
 		
 		if(hitdie == 11)
 		{
-			throw new InvalidHitDie("Hitdie can't be 11");
+			hitdie = 12;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
 		}
 		
 		if(hitdie > 12)
 		{
-			throw new InvalidHitDie("HitDie can't be greater than 12");
+			hitdie = 12;
+			System.out.println("Hitdie can't be greater than 12!");
 		}
 		
 		
