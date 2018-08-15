@@ -41,8 +41,6 @@ import org.w3c.dom.NodeList;
 
 public class DummyDatabaseFrame extends JFrame {
 	
-	private int mine = 10;
-	private int statMin = 0;
 	private int statMaMin = -20;
 	private int statMax = 100;
 	
@@ -88,9 +86,11 @@ public class DummyDatabaseFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CharacterStatsJAXB obj = new CharacterStatsJAXB();
-					obj.marshal();
-					obj.unmarshall();
+					
+					//test code of marshalling
+					//CharacterStatsJAXB obj = new CharacterStatsJAXB();
+					//obj.marshal();
+					//obj.unmarshall();
 					DummyDatabaseFrame frame = new DummyDatabaseFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -101,7 +101,8 @@ public class DummyDatabaseFrame extends JFrame {
 	}
 
 	public DummyDatabaseFrame() {
-		CharacterStats char1 = new CharacterStats();
+		CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
+		CharacterStatsJAXB charB = new CharacterStatsJAXB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
@@ -150,21 +151,11 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
 		rdbtnMale.setBounds(37, 313, 100, 23);
-		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0) {
-				char1.setMale(true);
-			}
-		});
 		group.add(rdbtnMale);
 		contentPane.add(rdbtnMale);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
 		rdbtnFemale.setBounds(37, 338, 100, 23);
-		rdbtnFemale.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				char1.setMale(false);
-			}
-		});
 		group.add(rdbtnFemale);
 		rdbtnMale.setSelected(true);
 		contentPane.add(rdbtnFemale);
@@ -183,47 +174,12 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		charNaTF = new JTextField();
 		charNaTF.setBounds(165, 62, 210, 20);
-		charNaTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!charNaTF.getText().equals(""))
-				{
-					char1.setChName(charNaTF.getText());
-					System.out.println("Worked!" + char1.getChName());
-				}
-			}
-		});
 		charNaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(charNaTF);
 		charNaTF.setColumns(10);
 		
 		strTF = new JTextField();
 		strTF.setBounds(165, 87, 50, 20);
-		strTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
-				char1.setStrength(returnTextData(strTF));
-				System.out.println("Worked!" + char1.getStrength());
-				if(!(char1.getStrength() == 0))
-				{
-					char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
-					if(char1.getStrMod() > 0)
-					{
-						strMod.setText("+" + Integer.toString(char1.getStrMod()));
-					}
-					else
-					{
-						strMod.setText(Integer.toString(char1.getStrMod()));
-					}
-
-				}
-				updateFavDam(favWeapTF,char1, FavDamDiTF);
-				}
-			}
-			
-		});
-		
 		strTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(strTF);
 		strTF.setColumns(10);
@@ -231,246 +187,59 @@ public class DummyDatabaseFrame extends JFrame {
 		conTF = new JTextField();
 		conTF.setBounds(165, 137, 50, 20);
 		conTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		conTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!conTF.getText().equals("")) {
-				char1.setConstituion(returnTextData(conTF));
-				System.out.println("Worked!" + char1.getConstituion());
-				if(!(char1.getConstituion() == 0))
-				{
-					char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
-					if(char1.getConMod() > 0)
-					{
-						conMod.setText("+" + Integer.toString(char1.getConMod()));
-					}
-					else
-					{
-						conMod.setText(Integer.toString(char1.getConMod()));
-					}
-					
-					if(!tFLevel.getText().equals(""))
-					{
-						tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
-					}
-					
-
-				}
-				}
-			}
-		});
 		contentPane.add(conTF);
 		conTF.setColumns(10);
 		
 		dexTF = new JTextField();
 		dexTF.setBounds(165, 112, 50, 20);
 		dexTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		dexTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				if(!dexTF.getText().equals("")) {
-					char1.setDexterity(returnTextData(dexTF));
-					System.out.println("Worked!" + char1.getDexterity());
-					if(!(char1.getDexterity() == 0))
-					{
-						char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
-						if(char1.getDexMod() > 0)
-						{
-							dexMod.setText("+" + Integer.toString(char1.getDexMod()));
-						}
-						else
-						{
-							dexMod.setText(Integer.toString(char1.getDexMod()));
-						}
-
-					}
-					
-				updateRanDam(ranWeapTF, char1, RanDamDiTF);
-				updateSpDam(spWeapTF, char1, spDamDiTF);
-				}
-			}
-				
-		});
 		contentPane.add(dexTF);
 		dexTF.setColumns(10);
 		
 		intTF = new JTextField();
 		intTF.setBounds(165, 162, 50, 20);
 		intTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		intTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!intTF.getText().equals("")) {
-				char1.setIntelligence(returnTextData(intTF));
-				System.out.println("Worked!" + char1.getIntelligence());
-				if(!(char1.getIntelligence() == 0))
-				{
-					char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
-					if(char1.getDexMod() > 0)
-					{
-						intMod.setText("+" + Integer.toString(char1.getIntMod()));
-					}
-					else
-					{
-						intMod.setText(Integer.toString(char1.getIntMod()));
-					}
-
-				}
-				}
-			}
-		});
 		contentPane.add(intTF);
 		intTF.setColumns(10);
 		
 		wisTF = new JTextField();
 		wisTF.setBounds(165, 187, 50, 20);
 		wisTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		wisTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!wisTF.getText().equals("")) {
-				char1.setWisdom(returnTextData(wisTF));
-				System.out.println("Worked!" + char1.getWisdom());
-				if(!(char1.getWisdom() == 0))
-				{
-					char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-					if(char1.getDexMod() > 0)
-					{
-						wisMod.setText("+" + Integer.toString(char1.getWisMod()));
-					}
-					else
-					{
-						wisMod.setText(Integer.toString(char1.getWisMod()));
-					}
-
-				}
-				}
-			}
-		});
 		contentPane.add(wisTF);
 		wisTF.setColumns(10);
 		
 		chaTF = new JTextField();
 		chaTF.setBounds(165, 212, 50, 20);
 		chaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		chaTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!chaTF.getText().equals("")) {
-				char1.setCharisma(returnTextData(chaTF));
-				System.out.println("Worked!" + char1.getCharisma());
-				if(!(char1.getCharisma() == 0))
-				{
-					char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-					if(char1.getDexMod() > 0)
-					{
-						chaMod.setText("+" + Integer.toString(char1.getChaMod()));
-					}
-					else
-					{
-						chaMod.setText(Integer.toString(char1.getChaMod()));
-					}
-
-				}
-				}
-			}
-		});
 		contentPane.add(chaTF);
 		chaTF.setColumns(10);
 		
 		weightTF = new JTextField();
 		weightTF.setBounds(165, 262, 50, 20);
 		weightTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		weightTF.addFocusListener(new FocusAdapter() {			
-			@Override
-			public void focusLost(FocusEvent e) {
-				double maxWeight = 1000000.0;
-				
-				if(!weightTF.getText().equals("")) {
-					
-					// this needs testing not sure if brackets in right place others are correct
-				double result = 0.0;
-				try {
-					result = Double.parseDouble(removePlusSign(weightTF.getText(), weightTF));
-				}
-				catch (NumberFormatException ex)
-				{
-					result = 0;
-					JOptionPane.showMessageDialog(null, "You entered invalid characters \n please enter again!");
-					weightTF.setText("");
-				}
-				
-				if(result > maxWeight) // hardcode
-				{
-					result = 0;
-					weightTF.setText("");
-					JOptionPane.showMessageDialog(null, "Please enter a value lower than " + maxWeight + "!");
-				}
-				
-				if(result < 0)
-				{
-					result = 0;
-					weightTF.setText("");
-					JOptionPane.showMessageDialog(null, "Please enter positive numbers only!");
-				}
-				
-				char1.setWeight(result);
-				System.out.println(char1.getWeight());
-				}
-			}
-		});
 		contentPane.add(weightTF);
 		weightTF.setColumns(10);
 		
 		ageTF = new JTextField();
 		ageTF.setBounds(165, 292, 50, 20);
 		ageTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		ageTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!ageTF.getText().equals("")) {
-					
-				char1.setAge((returnTextData(ageTF,0,1000)));
-				System.out.println("Worked!" + char1.getAge());
-				}
-			}
-		});
 		contentPane.add(ageTF);
 		ageTF.setColumns(10);
 		
 		favWeapTF = new JTextField();
 		favWeapTF.setBounds(165, 380, 50, 20);
-		favWeapTF.addFocusListener(new FocusAdapter() { // write a function
-			@Override
-			public void focusLost(FocusEvent e) {
-				updateFavDam(favWeapTF,char1, FavDamDiTF);
-
-			}
-		});
 		favWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(favWeapTF);
 		favWeapTF.setColumns(10);
 		
 		ranWeapTF = new JTextField();
 		ranWeapTF.setBounds(165, 409, 50, 20);
-		ranWeapTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				updateRanDam(ranWeapTF, char1, RanDamDiTF);
-			}
-		});
 		ranWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(ranWeapTF);
 		ranWeapTF.setColumns(10);
 		
 		spWeapTF = new JTextField();
 		spWeapTF.setBounds(165, 437, 50, 20);
-		spWeapTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				updateSpDam(spWeapTF, char1, spDamDiTF);				
-			}
-		});
 		spWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(spWeapTF);
 		spWeapTF.setColumns(10);
@@ -567,233 +336,55 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		strMTF = new JTextField();
 		strMTF.setBounds(266, 87, 30, 20);
-		strMTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!strMTF.getText().equals(""))
-				{
-					
-					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
-					System.out.println(char1.getMaStr());
-					if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
-						if(!(char1.getStrength() == 0))
-						{
-							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
-							if(char1.getStrMod() > 0)
-							{
-								strMod.setText("+" + Integer.toString(char1.getStrMod()));
-							}
-							else
-							{
-								strMod.setText(Integer.toString(char1.getStrMod()));
-							}
-
-						}
-					}
-					updateFavDam(favWeapTF,char1, FavDamDiTF); // update for weapon damage
-				}
-			}
-		});
 		strMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(strMTF);
 		strMTF.setColumns(10);
 		
 		dexMTF = new JTextField();
 		dexMTF.setBounds(266, 112, 30, 20);
-		dexMTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!dexMTF.getText().equals(""))
-				{
-					char1.setMaDex(returnTextData(dexMTF, statMaMin, statMax));
-					System.out.println(char1.getMaDex());
-					if(!(char1.getDexterity() == 0))
-					{
-						char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
-						if(char1.getDexMod() > 0)
-						{
-							dexMod.setText("+" + Integer.toString(char1.getDexMod()));
-						}
-						else
-						{
-							dexMod.setText(Integer.toString(char1.getDexMod()));
-						}
-
-					}
-					updateRanDam(ranWeapTF, char1, RanDamDiTF);
-					updateSpDam(spWeapTF, char1, spDamDiTF);
-				}
-			}
-		});
 		dexMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(dexMTF);
 		dexMTF.setColumns(10);
 		
 		conMTF = new JTextField();
 		conMTF.setBounds(266, 137, 30, 20);
-		conMTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!conMTF.getText().equals(""))
-				{
-					char1.setMaCon(returnTextData(conMTF,statMaMin,statMax));
-					System.out.println(char1.getMaCon());
-					if(!(char1.getConstituion() == 0))
-					{
-						char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
-						if(char1.getConMod() > 0)
-						{
-							conMod.setText("+" + Integer.toString(char1.getConMod()));
-						}
-						else
-						{
-							conMod.setText(Integer.toString(char1.getConMod()));
-						}
-						
-						if(!tFLevel.getText().equals(""))
-						{
-							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
-						}
-
-					}
-				}
-			}
-		});
 		conMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(conMTF);
 		conMTF.setColumns(10);
 		
 		intMTF = new JTextField();
 		intMTF.setBounds(266, 162, 30, 20);
-		intMTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!intMTF.getText().equals(""))
-				{
-					char1.setMaInt(returnTextData(intMTF,statMaMin,statMax));
-					System.out.println(char1.getMaInt());
-					if(!(char1.getIntelligence() == 0))
-					{
-						char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
-						if(char1.getDexMod() > 0)
-						{
-							intMod.setText("+" + Integer.toString(char1.getIntMod()));
-						}
-						else
-						{
-							intMod.setText(Integer.toString(char1.getIntMod()));
-						}
-
-					}
-				}
-			}
-		});
 		intMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(intMTF);
 		intMTF.setColumns(10);
 		
 		wisMTF = new JTextField();
 		wisMTF.setBounds(266, 187, 30, 20);
-		wisMTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!wisMTF.getText().equals(""))
-				{
-					char1.setMaWis(returnTextData(intMTF,statMaMin,statMax));
-					System.out.println(char1.getMaWis());
-					if(!(char1.getWisdom() == 0))
-					{
-						char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-						if(char1.getDexMod() > 0)
-						{
-							wisMod.setText("+" + Integer.toString(char1.getWisMod()));
-						}
-						else
-						{
-							wisMod.setText(Integer.toString(char1.getWisMod()));
-						}
-
-					}
-				}
-			}
-		});
 		wisMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(wisMTF);
 		wisMTF.setColumns(10);
 		
 		chaMTF = new JTextField();
 		chaMTF.setBounds(266, 212, 30, 20);
-		chaMTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!chaMTF.getText().equals(""))
-				{
-					char1.setMaCha(returnTextData(chaMTF,statMaMin,statMax));
-					System.out.println(char1.getMaCha());
-					if(!(char1.getCharisma() == 0))
-					{
-						char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-						if(char1.getDexMod() > 0)
-						{
-							chaMod.setText("+" + Integer.toString(char1.getChaMod()));
-						}
-						else
-						{
-							chaMod.setText(Integer.toString(char1.getChaMod()));
-						}
-
-					}
-				}
-			}
-		});
 		chaMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(chaMTF);
 		chaMTF.setColumns(10);
 		
 		favAtkTF = new JTextField();
 		favAtkTF.setBounds(273, 380, 30, 20);
-		favAtkTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!favAtkTF.getText().equals(""))
-				{
-					char1.setFavAtk(returnTextData(favAtkTF, -5,100));
-					System.out.println("Worked!" + char1.getFavAtk());
-				}
-			}
-		});
 		favAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(favAtkTF);
 		favAtkTF.setColumns(10);
 		
 		ranAtkTF = new JTextField();
 		ranAtkTF.setBounds(273, 409, 30, 20);
-		ranAtkTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!ranAtkTF.getText().equals(""))
-				{
-					char1.setRaAtk(returnTextData(ranAtkTF,-5,100));
-					System.out.println("Worked!" + char1.getRaAtk());
-				}
-			}
-		});
+		
 		ranAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(ranAtkTF);
 		ranAtkTF.setColumns(10);
 		
 		spAtkTF = new JTextField();
 		spAtkTF.setBounds(273, 434, 30, 20);
-		spAtkTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!spAtkTF.getText().equals(""))
-				{
-					char1.setSpWeap(returnTextData(spAtkTF,-5,100));
-					System.out.println("Worked!" + char1.getSpAtk());
-				}
-			}
-		});
 		spAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(spAtkTF);
 		spAtkTF.setColumns(10);
@@ -845,35 +436,18 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		JButton btnNextCharacter = new JButton("Next Character");
 		btnNextCharacter.setBounds(165, 338, 121, 23);
-		btnNextCharacter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("next character");
-			}
-		});
 		contentPane.add(btnNextCharacter);
 		
-		JButton btnNewButton_1 = new JButton("Save File");
-		btnNewButton_1.setBounds(38, 22, 142, 23);
-		contentPane.add(btnNewButton_1);
+		JButton saveBtn = new JButton("Save File");
+		saveBtn.setBounds(38, 22, 142, 23);
+		contentPane.add(saveBtn);
 		
-		JButton btnNewButton_2 = new JButton("Load File");
-		btnNewButton_2.setBounds(197, 22, 129, 23);
-		contentPane.add(btnNewButton_2);
-		
-		
+		JButton loadFileBtn = new JButton("Load File");
+		loadFileBtn.setBounds(197, 22, 129, 23);
+		contentPane.add(loadFileBtn);
 		
 		bBABTF = new JTextField();
 		bBABTF.setBounds(369, 339, 86, 20);
-		bBABTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!bBABTF.getText().equals(""))
-				{
-					char1.setBAB(returnTextData(bBABTF, -5,100));
-					System.out.println("Worked!" + char1.getBAB());
-				}
-			}
-		});
 		bBABTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		contentPane.add(bBABTF);
 		bBABTF.setColumns(10);
@@ -891,6 +465,479 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblHitdie);
 		
 		tFLevel = new JTextField();
+		tFLevel.setBounds(266, 262, 36, 20);
+		contentPane.add(tFLevel);
+		tFLevel.setColumns(10);
+		
+		tFHitDie = new JTextField();
+		tFHitDie.setBounds(266, 292, 36, 20);
+		contentPane.add(tFHitDie);
+		tFHitDie.setColumns(10);
+		
+		JLabel hpTF = new JLabel("HP");
+		hpTF.setBounds(310, 264, 26, 16);
+		contentPane.add(hpTF);
+		
+		JComboBox cBHitDice = new JComboBox();
+		cBHitDice.setEditable(true);
+		cBHitDice.setBounds(369, 290, 50, 26);
+		contentPane.add(cBHitDice);
+		
+		JLabel lblHitDice = new JLabel("Hit Dice");
+		lblHitDice.setBounds(310, 294, 55, 16);
+		contentPane.add(lblHitDice);
+		
+		tFHP = new JTextField();
+		tFHP.setEditable(false);
+		tFHP.setBounds(334, 262, 41, 20);
+		contentPane.add(tFHP);
+		tFHP.setColumns(10);
+		
+		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				char1.setMale(true);
+			}
+		});
+		
+		rdbtnFemale.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				char1.setMale(false);
+			}
+		});
+		
+		charNaTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!charNaTF.getText().equals(""))
+				{
+					char1.setChName(charNaTF.getText());
+					System.out.println("Worked!" + char1.getChName());
+				}
+			}
+		});
+		
+		strTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
+				char1.setStrength(returnTextData(strTF));
+				System.out.println("Worked!" + char1.getStrength());
+				if(!(char1.getStrength() == 0))
+				{
+					char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
+					if(char1.getStrMod() > 0)
+					{
+						strMod.setText("+" + Integer.toString(char1.getStrMod()));
+					}
+					else
+					{
+						strMod.setText(Integer.toString(char1.getStrMod()));
+					}
+
+				}
+				updateFavDam(favWeapTF,char1, FavDamDiTF);
+				}
+			}
+		});
+		
+		conTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!conTF.getText().equals("")) {
+				char1.setConstituion(returnTextData(conTF));
+				System.out.println("Worked!" + char1.getConstituion());
+				if(!(char1.getConstituion() == 0))
+				{
+					char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+					if(char1.getConMod() > 0)
+					{
+						conMod.setText("+" + Integer.toString(char1.getConMod()));
+					}
+					else
+					{
+						conMod.setText(Integer.toString(char1.getConMod()));
+					}
+					
+					if(!tFLevel.getText().equals("")) // updates hp with con changes 
+					{
+						tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+					}
+				}
+				}
+			}
+		});
+		
+		dexTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(!dexTF.getText().equals("")) {
+					char1.setDexterity(returnTextData(dexTF));
+					System.out.println("Worked!" + char1.getDexterity());
+					if(!(char1.getDexterity() == 0))
+					{
+						char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							dexMod.setText("+" + Integer.toString(char1.getDexMod()));
+						}
+						else
+						{
+							dexMod.setText(Integer.toString(char1.getDexMod()));
+						}
+					}
+				updateRanDam(ranWeapTF, char1, RanDamDiTF); // chained updates
+				updateSpDam(spWeapTF, char1, spDamDiTF); // chained updates
+				}
+			}	
+		});
+		
+		intTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!intTF.getText().equals("")) {
+				char1.setIntelligence(returnTextData(intTF));
+				System.out.println("Worked!" + char1.getIntelligence());
+				if(!(char1.getIntelligence() == 0))
+				{
+					char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						intMod.setText("+" + Integer.toString(char1.getIntMod()));
+					}
+					else
+					{
+						intMod.setText(Integer.toString(char1.getIntMod()));
+					}
+
+				}
+				}
+			}
+		});
+		
+		wisTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!wisTF.getText().equals("")) {
+				char1.setWisdom(returnTextData(wisTF));
+				System.out.println("Worked!" + char1.getWisdom());
+				if(!(char1.getWisdom() == 0))
+				{
+					char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						wisMod.setText("+" + Integer.toString(char1.getWisMod()));
+					}
+					else
+					{
+						wisMod.setText(Integer.toString(char1.getWisMod()));
+					}
+
+				}
+				}
+			}
+		});
+		
+		chaTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!chaTF.getText().equals("")) {
+				char1.setCharisma(returnTextData(chaTF));
+				System.out.println("Worked!" + char1.getCharisma());
+				if(!(char1.getCharisma() == 0))
+				{
+					char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+					if(char1.getDexMod() > 0)
+					{
+						chaMod.setText("+" + Integer.toString(char1.getChaMod()));
+					}
+					else
+					{
+						chaMod.setText(Integer.toString(char1.getChaMod()));
+					}
+
+				}
+				}
+			}
+		});
+		
+		weightTF.addFocusListener(new FocusAdapter() {			
+			@Override
+			public void focusLost(FocusEvent e) {
+				double maxWeight = 1000000.0;
+				
+				if(!weightTF.getText().equals("")) {
+					
+					// this needs testing not sure if brackets in right place others are correct
+				double result = 0.0;
+				try {
+					result = Double.parseDouble(removePlusSign(weightTF.getText(), weightTF));
+				}
+				catch (NumberFormatException ex)
+				{
+					result = 0;
+					JOptionPane.showMessageDialog(null, "You entered invalid characters \n please enter again!");
+					weightTF.setText("");
+				}
+				
+				if(result > maxWeight) // hardcode
+				{
+					result = 0;
+					weightTF.setText("");
+					JOptionPane.showMessageDialog(null, "Please enter a value lower than " + maxWeight + "!");
+				}
+				
+				if(result < 0)
+				{
+					result = 0;
+					weightTF.setText("");
+					JOptionPane.showMessageDialog(null, "Please enter positive numbers only!");
+				}
+				
+				char1.setWeight(result);
+				System.out.println(char1.getWeight());
+				}
+			}
+		});
+		
+		ageTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!ageTF.getText().equals("")) {
+					
+				char1.setAge((returnTextData(ageTF,0,1000)));
+				System.out.println("Worked!" + char1.getAge());
+				}
+			}
+		});
+		
+		favWeapTF.addFocusListener(new FocusAdapter() { // write a function
+			@Override
+			public void focusLost(FocusEvent e) {
+				updateFavDam(favWeapTF,char1, FavDamDiTF);
+
+			}
+		});
+		
+		ranWeapTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				updateRanDam(ranWeapTF, char1, RanDamDiTF);
+			}
+		});
+		
+		spWeapTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				updateSpDam(spWeapTF, char1, spDamDiTF);				
+			}
+		});
+		
+		strMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!strMTF.getText().equals(""))
+				{
+					
+					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
+					System.out.println(char1.getMaStr());
+					if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
+						if(!(char1.getStrength() == 0))
+						{
+							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
+							if(char1.getStrMod() > 0)
+							{
+								strMod.setText("+" + Integer.toString(char1.getStrMod()));
+							}
+							else
+							{
+								strMod.setText(Integer.toString(char1.getStrMod()));
+							}
+
+						}
+					}
+					updateFavDam(favWeapTF,char1, FavDamDiTF); // update for weapon damage
+				}
+			}
+		});
+		
+		dexMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!dexMTF.getText().equals(""))
+				{
+					char1.setMaDex(returnTextData(dexMTF, statMaMin, statMax));
+					System.out.println(char1.getMaDex());
+					if(!(char1.getDexterity() == 0))
+					{
+						char1.setDexMod((Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							dexMod.setText("+" + Integer.toString(char1.getDexMod()));
+						}
+						else
+						{
+							dexMod.setText(Integer.toString(char1.getDexMod()));
+						}
+
+					}
+					updateRanDam(ranWeapTF, char1, RanDamDiTF);
+					updateSpDam(spWeapTF, char1, spDamDiTF);
+				}
+			}
+		});
+		
+		conMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!conMTF.getText().equals(""))
+				{
+					char1.setMaCon(returnTextData(conMTF,statMaMin,statMax));
+					System.out.println(char1.getMaCon());
+					if(!(char1.getConstituion() == 0))
+					{
+						char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+						if(char1.getConMod() > 0)
+						{
+							conMod.setText("+" + Integer.toString(char1.getConMod()));
+						}
+						else
+						{
+							conMod.setText(Integer.toString(char1.getConMod()));
+						}
+						
+						if(!tFLevel.getText().equals(""))
+						{
+							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+						}
+
+					}
+				}
+			}
+		});
+		
+		intMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!intMTF.getText().equals(""))
+				{
+					char1.setMaInt(returnTextData(intMTF,statMaMin,statMax));
+					System.out.println(char1.getMaInt());
+					if(!(char1.getIntelligence() == 0))
+					{
+						char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							intMod.setText("+" + Integer.toString(char1.getIntMod()));
+						}
+						else
+						{
+							intMod.setText(Integer.toString(char1.getIntMod()));
+						}
+
+					}
+				}
+			}
+		});
+		
+		wisMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!wisMTF.getText().equals(""))
+				{
+					char1.setMaWis(returnTextData(intMTF,statMaMin,statMax));
+					System.out.println(char1.getMaWis());
+					if(!(char1.getWisdom() == 0))
+					{
+						char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							wisMod.setText("+" + Integer.toString(char1.getWisMod()));
+						}
+						else
+						{
+							wisMod.setText(Integer.toString(char1.getWisMod()));
+						}
+
+					}
+				}
+			}
+		});
+		
+		chaMTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!chaMTF.getText().equals(""))
+				{
+					char1.setMaCha(returnTextData(chaMTF,statMaMin,statMax));
+					System.out.println(char1.getMaCha());
+					if(!(char1.getCharisma() == 0))
+					{
+						char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+						if(char1.getDexMod() > 0)
+						{
+							chaMod.setText("+" + Integer.toString(char1.getChaMod()));
+						}
+						else
+						{
+							chaMod.setText(Integer.toString(char1.getChaMod()));
+						}
+
+					}
+				}
+			}
+		});
+		
+		ranAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!ranAtkTF.getText().equals(""))
+				{
+					char1.setRaAtk(returnTextData(ranAtkTF,-5,100));
+					System.out.println("Worked!" + char1.getRaAtk());
+				}
+			}
+		});
+		
+		ranAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!ranAtkTF.getText().equals(""))
+				{
+					char1.setRaAtk(returnTextData(ranAtkTF,-5,100));
+					System.out.println("Worked!" + char1.getRaAtk());
+				}
+			}
+		});
+		
+		spAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!spAtkTF.getText().equals(""))
+				{
+					char1.setSpWeap(returnTextData(spAtkTF,-5,100));
+					System.out.println("Worked!" + char1.getSpAtk());
+				}
+			}
+		});
+		
+		// does nothing // take out or change structure
+		btnNextCharacter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("next character");
+			}
+		});
+		
+		bBABTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!bBABTF.getText().equals(""))
+				{
+					char1.setBAB(returnTextData(bBABTF, -5,100));
+					System.out.println("Worked!" + char1.getBAB());
+				}
+			}
+		});
+		
 		tFLevel.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -906,13 +953,8 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		tFLevel.setBounds(266, 262, 36, 20);
-		contentPane.add(tFLevel);
-		tFLevel.setColumns(10);
 		
-		tFHitDie = new JTextField();
-		
-		// need to update error for hitdie exception removed for marshalling
+		// belongs with tFHitDie need to update error for hitdie exception removed for marshalling
 		// need to update error for hitdie exception removed for marshalling
 		// need to update error for hitdie exception removed for marshalling
 		
@@ -935,39 +977,29 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		tFHitDie.setBounds(266, 292, 36, 20);
-		contentPane.add(tFHitDie);
-		tFHitDie.setColumns(10);
 		
-		JLabel hpTF = new JLabel("HP");
 		hpTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				// add logic
 			}
 		});
-		hpTF.setBounds(310, 264, 26, 16);
-		contentPane.add(hpTF);
 		
-		JComboBox cBHitDice = new JComboBox();
-		cBHitDice.setEditable(true);
-		cBHitDice.setBounds(369, 290, 50, 26);
-		contentPane.add(cBHitDice);
-		
-		JLabel lblHitDice = new JLabel("Hit Dice");
-		lblHitDice.setBounds(310, 294, 55, 16);
-		contentPane.add(lblHitDice);
-		
-		tFHP = new JTextField();
-		tFHP.setEditable(false);
-		tFHP.setBounds(334, 262, 41, 20);
-		contentPane.add(tFHP);
-		tFHP.setColumns(10);
-		
-		btnNewButton_2.addActionListener(new ActionListener() {
+		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				charB.marshal(char1);
+				// add seralization
+			}
+		});
+		
+		loadFileBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CharacterStats char2 = new CharacterStats();
+				char2 = charB.unmarshall();
+			
 				
+				/*
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				try {
 					DocumentBuilder builder = factory.newDocumentBuilder();
@@ -1149,7 +1181,7 @@ public class DummyDatabaseFrame extends JFrame {
 							}
 							System.out.println(temp);
 							tFHitDie.setText(temp);
-							
+						*/
 							// remove this section later
 							// remove this section later
 							// remove this section later
@@ -1170,11 +1202,11 @@ public class DummyDatabaseFrame extends JFrame {
 //								}
 //							}
 						}
-					}
-				}
-				catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e)
+		//			}
+		//		}
+//////				catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e)
 				{
-					e.printStackTrace();
+		//			e.printStackTrace();
 				}
 
 //				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -1204,7 +1236,7 @@ public class DummyDatabaseFrame extends JFrame {
 //				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e) {
 //					e.printStackTrace();
 //				}
-			}
+//			}
 		});
 		
 		

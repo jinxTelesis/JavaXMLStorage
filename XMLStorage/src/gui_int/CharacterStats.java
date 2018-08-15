@@ -84,12 +84,11 @@ public class CharacterStats implements Serializable{
 		setFavAtk(0); // this.favAtk set
 		setRaAtk(0); // this.raAtk set
 		setSpAtk(0); // this.spAtk set
-		//setFavDam(0);// this.favDam set
-		//setRaDam(0);// this.raDam set
-		//setSpDam(0);// this.spDam set
-		
-		
-		
+	}
+	
+	public CharacterStats(CharacterStats obj) { // test this first
+		this();
+		this.ChName = obj.ChName;
 	}
 	
 	public int[] createHitDie(int size) { // put this in the action listener not the class i think
@@ -472,7 +471,7 @@ public class CharacterStats implements Serializable{
 		return hitdie;
 	}
 
-	public void setHitdie(int hitdie) {
+	public void setHitdie(int hitdie) {// can't marshall with an exception
 		if(hitdie < 4)
 		{
 			hitdie = 4;
