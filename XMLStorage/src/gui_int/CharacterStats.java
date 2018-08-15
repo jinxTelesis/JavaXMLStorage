@@ -1,8 +1,12 @@
 package gui_int;
 
-public class CharacterStats {
+import java.io.Serializable;
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement(name="CharacterStats")
+public class CharacterStats implements Serializable{
 	
-	private static int CharNumInc;
+	//private static int CharNumInc;
 	private static int defaultStats;
 	
 	static {
@@ -49,9 +53,13 @@ public class CharacterStats {
 	private int maInt;
 	private int maWis;
 	private int maCha;
+	private int level;
+	private int hitdie;
+	private int hitdice[];
+	
 	
 	public CharacterStats() { // need to set getters before used
-		++CharNumInc;
+		//++CharNumInc;
 		this.ChName = "Unamed Character"; // add a static
 		this.strength = defaultStats;
 		this.dexterity = defaultStats;
@@ -76,14 +84,56 @@ public class CharacterStats {
 		setFavAtk(0); // this.favAtk set
 		setRaAtk(0); // this.raAtk set
 		setSpAtk(0); // this.spAtk set
-		//setFavDam(0);// this.favDam set
-		//setRaDam(0);// this.raDam set
-		//setSpDam(0);// this.spDam set
-		
-		
-		
 	}
 	
+	public CharacterStats(CharacterStats obj) { // test this first
+		this();
+		this.ChName = obj.ChName;
+		this.strength = obj.strength;
+		this.dexterity = obj.dexterity;
+		this.constituion = obj.constituion;
+		this.intelligence = obj.intelligence;
+		this.wisdom = obj.wisdom;
+		this.charisma = obj.charisma;
+		this.strMod = obj.strMod;
+		this.dexMod = obj.dexMod;
+		this.conMod = obj.conMod;
+		this.intMod = obj.intMod;
+		this.wisMod = obj.wisMod;
+		this.chaMod = obj.chaMod;
+		this.BAB = obj.BAB;
+		this.weight = obj.weight;
+		this.age = obj.age;
+		this.male = obj.male;
+		this.maStr = obj.maStr;
+		this.maDex = obj.maDex;
+		this.maCon = obj.maCon;
+		this.maInt = obj.maInt;
+		this.maWis = obj.maWis;
+		this.favAtk = obj.favAtk;
+		this.spAtk = obj.spAtk;
+		this.raAtk = obj.raAtk;
+		this.favWeap = obj.favWeap;
+		this.ranWeap = obj.ranWeap;
+		this.spWeap = obj.spWeap;
+		this.level = obj.level;
+		this.hitdie = obj.hitdie;
+		this.hitdice = obj.hitdice;
+		this.calcFavDam();
+		this.calcRaDam();
+		this.calcSpDam();
+	}
+	
+	public int[] createHitDie(int size) { // put this in the action listener not the class i think
+		if(size > 100)
+		{
+			size = 99;
+		}
+		int hitDie[] = new int[size];
+		return hitDie;
+	}
+	
+	@XmlElement
 	public int getMaStr() {
 		return maStr;
 	}
@@ -95,7 +145,8 @@ public class CharacterStats {
 		}
 		this.maStr = maStr;
 	}
-
+	
+	@XmlElement
 	public int getMaDex() {
 		return maDex;
 	}
@@ -107,7 +158,8 @@ public class CharacterStats {
 		}
 		this.maDex = maDex;
 	}
-
+	
+	@XmlElement
 	public int getMaCon() {
 		return maCon;
 	}
@@ -119,7 +171,8 @@ public class CharacterStats {
 		}
 		this.maCon = maCon;
 	}
-
+	
+	@XmlElement
 	public int getMaInt() {
 		return maInt;
 	}
@@ -131,7 +184,8 @@ public class CharacterStats {
 		}
 		this.maInt = maInt;
 	}
-
+	
+	@XmlElement
 	public int getMaWis() {
 		return maWis;
 	}
@@ -144,7 +198,8 @@ public class CharacterStats {
 		
 		this.maWis = maWis;
 	}
-
+	
+	@XmlElement
 	public int getMaCha() {
 		return maCha;
 	}
@@ -156,8 +211,8 @@ public class CharacterStats {
 		}
 		this.maCha = maCha;
 	}
-	// maSetter // Getter end
-	
+	// maybe hold off on this one???
+	//@XmlElement
 	public static int getDefaultStats() {
 		return defaultStats;
 	}
@@ -165,7 +220,8 @@ public class CharacterStats {
 	public static void setDefaultStats(int defaultStats) {
 		CharacterStats.defaultStats = defaultStats;
 	}
-
+	
+	@XmlElement
 	public String getChName() {
 		return ChName;
 	}
@@ -173,7 +229,8 @@ public class CharacterStats {
 	public void setChName(String chName) {
 		ChName = chName;
 	}
-
+	
+	@XmlElement
 	public int getStrength() {
 		return strength;
 	}
@@ -181,7 +238,8 @@ public class CharacterStats {
 	public void setStrength(int strength) {
 		this.strength = strength;
 	}
-
+	
+	@XmlElement
 	public int getDexterity() {
 		return dexterity;
 	}
@@ -189,7 +247,8 @@ public class CharacterStats {
 	public void setDexterity(int dexterity) {
 		this.dexterity = dexterity;
 	}
-
+	
+	@XmlElement
 	public int getConstituion() {
 		return constituion;
 	}
@@ -197,7 +256,8 @@ public class CharacterStats {
 	public void setConstituion(int constituion) {
 		this.constituion = constituion;
 	}
-
+	
+	@XmlElement
 	public int getIntelligence() {
 		return intelligence;
 	}
@@ -205,7 +265,8 @@ public class CharacterStats {
 	public void setIntelligence(int intelligence) {
 		this.intelligence = intelligence;
 	}
-
+	
+	@XmlElement
 	public int getWisdom() {
 		return wisdom;
 	}
@@ -213,7 +274,8 @@ public class CharacterStats {
 	public void setWisdom(int wisdom) {
 		this.wisdom = wisdom;
 	}
-
+	
+	@XmlElement
 	public int getCharisma() {
 		return charisma;
 	}
@@ -221,7 +283,8 @@ public class CharacterStats {
 	public void setCharisma(int charisma) {
 		this.charisma = charisma;
 	}
-
+	
+	@XmlElement
 	public int getStrMod() {
 		return strMod;
 	}
@@ -229,7 +292,8 @@ public class CharacterStats {
 	public void setStrMod(int strMod) {
 		this.strMod = strMod;
 	}
-
+	
+	@XmlElement
 	public int getDexMod() {
 		return dexMod;
 	}
@@ -237,7 +301,8 @@ public class CharacterStats {
 	public void setDexMod(int dexMod) {
 		this.dexMod = dexMod;
 	}
-
+	
+	@XmlElement
 	public int getConMod() {
 		return conMod;
 	}
@@ -245,7 +310,8 @@ public class CharacterStats {
 	public void setConMod(int conMod) {
 		this.conMod = conMod;
 	}
-
+	
+	@XmlElement
 	public int getIntMod() {
 		return intMod;
 	}
@@ -253,7 +319,8 @@ public class CharacterStats {
 	public void setIntMod(int intMod) {
 		this.intMod = intMod;
 	}
-
+	
+	@XmlElement
 	public int getWisMod() {
 		return wisMod;
 	}
@@ -261,7 +328,8 @@ public class CharacterStats {
 	public void setWisMod(int wisMod) {
 		this.wisMod = wisMod;
 	}
-
+	
+	@XmlElement
 	public int getChaMod() {
 		return chaMod;
 	}
@@ -269,7 +337,8 @@ public class CharacterStats {
 	public void setChaMod(int chaMod) {
 		this.chaMod = chaMod;
 	}
-
+	
+	@XmlElement
 	public int getBAB() {
 		return BAB;
 	}
@@ -277,7 +346,8 @@ public class CharacterStats {
 	public void setBAB(int bAB) {
 		BAB = bAB;
 	}
-
+	
+	@XmlElement
 	public double getWeight() {
 		return weight;
 	}
@@ -285,7 +355,8 @@ public class CharacterStats {
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-
+	
+	@XmlElement
 	public int getAge() {
 		return age;
 	}
@@ -297,7 +368,8 @@ public class CharacterStats {
 		}
 		this.age = age;
 	}
-
+	
+	@XmlElement
 	public boolean isMale() {
 		return male;
 	}
@@ -305,7 +377,8 @@ public class CharacterStats {
 	public void setMale(boolean male) {
 		this.male = male;
 	}
-
+	
+	@XmlElement
 	public int getFavWeap() {
 		return favWeap;
 	}
@@ -318,7 +391,8 @@ public class CharacterStats {
 		}
 		this.favWeap = favWeap;
 	}
-
+	
+	@XmlElement
 	public int getRanWeap() {
 		return ranWeap;
 	}
@@ -332,7 +406,8 @@ public class CharacterStats {
 		
 		this.ranWeap = ranWeap;
 	}
-
+	
+	@XmlElement
 	public int getSpWeap() {
 		return spWeap;
 	}
@@ -346,7 +421,8 @@ public class CharacterStats {
 		}
 		this.spWeap = spWeap;
 	}
-
+	
+	@XmlElement
 	public int getFavAtk() {
 		return favAtk;
 	}
@@ -355,7 +431,8 @@ public class CharacterStats {
 		
 		this.favAtk = favAtk + strMod + BAB;
 	}
-
+	
+	@XmlElement
 	public int getRaAtk() {
 		return raAtk;
 	}
@@ -363,7 +440,8 @@ public class CharacterStats {
 	public void setRaAtk(int raAtk) {
 		this.raAtk = raAtk + dexMod + BAB;
 	}
-
+	
+	@XmlElement
 	public int getSpAtk() {
 		return spAtk;
 	}
@@ -371,7 +449,8 @@ public class CharacterStats {
 	public void setSpAtk(int spAtk) {
 		this.spAtk = spAtk + dexMod + BAB;
 	}
-
+	
+	@XmlElement
 	public int getFavDam() {
 		return favDam;
 	}
@@ -379,7 +458,8 @@ public class CharacterStats {
 	public void calcFavDam() {
 		this.favDam = strMod + favWeap;
 	}
-
+	
+	@XmlElement
 	public int getRaDam() {
 		return raDam;
 	}
@@ -387,12 +467,82 @@ public class CharacterStats {
 	public void calcRaDam() {
 		this.raDam = dexMod + ranWeap;
 	}
-
+	
+	@XmlElement
 	public int getSpDam() {
 		return spDam;
 	}
 
 	public void calcSpDam() {
 		this.spDam = dexMod + spWeap;
+	}
+	
+	@XmlElement
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		if(level > 20)
+		{
+			this.level = 20;
+		}
+		this.level = level;
+	}
+	
+	//@XmlElement
+	public int[] getHitdice() {
+		return hitdice;
+	}
+
+	public void setHitdice(int hitdice[]) {
+		this.hitdice = hitdice;
+	}
+	
+	@XmlElement
+	public int getHitdie() {
+		return hitdie;
+	}
+
+	public void setHitdie(int hitdie) {// can't marshall with an exception
+		if(hitdie < 4)
+		{
+			hitdie = 4;
+			System.out.println("Hitdie must be at least 4");
+		}
+		
+		if(hitdie == 5)
+		{
+			hitdie = 6;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
+			//throw new InvalidHitDie("Hitdie can't be 5");
+		}
+		
+		if(hitdie == 7)
+		{
+			hitdie = 8;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
+		}
+		
+		if(hitdie == 9)
+		{
+			hitdie = 10;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
+		}
+		
+		if(hitdie == 11)
+		{
+			hitdie = 12;
+			System.out.println("Hitdie must not be an odd number /n check your character sheet");
+		}
+		
+		if(hitdie > 12)
+		{
+			hitdie = 12;
+			System.out.println("Hitdie can't be greater than 12!");
+		}
+		
+		
+		this.hitdie = hitdie;
 	}
 }

@@ -1,11 +1,22 @@
 package gui_int;
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import jdk.internal.org.xml.sax.SAXException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
@@ -22,13 +33,14 @@ import java.awt.event.FocusEvent;
 import java.util.IllegalFormatConversionException;
 import java.math.*;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JComboBox;
 //import components.DocumentSizeFilter; add documents filter later
+import org.w3c.dom.NodeList;
 
 public class DummyDatabaseFrame extends JFrame {
 	
-	private int mine = 10;
-	private int statMin = 0;
 	private int statMaMin = -20;
 	private int statMax = 100;
 	
@@ -65,15 +77,20 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField RanDamDiTF;
 	private JTextField spDamDiTF;
 	private JTextField bBABTF;
+	private JTextField tFLevel;
+	private JTextField tFHitDie;
+	private JTextField tFHP;
 
-	
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					//test code of marshalling
+					//CharacterStatsJAXB obj = new CharacterStatsJAXB();
+					//obj.marshal();
+					//obj.unmarshall();
 					DummyDatabaseFrame frame = new DummyDatabaseFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -84,10 +101,8 @@ public class DummyDatabaseFrame extends JFrame {
 	}
 
 	public DummyDatabaseFrame() {
-		CharacterStats char1 = new CharacterStats();
-		
-		
-		
+		CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
+		CharacterStatsJAXB charB = new CharacterStatsJAXB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
@@ -125,34 +140,24 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblCharisma);
 		
 		JLabel lblWeight = new JLabel("Weight");
-		lblWeight.setBounds(37, 262, 100, 14);
+		lblWeight.setBounds(37, 263, 100, 14);
 		contentPane.add(lblWeight);
 		
 		JLabel lblAge = new JLabel("Age");
-		lblAge.setBounds(37, 292, 100, 14);
+		lblAge.setBounds(37, 293, 100, 14);
 		contentPane.add(lblAge);
 		
 		ButtonGroup group = new ButtonGroup();
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
-		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0) {
-				char1.setMale(true);
-			}
-		});
-		group.add(rdbtnMale);
 		rdbtnMale.setBounds(37, 313, 100, 23);
+		group.add(rdbtnMale);
 		contentPane.add(rdbtnMale);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
-		rdbtnFemale.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				char1.setMale(false);
-			}
-		});
+		rdbtnFemale.setBounds(37, 338, 100, 23);
 		group.add(rdbtnFemale);
 		rdbtnMale.setSelected(true);
-		rdbtnFemale.setBounds(37, 338, 100, 23);
 		contentPane.add(rdbtnFemale);
 		
 		JLabel lblFavoriteWeapon = new JLabel("Favorite Weapon");
@@ -168,6 +173,338 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		charNaTF = new JTextField();
+		charNaTF.setBounds(165, 62, 210, 20);
+		charNaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(charNaTF);
+		charNaTF.setColumns(10);
+		
+		strTF = new JTextField();
+		strTF.setBounds(165, 87, 50, 20);
+		strTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(strTF);
+		strTF.setColumns(10);
+		
+		conTF = new JTextField();
+		conTF.setBounds(165, 137, 50, 20);
+		conTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(conTF);
+		conTF.setColumns(10);
+		
+		dexTF = new JTextField();
+		dexTF.setBounds(165, 112, 50, 20);
+		dexTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(dexTF);
+		dexTF.setColumns(10);
+		
+		intTF = new JTextField();
+		intTF.setBounds(165, 162, 50, 20);
+		intTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(intTF);
+		intTF.setColumns(10);
+		
+		wisTF = new JTextField();
+		wisTF.setBounds(165, 187, 50, 20);
+		wisTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(wisTF);
+		wisTF.setColumns(10);
+		
+		chaTF = new JTextField();
+		chaTF.setBounds(165, 212, 50, 20);
+		chaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(chaTF);
+		chaTF.setColumns(10);
+		
+		weightTF = new JTextField();
+		weightTF.setBounds(165, 262, 50, 20);
+		weightTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(weightTF);
+		weightTF.setColumns(10);
+		
+		ageTF = new JTextField();
+		ageTF.setBounds(165, 292, 50, 20);
+		ageTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(ageTF);
+		ageTF.setColumns(10);
+		
+		favWeapTF = new JTextField();
+		favWeapTF.setBounds(165, 380, 50, 20);
+		favWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(favWeapTF);
+		favWeapTF.setColumns(10);
+		
+		ranWeapTF = new JTextField();
+		ranWeapTF.setBounds(165, 409, 50, 20);
+		ranWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(ranWeapTF);
+		ranWeapTF.setColumns(10);
+		
+		spWeapTF = new JTextField();
+		spWeapTF.setBounds(165, 437, 50, 20);
+		spWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(spWeapTF);
+		spWeapTF.setColumns(10);
+		
+		JLabel lblMod = new JLabel("Mod");
+		lblMod.setBounds(310, 87, 26, 20);
+		contentPane.add(lblMod);
+		
+		JLabel lblMod_1 = new JLabel("Mod");
+		lblMod_1.setBounds(310, 112, 26, 20);
+		contentPane.add(lblMod_1);
+		
+		JLabel lblMod_2 = new JLabel("Mod");
+		lblMod_2.setBounds(310, 137, 26, 14);
+		contentPane.add(lblMod_2);
+		
+		JLabel lblMod_3 = new JLabel("Mod");
+		lblMod_3.setBounds(310, 162, 26, 14);
+		contentPane.add(lblMod_3);
+		
+		JLabel lblMod_4 = new JLabel("Mod");
+		lblMod_4.setBounds(310, 187, 26, 14);
+		contentPane.add(lblMod_4);
+		
+		JLabel lblMod_5 = new JLabel("Mod");
+		lblMod_5.setBounds(310, 212, 26, 14);
+		contentPane.add(lblMod_5);
+		
+		strMod = new JTextField();
+		strMod.setBounds(345, 87, 30, 20);
+		strMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		strMod.setEditable(false);
+		contentPane.add(strMod);
+		strMod.setColumns(10);
+		
+		dexMod = new JTextField();
+		dexMod.setBounds(345, 112, 30, 20);
+		dexMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		dexMod.setEditable(false);
+		contentPane.add(dexMod);
+		dexMod.setColumns(10);
+		
+		conMod = new JTextField();
+		conMod.setBounds(345, 135, 30, 20);
+		conMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		conMod.setEditable(false);
+		contentPane.add(conMod);
+		conMod.setColumns(10);
+		
+		intMod = new JTextField();
+		intMod.setBounds(345, 160, 30, 20);
+		intMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		intMod.setEditable(false);
+		contentPane.add(intMod);
+		intMod.setColumns(10);
+		
+		wisMod = new JTextField();
+		wisMod.setBounds(345, 185, 30, 20);
+		wisMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		wisMod.setEditable(false);
+		contentPane.add(wisMod);
+		wisMod.setColumns(10);
+		
+		chaMod = new JTextField();
+		chaMod.setBounds(345, 210, 30, 20);
+		chaMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		chaMod.setEditable(false);
+		contentPane.add(chaMod);
+		chaMod.setColumns(10);
+		
+		JLabel lblTotal = new JLabel("Magic");
+		lblTotal.setBounds(225, 87, 36, 20);
+		contentPane.add(lblTotal);
+		
+		JLabel lblTotal_1 = new JLabel("Magic");
+		lblTotal_1.setBounds(225, 112, 36, 20);
+		contentPane.add(lblTotal_1);
+		
+		JLabel lblTotal_2 = new JLabel("Magic");
+		lblTotal_2.setBounds(225, 137, 36, 20);
+		contentPane.add(lblTotal_2);
+		
+		JLabel lblTotal_3 = new JLabel("Magic");
+		lblTotal_3.setBounds(225, 165, 36, 20);
+		contentPane.add(lblTotal_3);
+		
+		JLabel lblTotal_4 = new JLabel("Magic");
+		lblTotal_4.setBounds(225, 187, 36, 20);
+		contentPane.add(lblTotal_4);
+		
+		JLabel lblTotal_5 = new JLabel("Magic");
+		lblTotal_5.setBounds(225, 212, 36, 20);
+		contentPane.add(lblTotal_5);
+		
+		strMTF = new JTextField();
+		strMTF.setBounds(266, 87, 30, 20);
+		strMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(strMTF);
+		strMTF.setColumns(10);
+		
+		dexMTF = new JTextField();
+		dexMTF.setBounds(266, 112, 30, 20);
+		dexMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(dexMTF);
+		dexMTF.setColumns(10);
+		
+		conMTF = new JTextField();
+		conMTF.setBounds(266, 137, 30, 20);
+		conMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(conMTF);
+		conMTF.setColumns(10);
+		
+		intMTF = new JTextField();
+		intMTF.setBounds(266, 162, 30, 20);
+		intMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(intMTF);
+		intMTF.setColumns(10);
+		
+		wisMTF = new JTextField();
+		wisMTF.setBounds(266, 187, 30, 20);
+		wisMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(wisMTF);
+		wisMTF.setColumns(10);
+		
+		chaMTF = new JTextField();
+		chaMTF.setBounds(266, 212, 30, 20);
+		chaMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(chaMTF);
+		chaMTF.setColumns(10);
+		
+		favAtkTF = new JTextField();
+		favAtkTF.setBounds(273, 380, 30, 20);
+		favAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(favAtkTF);
+		favAtkTF.setColumns(10);
+		
+		ranAtkTF = new JTextField();
+		ranAtkTF.setBounds(273, 409, 30, 20);
+		
+		ranAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(ranAtkTF);
+		ranAtkTF.setColumns(10);
+		
+		spAtkTF = new JTextField();
+		spAtkTF.setBounds(273, 434, 30, 20);
+		spAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(spAtkTF);
+		spAtkTF.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Atk");
+		lblNewLabel_2.setBounds(240, 383, 46, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Atk");
+		lblNewLabel_3.setBounds(240, 412, 46, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Atk");
+		lblNewLabel_4.setBounds(240, 440, 46, 14);
+		contentPane.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("Damage");
+		lblNewLabel_5.setBounds(315, 383, 50, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_6 = new JLabel("Damage");
+		lblNewLabel_6.setBounds(315, 412, 50, 14);
+		contentPane.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel("Damage");
+		lblNewLabel_7.setBounds(315, 437, 50, 14);
+		contentPane.add(lblNewLabel_7);
+		
+		FavDamDiTF = new JTextField();
+		FavDamDiTF.setBounds(369, 380, 86, 20);
+		FavDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		FavDamDiTF.setEditable(false);
+		contentPane.add(FavDamDiTF);
+		FavDamDiTF.setColumns(10);
+		
+		RanDamDiTF = new JTextField();
+		RanDamDiTF.setBounds(369, 409, 86, 20);
+		RanDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		RanDamDiTF.setEditable(false);
+		contentPane.add(RanDamDiTF);
+		RanDamDiTF.setColumns(10);
+		
+		spDamDiTF = new JTextField();
+		spDamDiTF.setBounds(369, 437, 86, 20);
+		spDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		spDamDiTF.setEditable(false);
+		contentPane.add(spDamDiTF);
+		spDamDiTF.setColumns(10);
+		
+		JButton btnNextCharacter = new JButton("Next Character");
+		btnNextCharacter.setBounds(165, 338, 121, 23);
+		contentPane.add(btnNextCharacter);
+		
+		JButton saveBtn = new JButton("Save File");
+		saveBtn.setBounds(38, 22, 142, 23);
+		contentPane.add(saveBtn);
+		
+		JButton loadFileBtn = new JButton("Load File");
+		loadFileBtn.setBounds(197, 22, 129, 23);
+		contentPane.add(loadFileBtn);
+		
+		bBABTF = new JTextField();
+		bBABTF.setBounds(369, 339, 86, 20);
+		bBABTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		contentPane.add(bBABTF);
+		bBABTF.setColumns(10);
+		
+		JLabel lblBab = new JLabel("   BAB");
+		lblBab.setBounds(320, 342, 40, 14);
+		contentPane.add(lblBab);
+		
+		JLabel lblLevel = new JLabel("Level");
+		lblLevel.setBounds(227, 264, 40, 14);
+		contentPane.add(lblLevel);
+		
+		JLabel lblHitdie = new JLabel("Hit Die");
+		lblHitdie.setBounds(227, 294, 40, 14);
+		contentPane.add(lblHitdie);
+		
+		tFLevel = new JTextField();
+		tFLevel.setBounds(266, 262, 36, 20);
+		contentPane.add(tFLevel);
+		tFLevel.setColumns(10);
+		
+		tFHitDie = new JTextField();
+		tFHitDie.setBounds(266, 292, 36, 20);
+		contentPane.add(tFHitDie);
+		tFHitDie.setColumns(10);
+		
+		JLabel hpTF = new JLabel("HP");
+		hpTF.setBounds(310, 264, 26, 16);
+		contentPane.add(hpTF);
+		
+		JComboBox cBHitDice = new JComboBox();
+		cBHitDice.setEditable(true);
+		cBHitDice.setBounds(369, 290, 50, 26);
+		contentPane.add(cBHitDice);
+		
+		JLabel lblHitDice = new JLabel("Hit Dice");
+		lblHitDice.setBounds(310, 294, 55, 16);
+		contentPane.add(lblHitDice);
+		
+		tFHP = new JTextField();
+		tFHP.setEditable(false);
+		tFHP.setBounds(334, 262, 41, 20);
+		contentPane.add(tFHP);
+		tFHP.setColumns(10);
+		
+		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				char1.setMale(true);
+			}
+		});
+		
+		rdbtnFemale.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				char1.setMale(false);
+			}
+		});
+		
 		charNaTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -178,12 +515,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		charNaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		charNaTF.setBounds(165, 62, 210, 20);
-		contentPane.add(charNaTF);
-		charNaTF.setColumns(10);
 		
-		strTF = new JTextField();
 		strTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -192,7 +524,6 @@ public class DummyDatabaseFrame extends JFrame {
 				System.out.println("Worked!" + char1.getStrength());
 				if(!(char1.getStrength() == 0))
 				{
-					// call function to get str + magic assume zero if not set
 					char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
 					if(char1.getStrMod() > 0)
 					{
@@ -207,16 +538,8 @@ public class DummyDatabaseFrame extends JFrame {
 				updateFavDam(favWeapTF,char1, FavDamDiTF);
 				}
 			}
-			
 		});
 		
-		strTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		strTF.setBounds(165, 87, 50, 20);
-		contentPane.add(strTF);
-		strTF.setColumns(10);
-		
-		conTF = new JTextField();
-		conTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		conTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -234,17 +557,16 @@ public class DummyDatabaseFrame extends JFrame {
 					{
 						conMod.setText(Integer.toString(char1.getConMod()));
 					}
-
+					
+					if(!tFLevel.getText().equals("")) // updates hp with con changes 
+					{
+						tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+					}
 				}
 				}
 			}
 		});
-		conTF.setBounds(165, 137, 50, 20);
-		contentPane.add(conTF);
-		conTF.setColumns(10);
 		
-		dexTF = new JTextField();
-		dexTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		dexTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -262,21 +584,13 @@ public class DummyDatabaseFrame extends JFrame {
 						{
 							dexMod.setText(Integer.toString(char1.getDexMod()));
 						}
-
 					}
-					
-				updateRanDam(ranWeapTF, char1, RanDamDiTF);
-				updateSpDam(spWeapTF, char1, spDamDiTF);
+				updateRanDam(ranWeapTF, char1, RanDamDiTF); // chained updates
+				updateSpDam(spWeapTF, char1, spDamDiTF); // chained updates
 				}
-			}
-				
+			}	
 		});
-		dexTF.setBounds(165, 112, 50, 20);
-		contentPane.add(dexTF);
-		dexTF.setColumns(10);
 		
-		intTF = new JTextField();
-		intTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		intTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -299,12 +613,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		intTF.setBounds(165, 162, 50, 20);
-		contentPane.add(intTF);
-		intTF.setColumns(10);
 		
-		wisTF = new JTextField();
-		wisTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		wisTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -327,12 +636,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		wisTF.setBounds(165, 187, 50, 20);
-		contentPane.add(wisTF);
-		wisTF.setColumns(10);
 		
-		chaTF = new JTextField();
-		chaTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		chaTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -356,13 +660,6 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
-		
-		chaTF.setBounds(165, 212, 50, 20);
-		contentPane.add(chaTF);
-		chaTF.setColumns(10);
-		
-		weightTF = new JTextField();
-		weightTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		weightTF.addFocusListener(new FocusAdapter() {			
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -402,12 +699,6 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
-		weightTF.setBounds(165, 262, 50, 20);
-		contentPane.add(weightTF);
-		weightTF.setColumns(10);
-		
-		ageTF = new JTextField();
-		ageTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		ageTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -419,11 +710,6 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
-		ageTF.setBounds(165, 292, 50, 20);
-		contentPane.add(ageTF);
-		ageTF.setColumns(10);
-		
-		favWeapTF = new JTextField();
 		favWeapTF.addFocusListener(new FocusAdapter() { // write a function
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -431,126 +717,21 @@ public class DummyDatabaseFrame extends JFrame {
 
 			}
 		});
-		favWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		favWeapTF.setBounds(165, 380, 50, 20);
-		contentPane.add(favWeapTF);
-		favWeapTF.setColumns(10);
 		
-		ranWeapTF = new JTextField();
 		ranWeapTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				updateRanDam(ranWeapTF, char1, RanDamDiTF);
 			}
 		});
-		ranWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		ranWeapTF.setBounds(165, 409, 50, 20);
-		contentPane.add(ranWeapTF);
-		ranWeapTF.setColumns(10);
 		
-		spWeapTF = new JTextField();
 		spWeapTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				updateSpDam(spWeapTF, char1, spDamDiTF);				
 			}
 		});
-		spWeapTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		spWeapTF.setBounds(165, 437, 50, 20);
-		contentPane.add(spWeapTF);
-		spWeapTF.setColumns(10);
 		
-		JLabel lblMod = new JLabel("Mod");
-		lblMod.setBounds(310, 87, 26, 20);
-		contentPane.add(lblMod);
-		
-		JLabel lblMod_1 = new JLabel("Mod");
-		lblMod_1.setBounds(310, 112, 26, 20);
-		contentPane.add(lblMod_1);
-		
-		JLabel lblMod_2 = new JLabel("Mod");
-		lblMod_2.setBounds(310, 137, 26, 14);
-		contentPane.add(lblMod_2);
-		
-		JLabel lblMod_3 = new JLabel("Mod");
-		lblMod_3.setBounds(310, 162, 26, 14);
-		contentPane.add(lblMod_3);
-		
-		JLabel lblMod_4 = new JLabel("Mod");
-		lblMod_4.setBounds(310, 187, 26, 14);
-		contentPane.add(lblMod_4);
-		
-		JLabel lblMod_5 = new JLabel("Mod");
-		lblMod_5.setBounds(310, 212, 26, 14);
-		contentPane.add(lblMod_5);
-		
-		strMod = new JTextField();
-		strMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		strMod.setEditable(false);
-		strMod.setBounds(345, 87, 30, 20);
-		contentPane.add(strMod);
-		strMod.setColumns(10);
-		
-		dexMod = new JTextField();
-		dexMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		dexMod.setEditable(false);
-		dexMod.setBounds(345, 112, 30, 20);
-		contentPane.add(dexMod);
-		dexMod.setColumns(10);
-		
-		conMod = new JTextField();
-		conMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		conMod.setEditable(false);
-		conMod.setBounds(345, 135, 30, 20);
-		contentPane.add(conMod);
-		conMod.setColumns(10);
-		
-		intMod = new JTextField();
-		intMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		intMod.setEditable(false);
-		intMod.setBounds(345, 160, 30, 20);
-		contentPane.add(intMod);
-		intMod.setColumns(10);
-		
-		wisMod = new JTextField();
-		wisMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		wisMod.setEditable(false);
-		wisMod.setBounds(345, 185, 30, 20);
-		contentPane.add(wisMod);
-		wisMod.setColumns(10);
-		
-		chaMod = new JTextField();
-		chaMod.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		chaMod.setEditable(false);
-		chaMod.setBounds(345, 210, 30, 20);
-		contentPane.add(chaMod);
-		chaMod.setColumns(10);
-		
-		JLabel lblTotal = new JLabel("Magic");
-		lblTotal.setBounds(225, 87, 36, 20);
-		contentPane.add(lblTotal);
-		
-		JLabel lblTotal_1 = new JLabel("Magic");
-		lblTotal_1.setBounds(225, 112, 36, 20);
-		contentPane.add(lblTotal_1);
-		
-		JLabel lblTotal_2 = new JLabel("Magic");
-		lblTotal_2.setBounds(225, 137, 36, 20);
-		contentPane.add(lblTotal_2);
-		
-		JLabel lblTotal_3 = new JLabel("Magic");
-		lblTotal_3.setBounds(225, 165, 36, 20);
-		contentPane.add(lblTotal_3);
-		
-		JLabel lblTotal_4 = new JLabel("Magic");
-		lblTotal_4.setBounds(225, 187, 36, 20);
-		contentPane.add(lblTotal_4);
-		
-		JLabel lblTotal_5 = new JLabel("Magic");
-		lblTotal_5.setBounds(225, 212, 36, 20);
-		contentPane.add(lblTotal_5);
-		
-		strMTF = new JTextField();
 		strMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -578,12 +759,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		strMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		strMTF.setBounds(266, 87, 30, 20);
-		contentPane.add(strMTF);
-		strMTF.setColumns(10);
 		
-		dexMTF = new JTextField();
 		dexMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -609,12 +785,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		dexMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		dexMTF.setBounds(266, 112, 30, 20);
-		contentPane.add(dexMTF);
-		dexMTF.setColumns(10);
 		
-		conMTF = new JTextField();
 		conMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -633,17 +804,17 @@ public class DummyDatabaseFrame extends JFrame {
 						{
 							conMod.setText(Integer.toString(char1.getConMod()));
 						}
+						
+						if(!tFLevel.getText().equals(""))
+						{
+							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+						}
 
 					}
 				}
 			}
 		});
-		conMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		conMTF.setBounds(266, 137, 30, 20);
-		contentPane.add(conMTF);
-		conMTF.setColumns(10);
 		
-		intMTF = new JTextField();
 		intMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -667,12 +838,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		intMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		intMTF.setBounds(266, 162, 30, 20);
-		contentPane.add(intMTF);
-		intMTF.setColumns(10);
 		
-		wisMTF = new JTextField();
 		wisMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -696,12 +862,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		wisMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		wisMTF.setBounds(266, 187, 30, 20);
-		contentPane.add(wisMTF);
-		wisMTF.setColumns(10);
 		
-		chaMTF = new JTextField();
 		chaMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -725,40 +886,7 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		chaMTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		chaMTF.setBounds(266, 212, 30, 20);
-		contentPane.add(chaMTF);
-		chaMTF.setColumns(10);
 		
-		JButton btnAddCharacter = new JButton("Add Character");
-		btnAddCharacter.setBounds(241, 262, 140, 23);
-		contentPane.add(btnAddCharacter);
-		
-		JButton btnNewButton = new JButton("Remove Character");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton.setBounds(241, 292, 140, 23);
-		contentPane.add(btnNewButton);
-		
-		favAtkTF = new JTextField();
-		favAtkTF.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!favAtkTF.getText().equals(""))
-				{
-					char1.setFavAtk(returnTextData(favAtkTF, -5,100));
-					System.out.println("Worked!" + char1.getFavAtk());
-				}
-			}
-		});
-		favAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		favAtkTF.setBounds(273, 380, 30, 20);
-		contentPane.add(favAtkTF);
-		favAtkTF.setColumns(10);
-		
-		ranAtkTF = new JTextField();
 		ranAtkTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -769,12 +897,18 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		ranAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		ranAtkTF.setBounds(273, 409, 30, 20);
-		contentPane.add(ranAtkTF);
-		ranAtkTF.setColumns(10);
 		
-		spAtkTF = new JTextField();
+		ranAtkTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!ranAtkTF.getText().equals(""))
+				{
+					char1.setRaAtk(returnTextData(ranAtkTF,-5,100));
+					System.out.println("Worked!" + char1.getRaAtk());
+				}
+			}
+		});
+		
 		spAtkTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -785,78 +919,14 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		spAtkTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		spAtkTF.setBounds(273, 434, 30, 20);
-		contentPane.add(spAtkTF);
-		spAtkTF.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Atk");
-		lblNewLabel_2.setBounds(240, 383, 46, 14);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("Atk");
-		lblNewLabel_3.setBounds(240, 412, 46, 14);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_4 = new JLabel("Atk");
-		lblNewLabel_4.setBounds(240, 440, 46, 14);
-		contentPane.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("Damage");
-		lblNewLabel_5.setBounds(315, 383, 50, 14);
-		contentPane.add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("Damage");
-		lblNewLabel_6.setBounds(315, 412, 50, 14);
-		contentPane.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("Damage");
-		lblNewLabel_7.setBounds(315, 437, 50, 14);
-		contentPane.add(lblNewLabel_7);
-		
-		FavDamDiTF = new JTextField();
-		FavDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		FavDamDiTF.setEditable(false);
-		FavDamDiTF.setBounds(369, 380, 86, 20);
-		contentPane.add(FavDamDiTF);
-		FavDamDiTF.setColumns(10);
-		
-		RanDamDiTF = new JTextField();
-		RanDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		RanDamDiTF.setEditable(false);
-		RanDamDiTF.setBounds(369, 409, 86, 20);
-		contentPane.add(RanDamDiTF);
-		RanDamDiTF.setColumns(10);
-		
-		spDamDiTF = new JTextField();
-		spDamDiTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		spDamDiTF.setEditable(false);
-		spDamDiTF.setBounds(369, 437, 86, 20);
-		contentPane.add(spDamDiTF);
-		spDamDiTF.setColumns(10);
-		
-		JButton btnNextCharacter = new JButton("Next Character");
+		// does nothing // take out or change structure
 		btnNextCharacter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("next character");
 			}
 		});
-		btnNextCharacter.setBounds(165, 338, 121, 23);
-		contentPane.add(btnNextCharacter);
 		
-		JButton btnNewButton_1 = new JButton("Save File");
-		btnNewButton_1.setBounds(38, 22, 142, 23);
-		contentPane.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Load File");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton_2.setBounds(197, 22, 129, 23);
-		contentPane.add(btnNewButton_2);
-		
-		bBABTF = new JTextField();
 		bBABTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -867,14 +937,323 @@ public class DummyDatabaseFrame extends JFrame {
 				}
 			}
 		});
-		bBABTF.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		bBABTF.setBounds(369, 339, 86, 20);
-		contentPane.add(bBABTF);
-		bBABTF.setColumns(10);
 		
-		JLabel lblBab = new JLabel("   BAB");
-		lblBab.setBounds(320, 342, 40, 14);
-		contentPane.add(lblBab);
+		tFLevel.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(!tFLevel.getText().equals(""))
+				{
+					char1.setLevel(returnTextData(tFLevel,0,20));
+					System.out.println("Worked!" + char1.getLevel());
+					if(char1.getLevel() == 0)
+					{
+						tFLevel.setText("");
+					}
+					tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+				}
+			}
+		});
+		
+		// belongs with tFHitDie need to update error for hitdie exception removed for marshalling
+		// need to update error for hitdie exception removed for marshalling
+		// need to update error for hitdie exception removed for marshalling
+		
+		tFHitDie.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!tFHitDie.getText().equals(""))
+				{
+					try {
+						char1.setHitdie(Integer.parseInt(removePlusSign(tFHitDie.getText(),tFHitDie)));
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null, "You entered invalid characters \n Please enter again");
+						tFHitDie.setText("");
+						//e1.printStackTrace();
+					}// catch (InvalidHitDie e1) {
+					//	JOptionPane.showMessageDialog(null, "Invalid hit die check your character sheet again");
+					//	tFHitDie.setText("");
+						//e1.printStackTrace();
+					//}
+				}
+			}
+		});
+		
+		hpTF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				// add logic
+			}
+		});
+		
+		saveBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				charB.marshal(char1);
+				// add seralization
+			}
+		});
+		
+		loadFileBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CharacterStats char2 = new CharacterStats();
+				char2 = charB.unmarshall();
+				CharacterStats char1 = new CharacterStats(char2);
+				//System.out.println("Char name" + char3.getChName());
+				
+				/*
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				try {
+					DocumentBuilder builder = factory.newDocumentBuilder();
+					Document doc = builder.parse("Timmy.xml");
+					NodeList characterList = doc.getElementsByTagName("character");
+					
+					for(int i = 0;i<characterList.getLength();i++)
+					{
+						
+						// remove this section later
+						// remove this section later
+						// remove this section later
+						
+						System.out.println("got here 1");
+						Node c = characterList.item(i);
+						if(c.getNodeType()==Node.ELEMENT_NODE) {
+							Element stats = (Element) c;
+							String chname = stats.getAttribute("id");
+							NodeList statsList = stats.getChildNodes();
+							
+							Node statsAtt = statsList.item(1); // only every other item has a value
+							String temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setChName(temp);
+							charNaTF.setText(char1.getChName());
+							
+	
+							statsAtt = statsList.item(3);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setStrength(Integer.valueOf(temp));
+							strTF.setText(Integer.toString(char1.getStrength()));
+							
+							
+							statsAtt = statsList.item(5);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setDexterity(Integer.valueOf(temp));
+							dexTF.setText(Integer.toString(char1.getDexterity()));
+							
+							statsAtt = statsList.item(7);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setConstituion(Integer.valueOf(temp));
+							conTF.setText(Integer.toString(char1.getConstituion()));
+							
+							statsAtt = statsList.item(9);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setIntelligence(Integer.valueOf(temp));
+							intTF.setText(Integer.toString(char1.getIntelligence()));
+							
+							statsAtt = statsList.item(11);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setWisdom(Integer.valueOf(temp));
+							wisTF.setText(Integer.toString(char1.getWisdom()));
+							
+							statsAtt = statsList.item(13);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setCharisma(Integer.valueOf(temp));
+							chaTF.setText(Integer.toString(char1.getCharisma()));
+							
+							statsAtt = statsList.item(15);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setBAB(Integer.valueOf(temp));
+							bBABTF.setText(Integer.toString(char1.getBAB()));
+							
+							statsAtt = statsList.item(17);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setWeight(Double.valueOf(temp));
+							weightTF.setText(temp);
+							
+							statsAtt = statsList.item(19);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setAge(Integer.valueOf(temp));
+							ageTF.setText(temp);
+							
+							statsAtt = statsList.item(21);
+							temp = returnNode(statsAtt);
+							//System.out.println(temp);
+							char1.setMale(Boolean.parseBoolean(temp));
+							if(char1.isMale() == true)
+							{
+								rdbtnMale.setSelected(true);
+							}
+							
+							statsAtt = statsList.item(23);
+							temp = returnNode(statsAtt);
+							char1.setFavWeap(Integer.valueOf(temp));
+							System.out.println(temp);
+							favWeapTF.setText(temp);
+							
+							
+							statsAtt = statsList.item(25);
+							temp = returnNode(statsAtt);
+							char1.setRanWeap(Integer.valueOf(temp));
+							System.out.println(temp);
+							ranWeapTF.setText(temp);
+							
+							statsAtt = statsList.item(27);
+							temp = returnNode(statsAtt);
+							char1.setSpWeap(Integer.valueOf(temp));
+							System.out.println(temp);
+							spWeapTF.setText(temp);
+							
+							statsAtt = statsList.item(29);
+							temp = returnNode(statsAtt);
+							char1.setFavAtk(Integer.valueOf(temp));
+							System.out.println(temp);
+							favAtkTF.setText(temp);
+							
+							statsAtt = statsList.item(31);
+							temp = returnNode(statsAtt);
+							char1.setRaAtk(Integer.valueOf(temp));
+							System.out.println(temp);
+							ranAtkTF.setText(temp);
+							
+							statsAtt = statsList.item(33);
+							temp = returnNode(statsAtt);
+							char1.setSpAtk(Integer.valueOf(temp));
+							System.out.println(temp);
+							spAtkTF.setText(temp);
+							
+							statsAtt = statsList.item(35);
+							temp = returnNode(statsAtt);
+							char1.setMaStr(Integer.valueOf(temp));
+							System.out.println(temp);
+							strMTF.setText(temp);
+							
+							
+							statsAtt = statsList.item(37);
+							temp = returnNode(statsAtt);
+							char1.setMaDex(Integer.valueOf(temp));
+							System.out.println(temp);
+							dexMTF.setText(temp);
+							
+							statsAtt = statsList.item(39);
+							temp = returnNode(statsAtt);
+							char1.setMaCon(Integer.valueOf(temp));
+							System.out.println(temp);
+							conMTF.setText(temp);
+							
+							statsAtt = statsList.item(41);
+							temp = returnNode(statsAtt);
+							char1.setMaInt(Integer.valueOf(temp));
+							System.out.println(temp);
+							intMTF.setText(temp);
+							
+							statsAtt = statsList.item(43);
+							temp = returnNode(statsAtt);
+							char1.setMaWis(Integer.valueOf(temp));
+							System.out.println(temp);
+							wisMTF.setText(temp);
+							
+							statsAtt = statsList.item(45);
+							temp = returnNode(statsAtt);
+							char1.setMaCha(Integer.valueOf(temp));
+							System.out.println(temp);
+							chaMTF.setText(temp);
+							
+							statsAtt = statsList.item(47);
+							temp = returnNode(statsAtt);
+							char1.setLevel(Integer.valueOf(temp));
+							System.out.println(temp);
+							tFLevel.setText(temp);
+							
+							statsAtt = statsList.item(49);
+							temp = returnNode(statsAtt);
+							try {
+								char1.setHitdie(Integer.valueOf(temp));
+							} catch (NumberFormatException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							System.out.println(temp);
+							tFHitDie.setText(temp);
+						*/
+							// remove this section later
+							// remove this section later
+							// remove this section later
+							
+							
+							
+//							if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
+//								Element attributes = (Element) statsAtt;
+//								System.out.println(attributes.getTextContent());
+//							}
+							
+//							for(int x = 0;x<statsList.getLength();x++)
+//							{
+//								Node statsAtt = statsList.item(x);
+//								if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
+//									Element attributes = (Element) statsAtt;
+//									System.out.println(attributes.getTextContent());
+//								}
+//							}
+						}
+		//			}
+		//		}
+//////				catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e)
+				{
+		//			e.printStackTrace();
+				}
+
+//				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//				try {
+//					DocumentBuilder builder = factory.newDocumentBuilder();
+//					Document doc = builder.parse("Jim.xml");
+//					NodeList adventurerList = doc.getElementsByTagName("adventurers");
+//					
+//					for(int i = 0;i<adventurerList.getLength();i++)
+//					{	System.out.println("got here");
+//						Node c = adventurerList.item(i);
+//						if(c.getNodeType()==Node.ELEMENT_NODE) {
+//							Element character = (Element) c;
+//							String id = character.getAttribute("id");
+//							NodeList statsN = character.getChildNodes();
+//							for(int j =0;j<statsN.getLength();j++) {
+//								Node sec = statsN.item(j);
+//								if(sec.getNodeType()==Node.ELEMENT_NODE) {
+//									Element attributes = (Element) sec;
+//									System.out.println("Character's stats are " + 
+//									attributes.getTagName() + "= " + attributes.getTextContent());
+//								}
+//							}
+//						}
+//					}
+//				}
+//				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e) {
+//					e.printStackTrace();
+//				}
+//			}
+		});
+		
+		
+	}
+	// prob have to add a hit dice later
+	
+	private static CharacterStats refreshDisplay(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
+			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,
+			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod,
+			JTextField wisMod, JTextField chaMod, JTextField weightTf, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
+			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF) {
+		
+		
+		
+		return chObj;
 	}
 	
 	private static int returnTextData(JTextField tF) { // add calls to each now // might want to just remove this
@@ -979,14 +1358,15 @@ public class DummyDatabaseFrame extends JFrame {
 			disTF.setText(Integer.toString(char1.getSpDam()));
 		}
 	}
-//	if(!spWeapTF.getText().equals(""))
-//	{
-//		char1.setSpWeap(returnTextData(spWeapTF, 0,100));
-//		System.out.println("Worked!" + char1.getSpWeap());
-//		char1.calcSpDam();
-//		spDamDiTF.setText(Integer.toString(char1.getSpDam()));
-//		
-//	}
-
-
+	
+	private static String returnNode(Node statsAtt) {
+		String s = "";
+		
+		if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
+			Element attributes = (Element) statsAtt;
+			s = attributes.getTextContent();
+		}
+		
+		return s;
+	}
 }
