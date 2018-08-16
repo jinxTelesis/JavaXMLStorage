@@ -434,15 +434,15 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.add(spDamDiTF);
 		spDamDiTF.setColumns(10);
 		
-		JButton btnNextCharacter = new JButton("Next Character");
-		btnNextCharacter.setBounds(165, 338, 121, 23);
-		contentPane.add(btnNextCharacter);
+		JButton btnResetStats = new JButton("Reset Stats");
+		btnResetStats.setBounds(165, 338, 121, 23);
+		contentPane.add(btnResetStats);
 		
-		JButton saveBtn = new JButton("Save File");
+		JButton saveBtn = new JButton("Save File JAXB");
 		saveBtn.setBounds(38, 22, 142, 23);
 		contentPane.add(saveBtn);
 		
-		JButton loadFileBtn = new JButton("Load File");
+		JButton loadFileBtn = new JButton("Load File JAXB");
 		loadFileBtn.setBounds(197, 22, 129, 23);
 		contentPane.add(loadFileBtn);
 		
@@ -492,6 +492,215 @@ public class DummyDatabaseFrame extends JFrame {
 		tFHP.setBounds(334, 262, 41, 20);
 		contentPane.add(tFHP);
 		tFHP.setColumns(10);
+		
+		JButton btnSaveFileDom = new JButton("Save File DOM");
+		btnSaveFileDom.setBounds(345, 22, 142, 23);
+		contentPane.add(btnSaveFileDom);
+		
+		JButton btnNewButton = new JButton("Load File DOM");
+		btnNewButton.setBounds(505, 22, 129, 23);
+		contentPane.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				try {
+					DocumentBuilder builder = factory.newDocumentBuilder();
+					Document doc = builder.parse("Timmy.xml");
+					NodeList characterList = doc.getElementsByTagName("character");
+					
+					for(int i = 0;i<characterList.getLength();i++)
+					{
+						
+						// remove this section later
+						// remove this section later
+						// remove this section later
+						
+						System.out.println("got here 1");
+						Node c = characterList.item(i);
+						if(c.getNodeType()==Node.ELEMENT_NODE) {
+							Element stats = (Element) c;
+							String chname = stats.getAttribute("id");
+							NodeList statsList = stats.getChildNodes();
+							
+							Node statsAtt = statsList.item(1); // only every other item has a value
+							String temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setChName(temp);
+							charNaTF.setText(char1.getChName());
+							
+	
+							statsAtt = statsList.item(3);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setStrength(Integer.valueOf(temp));
+							strTF.setText(Integer.toString(char1.getStrength()));
+							
+							
+							statsAtt = statsList.item(5);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setDexterity(Integer.valueOf(temp));
+							dexTF.setText(Integer.toString(char1.getDexterity()));
+							
+							statsAtt = statsList.item(7);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setConstituion(Integer.valueOf(temp));
+							conTF.setText(Integer.toString(char1.getConstituion()));
+							
+							statsAtt = statsList.item(9);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setIntelligence(Integer.valueOf(temp));
+							intTF.setText(Integer.toString(char1.getIntelligence()));
+							
+							statsAtt = statsList.item(11);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setWisdom(Integer.valueOf(temp));
+							wisTF.setText(Integer.toString(char1.getWisdom()));
+							
+							statsAtt = statsList.item(13);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setCharisma(Integer.valueOf(temp));
+							chaTF.setText(Integer.toString(char1.getCharisma()));
+							
+							statsAtt = statsList.item(15);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setBAB(Integer.valueOf(temp));
+							bBABTF.setText(Integer.toString(char1.getBAB()));
+							
+							statsAtt = statsList.item(17);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setWeight(Double.valueOf(temp));
+							weightTF.setText(temp);
+							
+							statsAtt = statsList.item(19);
+							temp = returnNode(statsAtt);
+							System.out.println(temp);
+							char1.setAge(Integer.valueOf(temp));
+							ageTF.setText(temp);
+							
+							statsAtt = statsList.item(21);
+							temp = returnNode(statsAtt);
+							//System.out.println(temp);
+							char1.setMale(Boolean.parseBoolean(temp));
+							if(char1.isMale() == true)
+							{
+								rdbtnMale.setSelected(true);
+							}
+							
+							statsAtt = statsList.item(23);
+							temp = returnNode(statsAtt);
+							char1.setFavWeap(Integer.valueOf(temp));
+							System.out.println(temp);
+							favWeapTF.setText(temp);
+							
+							
+							statsAtt = statsList.item(25);
+							temp = returnNode(statsAtt);
+							char1.setRanWeap(Integer.valueOf(temp));
+							System.out.println(temp);
+							ranWeapTF.setText(temp);
+							
+							statsAtt = statsList.item(27);
+							temp = returnNode(statsAtt);
+							char1.setSpWeap(Integer.valueOf(temp));
+							System.out.println(temp);
+							spWeapTF.setText(temp);
+							
+							statsAtt = statsList.item(29);
+							temp = returnNode(statsAtt);
+							char1.setFavAtk(Integer.valueOf(temp));
+							System.out.println(temp);
+							favAtkTF.setText(temp);
+							
+							statsAtt = statsList.item(31);
+							temp = returnNode(statsAtt);
+							char1.setRaAtk(Integer.valueOf(temp));
+							System.out.println(temp);
+							ranAtkTF.setText(temp);
+							
+							statsAtt = statsList.item(33);
+							temp = returnNode(statsAtt);
+							char1.setSpAtk(Integer.valueOf(temp));
+							System.out.println(temp);
+							spAtkTF.setText(temp);
+							
+							statsAtt = statsList.item(35);
+							temp = returnNode(statsAtt);
+							char1.setMaStr(Integer.valueOf(temp));
+							System.out.println(temp);
+							strMTF.setText(temp);
+							
+							
+							statsAtt = statsList.item(37);
+							temp = returnNode(statsAtt);
+							char1.setMaDex(Integer.valueOf(temp));
+							System.out.println(temp);
+							dexMTF.setText(temp);
+							
+							statsAtt = statsList.item(39);
+							temp = returnNode(statsAtt);
+							char1.setMaCon(Integer.valueOf(temp));
+							System.out.println(temp);
+							conMTF.setText(temp);
+							
+							statsAtt = statsList.item(41);
+							temp = returnNode(statsAtt);
+							char1.setMaInt(Integer.valueOf(temp));
+							System.out.println(temp);
+							intMTF.setText(temp);
+							
+							statsAtt = statsList.item(43);
+							temp = returnNode(statsAtt);
+							char1.setMaWis(Integer.valueOf(temp));
+							System.out.println(temp);
+							wisMTF.setText(temp);
+							
+							statsAtt = statsList.item(45);
+							temp = returnNode(statsAtt);
+							char1.setMaCha(Integer.valueOf(temp));
+							System.out.println(temp);
+							chaMTF.setText(temp);
+							
+							statsAtt = statsList.item(47);
+							temp = returnNode(statsAtt);
+							char1.setLevel(Integer.valueOf(temp));
+							System.out.println(temp);
+							tFLevel.setText(temp);
+							
+							statsAtt = statsList.item(49);
+							temp = returnNode(statsAtt);
+							try {
+								char1.setHitdie(Integer.valueOf(temp));
+							} catch (NumberFormatException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+							System.out.println(temp);
+							tFHitDie.setText(temp);
+						
+							// remove this section later
+							// remove this section later
+							// remove this section later
+						}
+					}
+				}
+				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e3) {
+					e3.printStackTrace();
+				}
+			}
+		});
+		
+		btnSaveFileDom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// add dom loading
+			}
+		});
 		
 		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent arg0) {
@@ -640,12 +849,32 @@ public class DummyDatabaseFrame extends JFrame {
 		chaTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				
+//				if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
+//					char1.setStrength(returnTextData(strTF));
+//					System.out.println("Worked!" + char1.getStrength());
+//					if(!(char1.getStrength() == 0))
+//					{
+//						char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
+//						if(char1.getStrMod() > 0)
+//						{
+//							strMod.setText("+" + Integer.toString(char1.getStrMod()));
+//						}
+//						else
+//						{
+//							strMod.setText(Integer.toString(char1.getStrMod()));
+//						}
+//
+//					}
+//					updateFavDam(favWeapTF,char1, FavDamDiTF);
+//					}
+//				}
 				if(!chaTF.getText().equals("")) {
 				char1.setCharisma(returnTextData(chaTF));
 				System.out.println("Worked!" + char1.getCharisma());
 				if(!(char1.getCharisma() == 0))
 				{
-					char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
+					char1.setChaMod((Math.floorDiv(((char1.getCharisma() + char1.getChaMod())-10), 2)));
 					if(char1.getDexMod() > 0)
 					{
 						chaMod.setText("+" + Integer.toString(char1.getChaMod()));
@@ -921,9 +1150,14 @@ public class DummyDatabaseFrame extends JFrame {
 		});
 		
 		// does nothing // take out or change structure
-		btnNextCharacter.addActionListener(new ActionListener() {
+		btnResetStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("next character");
+				//
+				clearStats(char1, charNaTF,strTF, dexTF,conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,	
+						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod,
+						wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF,
+						FavDamDiTF, RanDamDiTF, spDamDiTF, tFLevel, tFHitDie);
 			}
 		});
 		
@@ -998,6 +1232,12 @@ public class DummyDatabaseFrame extends JFrame {
 				CharacterStats char2 = new CharacterStats();
 				char2 = charB.unmarshall();
 				CharacterStats char1 = new CharacterStats(char2);
+				
+				// this returns an object, discarded right now
+				 refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie);
+				
 				//System.out.println("Char name" + char3.getChName());
 				
 				/*
@@ -1243,15 +1483,102 @@ public class DummyDatabaseFrame extends JFrame {
 		
 	}
 	// prob have to add a hit dice later
+	private static void clearStats(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
+			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,	
+			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod, JTextField intMod,
+			JTextField wisMod, JTextField chaMod, JTextField weightTF, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
+			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie) {
+		
+		charNatTFL.setText(""); chObj.setChName("");
+		strTF.setText(""); chObj.setStrength(0);
+		dexTF.setText(""); chObj.setDexterity(0);
+		conTF.setText(""); chObj.setConstituion(0);
+		intTF.setText(""); chObj.setIntelligence(0);
+		wisTF.setText(""); chObj.setWisdom(0);
+		chaTF.setText(""); chObj.setCharisma(0);
+		strMTF.setText(""); chObj.setMaStr(0);
+		dexMTF.setText(""); chObj.setMaDex(0);
+		conMTF.setText(""); chObj.setMaCon(0);
+		intMTF.setText(""); chObj.setMaInt(0);
+		wisMTF.setText(""); chObj.setMaWis(0);
+		chaMTF.setText(""); chObj.setMaCha(0);
+		strMod.setText(""); chObj.setStrMod(0);
+		dexMod.setText(""); chObj.setDexMod(0);
+		conMod.setText(""); chObj.setConMod(0);
+		intMod.setText(""); chObj.setIntMod(0);
+		wisMod.setText(""); chObj.setWisMod(0);
+		chaMod.setText(""); chObj.setChaMod(0);
+		weightTF.setText("");chObj.setWeight(0.0);
+		ageTF.setText(""); chObj.setAge(0);
+		// radio button not done yet
+		favWeapTF.setText("");chObj.setFavWeap(0);
+		ranWeapTF.setText("");chObj.setRanWeap(0);
+		spWeapTF.setText("");chObj.setSpWeap(0);
+		favAtkTF.setText("");chObj.setFavAtk(0);
+		ranAtkTF.setText("");chObj.setRaAtk(0);
+		spAtkTF.setText("");chObj.setSpAtk(0);
+		bBABTF.setText("");chObj.setBAB(0);
+		FavDamnDiTF.setText("");
+		RanDamDiTF.setText("");
+		spDamDiTF.setText("");
+		tFLevel.setText("");chObj.setLevel(0);
+		tFHitDie.setText("");chObj.setHitdie(0);
+		
+		
+	}
 	
 	private static CharacterStats refreshDisplay(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
 			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,
-			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod,
-			JTextField wisMod, JTextField chaMod, JTextField weightTf, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
+			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod, JTextField intMod,
+			JTextField wisMod, JTextField chaMod, JTextField weightTF, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
 			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
-			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF) {
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie) {
 		
+		chObj.calcFavDam();
+		chObj.calcRaDam();
+		chObj.calcSpDam();
+		// maybe move mod calculations
+		// add calculate hp?
+		// add calculate hp
+		// add calculate hp
+		// add calculate hp
+		// add calculate hp
 		
+		charNatTFL.setText(chObj.getChName());
+		strTF.setText(Integer.toString(chObj.getStrength()));
+		dexTF.setText(Integer.toString(chObj.getDexterity()));
+		conTF.setText(Integer.toString(chObj.getConstituion()));
+		intTF.setText(Integer.toString(chObj.getIntelligence()));
+		wisTF.setText(Integer.toString(chObj.getWisdom()));
+		chaTF.setText(Integer.toString(chObj.getCharisma()));
+		strMTF.setText(Integer.toString(chObj.getMaStr()));
+		dexMTF.setText(Integer.toString(chObj.getMaDex()));
+		conMTF.setText(Integer.toString(chObj.getMaCon()));
+		intMTF.setText(Integer.toString(chObj.getMaInt()));
+		wisMTF.setText(Integer.toString(chObj.getMaWis()));
+		chaMTF.setText(Integer.toString(chObj.getChaMod()));
+		strMod.setText(Integer.toString(chObj.getStrMod()));
+		dexMod.setText(Integer.toString(chObj.getDexMod()));
+		conMod.setText(Integer.toString(chObj.getConMod()));
+		intMod.setText(Integer.toString(chObj.getIntMod()));
+		wisMod.setText(Integer.toString(chObj.getWisMod()));
+		chaMod.setText(Integer.toString(chObj.getChaMod()));
+		weightTF.setText(Double.toString(chObj.getWeight()));
+		ageTF.setText(Integer.toString(chObj.getAge()));
+		// radio button not done yet
+		favWeapTF.setText(Integer.toString(chObj.getFavWeap()));
+		ranWeapTF.setText(Integer.toString(chObj.getRanWeap()));
+		spWeapTF.setText(Integer.toString(chObj.getSpWeap()));
+		favAtkTF.setText(Integer.toString(chObj.getFavAtk()));
+		ranAtkTF.setText(Integer.toString(chObj.getRaAtk()));
+		spAtkTF.setText(Integer.toString(chObj.getSpAtk()));
+		bBABTF.setText(Integer.toString(chObj.getLevel()));
+		FavDamnDiTF.setText(Integer.toString(chObj.getFavDam()));
+		RanDamDiTF.setText(Integer.toString(chObj.getRaDam()));
+		spDamDiTF.setText(Integer.toString(chObj.getSpDam()));
+		tFLevel.setText(Integer.toString(chObj.getLevel()));
+		tFHitDie.setText(Integer.toString(chObj.getHitdie()));
 		
 		return chObj;
 	}
