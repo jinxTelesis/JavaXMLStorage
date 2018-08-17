@@ -95,12 +95,6 @@ public class CharacterStats implements Serializable{
 		this.intelligence = obj.intelligence;
 		this.wisdom = obj.wisdom;
 		this.charisma = obj.charisma;
-		this.strMod = obj.strMod;
-		this.dexMod = obj.dexMod;
-		this.conMod = obj.conMod;
-		this.intMod = obj.intMod;
-		this.wisMod = obj.wisMod;
-		this.chaMod = obj.chaMod;
 		this.BAB = obj.BAB;
 		this.weight = obj.weight;
 		this.age = obj.age;
@@ -119,6 +113,12 @@ public class CharacterStats implements Serializable{
 		this.level = obj.level;
 		this.hitdie = obj.hitdie;
 		this.hitdice = obj.hitdice;
+		this.strMod = obj.strMod;
+		this.dexMod = obj.dexMod;
+		this.conMod = obj.conMod;
+		this.intMod = obj.intMod;
+		this.wisMod = obj.wisMod;
+		this.chaMod = obj.chaMod;
 		this.calcFavDam();
 		this.calcRaDam();
 		this.calcSpDam();
