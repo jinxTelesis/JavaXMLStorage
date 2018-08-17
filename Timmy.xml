@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<adventurers>
 <character id="1">
-<chname>Jim The Great!</chname>
+<chname>Jim</chname>
 <strength>12</strength>
 <dexterity>14</dexterity>
 <constitution>15</constitution>
@@ -25,7 +26,7 @@
 <macha>0</macha>
 <level>5</level>
 <hitdie>10</hitdie>
-<int-array>
+<int-array name="hitDice">
 <item>8</item>
 <item>8</item>
 <item>7</item>
@@ -33,3 +34,4 @@
 <item>2</item>
 </int-array>
 </character>
+</adventurers>

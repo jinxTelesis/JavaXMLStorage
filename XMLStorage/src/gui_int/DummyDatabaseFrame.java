@@ -38,6 +38,11 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JComboBox;
 //import components.DocumentSizeFilter; add documents filter later
 import org.w3c.dom.NodeList;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class DummyDatabaseFrame extends JFrame {
 	
@@ -106,6 +111,48 @@ public class DummyDatabaseFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnFileMenu = new JMenu("File / Save");
+		menuBar.add(mnFileMenu);
+		
+		JMenuItem mntmNew = new JMenuItem("New");
+		mnFileMenu.add(mntmNew);
+		
+		JMenuItem mntmOpenFile = new JMenuItem("Open File");
+		mnFileMenu.add(mntmOpenFile);
+		
+		JMenuItem mntmCloseFile = new JMenuItem("Close File");
+		mnFileMenu.add(mntmCloseFile);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mnFileMenu.add(mntmSave);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnFileMenu.add(mntmExit);
+		
+		JMenu mnNewMenu_1 = new JMenu("Help");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmProgramHelp = new JMenuItem("Program Help");
+		mnNewMenu_1.add(mntmProgramHelp);
+		
+		JMenuItem mntmDndHelp = new JMenuItem("DnD Help");
+		mnNewMenu_1.add(mntmDndHelp);
+		
+		JMenu mnNewMenu_2 = new JMenu("Resources");
+		menuBar.add(mnNewMenu_2);
+		
+		JMenuItem mntmDnd = new JMenuItem("DnD 3.0");
+		mnNewMenu_2.add(mntmDnd);
+		
+		JMenuItem mntmDnd_1 = new JMenuItem("DnD 3.5");
+		mnNewMenu_2.add(mntmDnd_1);
+		
+		JMenuItem mntmPathfinder = new JMenuItem("Pathfinder");
+		mnNewMenu_2.add(mntmPathfinder);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -500,6 +547,7 @@ public class DummyDatabaseFrame extends JFrame {
 		JButton btnNewButton = new JButton("Load File DOM");
 		btnNewButton.setBounds(505, 22, 129, 23);
 		contentPane.add(btnNewButton);
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{charNaTF, strTF, strMTF, dexTF, dexMTF, conTF, conMTF, intTF, intMTF, wisTF, wisMTF, chaTF, chaMTF, weightTF, tFLevel, ageTF, tFHitDie, cBHitDice, bBABTF, favWeapTF, favAtkTF, ranWeapTF, ranAtkTF, spWeapTF, spAtkTF, lblName, lblStr, lblDex, lblConstitution, lblIntelligence, lblNewLabel, lblCharisma, lblWeight, lblAge, rdbtnMale, rdbtnFemale, lblFavoriteWeapon, lblRangedWeapon, lblNewLabel_1, lblMod, lblMod_1, lblMod_2, lblMod_3, lblMod_4, lblMod_5, strMod, dexMod, conMod, intMod, wisMod, chaMod, lblTotal, lblTotal_1, lblTotal_2, lblTotal_3, lblTotal_4, lblTotal_5, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4, lblNewLabel_5, lblNewLabel_6, lblNewLabel_7, FavDamDiTF, RanDamDiTF, spDamDiTF, btnResetStats, saveBtn, loadFileBtn, lblBab, lblLevel, lblHitdie, hpTF, lblHitDice, tFHP, btnSaveFileDom, btnNewButton}));
 		btnNewButton.addActionListener(new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -699,10 +747,7 @@ public class DummyDatabaseFrame extends JFrame {
 							
 							// add mod calculations
 							// add mod ca
-						
-							// remove this section later
-							// remove this section later
-							// remove this section later
+
 						}
 					}
 				}
@@ -1178,7 +1223,6 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
-		// does nothing // take out or change structure
 		btnResetStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//
@@ -1231,12 +1275,7 @@ public class DummyDatabaseFrame extends JFrame {
 					} catch (NumberFormatException e1) {
 						JOptionPane.showMessageDialog(null, "You entered invalid characters \n Please enter again");
 						tFHitDie.setText("");
-						//e1.printStackTrace();
-					}// catch (InvalidHitDie e1) {
-					//	JOptionPane.showMessageDialog(null, "Invalid hit die check your character sheet again");
-					//	tFHitDie.setText("");
-						//e1.printStackTrace();
-					//}
+					}
 				}
 			}
 		});
