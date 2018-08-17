@@ -501,7 +501,7 @@ public class DummyDatabaseFrame extends JFrame {
 		btnNewButton.setBounds(505, 22, 129, 23);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			 public void actionPerformed(ActionEvent e) {
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				try {
 					DocumentBuilder builder = factory.newDocumentBuilder();
@@ -683,6 +683,22 @@ public class DummyDatabaseFrame extends JFrame {
 							}
 							System.out.println(temp);
 							tFHitDie.setText(temp);
+							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+							
+							//setting mods
+							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2)); //str
+							char1.setDexMod(Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)); //dex
+							char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2)); //con
+							char1.setIntMod(Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)); //int
+							char1.setWisMod(Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)); //wis
+							char1.setChaMod(Math.floorDiv(((char1.getCharisma() + char1.getMaCha())-10), 2)); //cha
+							//display them
+							refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+									intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+									spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
+							
+							// add mod calculations
+							// add mod ca
 						
 							// remove this section later
 							// remove this section later
@@ -809,7 +825,7 @@ public class DummyDatabaseFrame extends JFrame {
 				if(!(char1.getIntelligence() == 0))
 				{
 					char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
-					if(char1.getDexMod() > 0)
+					if(char1.getIntMod() > 0)
 					{
 						intMod.setText("+" + Integer.toString(char1.getIntMod()));
 					}
@@ -823,6 +839,8 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
+
+		
 		wisTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -831,8 +849,8 @@ public class DummyDatabaseFrame extends JFrame {
 				System.out.println("Worked!" + char1.getWisdom());
 				if(!(char1.getWisdom() == 0))
 				{
-					char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-					if(char1.getDexMod() > 0)
+					char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2))); // error of getmawis - 10 before it is set?
+					if(char1.getWisMod() > 0)
 					{
 						wisMod.setText("+" + Integer.toString(char1.getWisMod()));
 					}
@@ -846,36 +864,19 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
+
+		
 		chaTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-//				if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
-//					char1.setStrength(returnTextData(strTF));
-//					System.out.println("Worked!" + char1.getStrength());
-//					if(!(char1.getStrength() == 0))
-//					{
-//						char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
-//						if(char1.getStrMod() > 0)
-//						{
-//							strMod.setText("+" + Integer.toString(char1.getStrMod()));
-//						}
-//						else
-//						{
-//							strMod.setText(Integer.toString(char1.getStrMod()));
-//						}
-//
-//					}
-//					updateFavDam(favWeapTF,char1, FavDamDiTF);
-//					}
-//				}
 				if(!chaTF.getText().equals("")) {
 				char1.setCharisma(returnTextData(chaTF));
 				System.out.println("Worked!" + char1.getCharisma());
 				if(!(char1.getCharisma() == 0))
 				{
-					char1.setChaMod((Math.floorDiv(((char1.getCharisma() + char1.getChaMod())-10), 2)));
-					if(char1.getDexMod() > 0)
+					char1.setChaMod((Math.floorDiv(((char1.getCharisma() + char1.getMaCha())-10), 2)));
+					if(char1.getChaMod() > 0)
 					{
 						chaMod.setText("+" + Integer.toString(char1.getChaMod()));
 					}
@@ -1054,7 +1055,7 @@ public class DummyDatabaseFrame extends JFrame {
 					if(!(char1.getIntelligence() == 0))
 					{
 						char1.setIntMod((Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)));
-						if(char1.getDexMod() > 0)
+						if(char1.getIntMod() > 0)
 						{
 							intMod.setText("+" + Integer.toString(char1.getIntMod()));
 						}
@@ -1068,17 +1069,45 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
+//		strMTF.addFocusListener(new FocusAdapter() {
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				if(!strMTF.getText().equals(""))
+//				{
+//					
+//					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
+//					System.out.println(char1.getMaStr());
+//					if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
+//						if(!(char1.getStrength() == 0))
+//						{
+//							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
+//							if(char1.getStrMod() > 0)
+//							{
+//								strMod.setText("+" + Integer.toString(char1.getStrMod()));
+//							}
+//							else
+//							{
+//								strMod.setText(Integer.toString(char1.getStrMod()));
+//							}
+//
+//						}
+//					}
+//					updateFavDam(favWeapTF,char1, FavDamDiTF); // update for weapon damage
+//				}
+//			}
+//		});
+		
 		wisMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(!wisMTF.getText().equals(""))
 				{
-					char1.setMaWis(returnTextData(intMTF,statMaMin,statMax));
+					char1.setMaWis(returnTextData(wisMTF,statMaMin,statMax)); // fixed wisdom
 					System.out.println(char1.getMaWis());
 					if(!(char1.getWisdom() == 0))
 					{
 						char1.setWisMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-						if(char1.getDexMod() > 0)
+						if(char1.getWisMod() > 0)
 						{
 							wisMod.setText("+" + Integer.toString(char1.getWisMod()));
 						}
@@ -1101,8 +1130,8 @@ public class DummyDatabaseFrame extends JFrame {
 					System.out.println(char1.getMaCha());
 					if(!(char1.getCharisma() == 0))
 					{
-						char1.setChaMod((Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)));
-						if(char1.getDexMod() > 0)
+						char1.setChaMod((Math.floorDiv(((char1.getCharisma() + char1.getCharisma())-10), 2)));
+						if(char1.getChaMod() > 0)
 						{
 							chaMod.setText("+" + Integer.toString(char1.getChaMod()));
 						}
@@ -1157,7 +1186,7 @@ public class DummyDatabaseFrame extends JFrame {
 						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod,
 						wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
 						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF,
-						FavDamDiTF, RanDamDiTF, spDamDiTF, tFLevel, tFHitDie);
+						FavDamDiTF, RanDamDiTF, spDamDiTF, tFLevel, tFHitDie,tFHP);
 			}
 		});
 		
@@ -1236,7 +1265,7 @@ public class DummyDatabaseFrame extends JFrame {
 				// this returns an object, discarded right now
 				 refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
 						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
-						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie);
+						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
 				
 				//System.out.println("Char name" + char3.getChName());
 				
@@ -1488,7 +1517,7 @@ public class DummyDatabaseFrame extends JFrame {
 			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod, JTextField intMod,
 			JTextField wisMod, JTextField chaMod, JTextField weightTF, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
 			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
-			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie) {
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie,JTextField tFHP) {
 		
 		charNatTFL.setText(""); chObj.setChName("");
 		strTF.setText(""); chObj.setStrength(0);
@@ -1524,21 +1553,22 @@ public class DummyDatabaseFrame extends JFrame {
 		spDamDiTF.setText("");
 		tFLevel.setText("");chObj.setLevel(0);
 		tFHitDie.setText("");chObj.setHitdie(0);
-		
+		tFHP.setText("");
 		
 	}
 	
-	private static CharacterStats refreshDisplay(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
+	
+	// need to add mod calculations
+	private static CharacterStats refreshDisplay(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF, 
 			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,
 			JTextField intMTF, JTextField wisMTF, JTextField chaMTF, JTextField strMod, JTextField dexMod, JTextField conMod, JTextField intMod,
 			JTextField wisMod, JTextField chaMod, JTextField weightTF, JTextField ageTF, JTextField favWeapTF, JTextField ranWeapTF,
 			JTextField spWeapTF, JTextField favAtkTF, JTextField ranAtkTF, JTextField spAtkTF, JRadioButton rBMale, JTextField bBABTF,
-			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie) {
+			JTextField FavDamnDiTF, JTextField RanDamDiTF, JTextField spDamDiTF, JTextField tFLevel, JTextField tFHitDie, JTextField tFHP) {
 		
 		chObj.calcFavDam();
 		chObj.calcRaDam();
 		chObj.calcSpDam();
-		// maybe move mod calculations
 		// add calculate hp?
 		// add calculate hp
 		// add calculate hp
@@ -1558,6 +1588,14 @@ public class DummyDatabaseFrame extends JFrame {
 		intMTF.setText(Integer.toString(chObj.getMaInt()));
 		wisMTF.setText(Integer.toString(chObj.getMaWis()));
 		chaMTF.setText(Integer.toString(chObj.getChaMod()));
+		
+		// added mod calculations
+		chObj.setStrMod(Math.floorDiv(((chObj.getStrength() + chObj.getMaStr())-10), 2));
+		chObj.setDexMod(Math.floorDiv(((chObj.getDexterity() + chObj.getMaDex())-10), 2));
+		chObj.setConMod(Math.floorDiv(((chObj.getConstituion() + chObj.getMaCon())-10), 2));
+		chObj.setIntMod(Math.floorDiv(((chObj.getIntelligence() + chObj.getMaInt())-10), 2));
+		chObj.setWisMod(Math.floorDiv(((chObj.getWisdom() + chObj.getMaWis())-10), 2));
+		chObj.setChaMod(Math.floorDiv(((chObj.getCharisma() + chObj.getMaCha())-10), 2));
 		strMod.setText(Integer.toString(chObj.getStrMod()));
 		dexMod.setText(Integer.toString(chObj.getDexMod()));
 		conMod.setText(Integer.toString(chObj.getConMod()));
@@ -1579,7 +1617,7 @@ public class DummyDatabaseFrame extends JFrame {
 		spDamDiTF.setText(Integer.toString(chObj.getSpDam()));
 		tFLevel.setText(Integer.toString(chObj.getLevel()));
 		tFHitDie.setText(Integer.toString(chObj.getHitdie()));
-		
+		tFHP.setText(Integer.toString((chObj.getLevel() * chObj.getConMod()) + chObj.getLevel()));
 		return chObj;
 	}
 	

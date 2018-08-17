@@ -12,8 +12,6 @@ public class CharacterStatsJAXB {
 		try {
 			
 			
-			//CharacterStats char2 = new CharacterStats(); // this needs to either use a contstructor
-			//Employee emp=new Employee("Blue", "Dre", "Oneonta", 120000);
 			JAXBContext jc = JAXBContext.newInstance(CharacterStats.class);
 			Marshaller ms=jc.createMarshaller();
 			ms.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
