@@ -268,7 +268,7 @@ public class CharacterStats implements Serializable{
 	
 	@XmlElement
 	public int getWisdom() {
-		return wisdom;
+		return this.wisdom;
 	}
 
 	public void setWisdom(int wisdom) {
@@ -277,7 +277,7 @@ public class CharacterStats implements Serializable{
 	
 	@XmlElement
 	public int getCharisma() {
-		return charisma;
+		return this.charisma;
 	}
 
 	public void setCharisma(int charisma) {
