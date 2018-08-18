@@ -1,12 +1,14 @@
 package gui_int;
 
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorListener;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,23 +35,35 @@ import java.awt.event.FocusEvent;
 import java.util.IllegalFormatConversionException;
 import java.math.*;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 //import components.DocumentSizeFilter; add documents filter later
 import org.w3c.dom.NodeList;
+
+import javafx.stage.FileChooser;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+
+
 public class DummyDatabaseFrame extends JFrame {
 	
 	private int statMaMin = -20;
 	private int statMax = 100;
-	
-
+	// testing
+	private String fileName = "";
+	// tesing 
 	private JPanel contentPane;
 	private JTextField charNaTF;
 	private JTextField strTF;
@@ -85,7 +99,8 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField tFLevel;
 	private JTextField tFHitDie;
 	private JTextField tFHP;
-
+	CharacterStats char1 = new CharacterStats(); // think it should just be global
+	CharacterStatsJAXB charB = new CharacterStatsJAXB();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -106,8 +121,8 @@ public class DummyDatabaseFrame extends JFrame {
 	}
 
 	public DummyDatabaseFrame() {
-		CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
-		CharacterStatsJAXB charB = new CharacterStatsJAXB();
+		//CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
+		//
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
@@ -121,6 +136,7 @@ public class DummyDatabaseFrame extends JFrame {
 		JMenuItem mntmNew = new JMenuItem("New");
 		mnFileMenu.add(mntmNew);
 		
+		
 		JMenuItem mntmOpenFile = new JMenuItem("Open File");
 		mnFileMenu.add(mntmOpenFile);
 		
@@ -129,6 +145,9 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnFileMenu.add(mntmSave);
+		
+		JMenuItem mntmSaveAs = new JMenuItem("Save As");
+		mnFileMenu.add(mntmSaveAs);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnFileMenu.add(mntmExit);
@@ -570,6 +589,7 @@ public class DummyDatabaseFrame extends JFrame {
 							String chname = stats.getAttribute("id");
 							NodeList statsList = stats.getChildNodes();
 							
+							
 							Node statsAtt = statsList.item(1); // only every other item has a value
 							String temp = returnNode(statsAtt);
 							System.out.println(temp);
@@ -723,12 +743,7 @@ public class DummyDatabaseFrame extends JFrame {
 							
 							statsAtt = statsList.item(49);
 							temp = returnNode(statsAtt);
-							try {
-								char1.setHitdie(Integer.valueOf(temp));
-							} catch (NumberFormatException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
+							char1.setHitdie(Integer.valueOf(temp));
 							System.out.println(temp);
 							tFHitDie.setText(temp);
 							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
@@ -1032,6 +1047,7 @@ public class DummyDatabaseFrame extends JFrame {
 					}
 					updateFavDam(favWeapTF,char1, FavDamDiTF); // update for weapon damage
 				}
+				char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2)); // test if this resolves problem
 			}
 		});
 		
@@ -1058,6 +1074,7 @@ public class DummyDatabaseFrame extends JFrame {
 					updateRanDam(ranWeapTF, char1, RanDamDiTF);
 					updateSpDam(spWeapTF, char1, spDamDiTF);
 				}
+				char1.setDexMod(Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2));
 			}
 		});
 		
@@ -1087,6 +1104,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 					}
 				}
+				char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
 			}
 		});
 		
@@ -1111,6 +1129,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 					}
 				}
+				char1.setIntMod(Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2));
 			}
 		});
 		
@@ -1163,6 +1182,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 					}
 				}
+				char1.setWisMod(Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2));
 			}
 		});
 		
@@ -1187,6 +1207,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 					}
 				}
+				char1.setChaMod(Math.floorDiv(((char1.getCharisma() + char1.getMaCha())-10), 2));
 			}
 		});
 		
@@ -1289,9 +1310,152 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				charB.marshal(char1);
-				// add seralization
+			}
+		});
+		
+		
+		mntmOpenFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+				if(option == JFileChooser.APPROVE_OPTION) {
+					try {
+						String strLine;
+						File selectedFile = chooser.getSelectedFile();
+						
+						// string conversion needed? 
+						fileName = selectedFile.getAbsolutePath();
+						CharacterStats char2 = new CharacterStats();
+						char2 = charB.unmarshall();
+//						char2 = charB.unmarshall();
+//						CharacterStats char1 = new CharacterStats(char2);char1 = new CharacterStats(char2);
+						FileInputStream in = new FileInputStream(selectedFile);
+						BufferedReader br = new BufferedReader(new InputStreamReader(in));
+						while((strLine = br.readLine()) !=null){
+							System.out.println(strLine + "\n");
+						}
+					} catch(Exception e1) {
+						System.out.println("Issue");
+						fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
+					}
+					
+					
+					
+					
+				}
+//				saveBtn.addActionListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent arg0) {
+//						
+//						charB.marshal(char1);
+//						// add seralization
+//					}
+//				});
+//				
+//				loadFileBtn.addActionListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent arg0) {
+//						CharacterStats char2 = new CharacterStats();
+//						char2 = charB.unmarshall();
+//						CharacterStats char1 = new CharacterStats(char2);
+//						
+//						// this returns an object, discarded right now
+//						 refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+//								intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+//								spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
+				
+				/**this unmarshals selected file no filter applied yet
+				 * 
+				 */
+				CharacterStats char2 = new CharacterStats();
+				char2 = charB.unmarshall(fileName);
+				CharacterStats char1 = new CharacterStats(char2); // check if this constructor is wrong
+				refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
+			}
+			
+		});
+		
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				charB.marshal(char1);
+			}
+		});
+		
+		mntmCloseFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// add logic
+			}
+		});
+		// new button
+		mntmNew.addActionListener(new ActionListener() {
+			
+			
+			// add part to clear character also
+			// need to rename button to new
+			
+			public void actionPerformed(ActionEvent e) {
+					JFileChooser chooser = new JFileChooser();
+					int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+					if(option == JFileChooser.APPROVE_OPTION) {
+						try {
+							File selectedFile = chooser.getSelectedFile();
+							if(!selectedFile.exists())
+							{
+								fileName = selectedFile.getAbsolutePath();
+								
+								String extension = "";
+								int i = fileName.lastIndexOf('.');
+								int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+								if (i > p) {
+								    extension = fileName.substring(i+1);
+								}
+								if(extension.equals(".xml"))
+								charB.marshal(char1,fileName);
+								else
+								{
+									JOptionPane.showMessageDialog(null, "Invalid extension");
+								}
+							}
+							else
+							{
+								// add backup
+							}
+							
+							
+						} catch(Exception e1) {
+							System.out.println("Issue");
+							// intended to be a backup save
+							fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
+							charB.marshal(char1,fileName);
+						}	
+					}
+				//tmpDir = new File("/var/tmp");
+				//boolean exists = tmpDir.exists();
+			}
+		});
+		
+		mntmSaveAs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+				if(option == JFileChooser.APPROVE_OPTION) {
+					try {
+						File selectedFile = chooser.getSelectedFile();
+						fileName = selectedFile.getAbsolutePath();
+						charB.marshal(char1,fileName);
+					} catch(Exception e1) {
+						System.out.println("Issue");
+						fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
+						charB.marshal(char1,fileName);
+					}	
+				}
 			}
 		});
 		
@@ -1485,7 +1649,6 @@ public class DummyDatabaseFrame extends JFrame {
 							try {
 								char1.setHitdie(Integer.valueOf(temp));
 							} catch (NumberFormatException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							System.out.println(temp);
@@ -1550,6 +1713,9 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		
 	}
+	
+	// *** add this to CharacterStats ***
+	// this needs to be pushed off to class
 	// prob have to add a hit dice later
 	private static void clearStats(CharacterStats chObj,JTextField charNatTFL, JTextField strTF, JTextField dexTF,
 			JTextField conTF, JTextField intTF, JTextField wisTF, JTextField chaTF, JTextField strMTF, JTextField dexMTF, JTextField conMTF,	
