@@ -99,18 +99,22 @@ public class DummyDatabaseFrame extends JFrame {
 	private JTextField tFLevel;
 	private JTextField tFHitDie;
 	private JTextField tFHP;
+	
+	
+	// changed these to global, either need to pass these or keep as globa
+	// changed these to global, refactor this
+	// refactor this
+	//
+	// 
 	CharacterStats char1 = new CharacterStats(); // think it should just be global
 	CharacterStatsJAXB charB = new CharacterStatsJAXB();
-
+	//
+	//
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					
-					//test code of marshalling
-					//CharacterStatsJAXB obj = new CharacterStatsJAXB();
-					//obj.marshal();
-					//obj.unmarshall();
 					DummyDatabaseFrame frame = new DummyDatabaseFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -122,7 +126,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 	public DummyDatabaseFrame() {
 		//CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
-		//
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
@@ -136,12 +140,8 @@ public class DummyDatabaseFrame extends JFrame {
 		JMenuItem mntmNew = new JMenuItem("New");
 		mnFileMenu.add(mntmNew);
 		
-		
 		JMenuItem mntmOpenFile = new JMenuItem("Open File");
 		mnFileMenu.add(mntmOpenFile);
-		
-		JMenuItem mntmCloseFile = new JMenuItem("Close File");
-		mnFileMenu.add(mntmCloseFile);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnFileMenu.add(mntmSave);
@@ -1133,34 +1133,6 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
-//		strMTF.addFocusListener(new FocusAdapter() {
-//			@Override
-//			public void focusLost(FocusEvent e) {
-//				if(!strMTF.getText().equals(""))
-//				{
-//					
-//					char1.setMaStr(returnTextData(strMTF, statMaMin, statMax));
-//					System.out.println(char1.getMaStr());
-//					if(!strTF.getText().equals("")) { // to make sure only actual text gets parses, think best memory wise also
-//						if(!(char1.getStrength() == 0))
-//						{
-//							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
-//							if(char1.getStrMod() > 0)
-//							{
-//								strMod.setText("+" + Integer.toString(char1.getStrMod()));
-//							}
-//							else
-//							{
-//								strMod.setText(Integer.toString(char1.getStrMod()));
-//							}
-//
-//						}
-//					}
-//					updateFavDam(favWeapTF,char1, FavDamDiTF); // update for weapon damage
-//				}
-//			}
-//		});
-		
 		wisMTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -1301,6 +1273,9 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
+		/*****************************************?
+		 *  not done yet
+		 ****************************************/
 		hpTF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -1323,13 +1298,9 @@ public class DummyDatabaseFrame extends JFrame {
 					try {
 						String strLine;
 						File selectedFile = chooser.getSelectedFile();
-						
-						// string conversion needed? 
 						fileName = selectedFile.getAbsolutePath();
 						CharacterStats char2 = new CharacterStats();
 						char2 = charB.unmarshall();
-//						char2 = charB.unmarshall();
-//						CharacterStats char1 = new CharacterStats(char2);char1 = new CharacterStats(char2);
 						FileInputStream in = new FileInputStream(selectedFile);
 						BufferedReader br = new BufferedReader(new InputStreamReader(in));
 						while((strLine = br.readLine()) !=null){
@@ -1339,36 +1310,14 @@ public class DummyDatabaseFrame extends JFrame {
 						System.out.println("Issue");
 						fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
 					}
-					
-					
-					
-					
 				}
-//				saveBtn.addActionListener(new ActionListener() {
-//					public void actionPerformed(ActionEvent arg0) {
-//						
-//						charB.marshal(char1);
-//						// add seralization
-//					}
-//				});
-//				
-//				loadFileBtn.addActionListener(new ActionListener() {
-//					public void actionPerformed(ActionEvent arg0) {
-//						CharacterStats char2 = new CharacterStats();
-//						char2 = charB.unmarshall();
-//						CharacterStats char1 = new CharacterStats(char2);
-//						
-//						// this returns an object, discarded right now
-//						 refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
-//								intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
-//								spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
 				
 				/**this unmarshals selected file no filter applied yet
 				 * 
 				 */
 				CharacterStats char2 = new CharacterStats();
 				char2 = charB.unmarshall(fileName);
-				CharacterStats char1 = new CharacterStats(char2); // check if this constructor is wrong
+				CharacterStats char1 = new CharacterStats(char2); 
 				refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
 						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
 						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
@@ -1388,53 +1337,57 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
-		mntmCloseFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// add logic
-			}
-		});
 		// new button
 		mntmNew.addActionListener(new ActionListener() {
 			
-			
-			// add part to clear character also
-			// need to rename button to new
-			
 			public void actionPerformed(ActionEvent e) {
-					JFileChooser chooser = new JFileChooser();
-					int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
-					if(option == JFileChooser.APPROVE_OPTION) {
-						try {
-							File selectedFile = chooser.getSelectedFile();
-							if(!selectedFile.exists())
-							{
-								fileName = selectedFile.getAbsolutePath();
-								
-								String extension = "";
-								int i = fileName.lastIndexOf('.');
-								int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-								if (i > p) {
-								    extension = fileName.substring(i+1);
+					int oResult = JOptionPane.showConfirmDialog(null, "Do you want to create a new character? \n the old character won't be saved!");
+					
+					if(oResult == 0)
+					{
+						JFileChooser chooser = new JFileChooser();
+						chooser.setApproveButtonText("Create New File");
+						chooser.setApproveButtonToolTipText("Create New Character File with .xml extension");
+						clearStats(char1, charNaTF,strTF, dexTF,conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,	
+								intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod,wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+								spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF,FavDamDiTF, RanDamDiTF, spDamDiTF, tFLevel, tFHitDie,tFHP);
+						int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+						
+						if(option == JFileChooser.APPROVE_OPTION) {
+							try {
+								File selectedFile = chooser.getSelectedFile();
+								if(!selectedFile.exists())
+								{
+									fileName = selectedFile.getAbsolutePath();
+									
+									String extension = "";
+									int i = fileName.lastIndexOf('.');
+									int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+									if (i > p) {
+									    extension = fileName.substring(i+1);
+									}
+									
+									if(extension.equals("xml"))
+									{
+										charB.marshal(char1,fileName);
+									}
+									else
+									{
+										JOptionPane.showMessageDialog(null, "Invalid extension");
+									}
 								}
-								if(extension.equals(".xml"))
-								charB.marshal(char1,fileName);
 								else
 								{
-									JOptionPane.showMessageDialog(null, "Invalid extension");
+									JOptionPane.showMessageDialog(null, "File already exists!");
 								}
-							}
-							else
-							{
-								// add backup
-							}
-							
-							
-						} catch(Exception e1) {
-							System.out.println("Issue");
-							// intended to be a backup save
-							fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
-							charB.marshal(char1,fileName);
-						}	
+								
+							} catch(Exception e1) {
+								System.out.println("Issue");
+								// intended to be a backup save
+								fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
+								charB.marshal(char1,fileName);
+							}	
+						}
 					}
 				//tmpDir = new File("/var/tmp");
 				//boolean exists = tmpDir.exists();
@@ -1448,8 +1401,16 @@ public class DummyDatabaseFrame extends JFrame {
 				if(option == JFileChooser.APPROVE_OPTION) {
 					try {
 						File selectedFile = chooser.getSelectedFile();
-						fileName = selectedFile.getAbsolutePath();
-						charB.marshal(char1,fileName);
+						if(selectedFile.exists())
+						{
+							int oResult = JOptionPane.showConfirmDialog(null, "Do you want to save over this file? \n " + selectedFile.getAbsolutePath());
+							
+							if(oResult == 0)
+							{
+								fileName = selectedFile.getAbsolutePath();
+								charB.marshal(char1,fileName);
+							}
+						}	
 					} catch(Exception e1) {
 						System.out.println("Issue");
 						fileName = "C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml";
@@ -1469,246 +1430,8 @@ public class DummyDatabaseFrame extends JFrame {
 				 refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
 						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
 						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
-				
-				//System.out.println("Char name" + char3.getChName());
-				
-				/*
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				try {
-					DocumentBuilder builder = factory.newDocumentBuilder();
-					Document doc = builder.parse("Timmy.xml");
-					NodeList characterList = doc.getElementsByTagName("character");
-					
-					for(int i = 0;i<characterList.getLength();i++)
-					{
-						
-						// remove this section later
-						// remove this section later
-						// remove this section later
-						
-						System.out.println("got here 1");
-						Node c = characterList.item(i);
-						if(c.getNodeType()==Node.ELEMENT_NODE) {
-							Element stats = (Element) c;
-							String chname = stats.getAttribute("id");
-							NodeList statsList = stats.getChildNodes();
-							
-							Node statsAtt = statsList.item(1); // only every other item has a value
-							String temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setChName(temp);
-							charNaTF.setText(char1.getChName());
-							
-	
-							statsAtt = statsList.item(3);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setStrength(Integer.valueOf(temp));
-							strTF.setText(Integer.toString(char1.getStrength()));
-							
-							
-							statsAtt = statsList.item(5);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setDexterity(Integer.valueOf(temp));
-							dexTF.setText(Integer.toString(char1.getDexterity()));
-							
-							statsAtt = statsList.item(7);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setConstituion(Integer.valueOf(temp));
-							conTF.setText(Integer.toString(char1.getConstituion()));
-							
-							statsAtt = statsList.item(9);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setIntelligence(Integer.valueOf(temp));
-							intTF.setText(Integer.toString(char1.getIntelligence()));
-							
-							statsAtt = statsList.item(11);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setWisdom(Integer.valueOf(temp));
-							wisTF.setText(Integer.toString(char1.getWisdom()));
-							
-							statsAtt = statsList.item(13);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setCharisma(Integer.valueOf(temp));
-							chaTF.setText(Integer.toString(char1.getCharisma()));
-							
-							statsAtt = statsList.item(15);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setBAB(Integer.valueOf(temp));
-							bBABTF.setText(Integer.toString(char1.getBAB()));
-							
-							statsAtt = statsList.item(17);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setWeight(Double.valueOf(temp));
-							weightTF.setText(temp);
-							
-							statsAtt = statsList.item(19);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setAge(Integer.valueOf(temp));
-							ageTF.setText(temp);
-							
-							statsAtt = statsList.item(21);
-							temp = returnNode(statsAtt);
-							//System.out.println(temp);
-							char1.setMale(Boolean.parseBoolean(temp));
-							if(char1.isMale() == true)
-							{
-								rdbtnMale.setSelected(true);
-							}
-							
-							statsAtt = statsList.item(23);
-							temp = returnNode(statsAtt);
-							char1.setFavWeap(Integer.valueOf(temp));
-							System.out.println(temp);
-							favWeapTF.setText(temp);
-							
-							
-							statsAtt = statsList.item(25);
-							temp = returnNode(statsAtt);
-							char1.setRanWeap(Integer.valueOf(temp));
-							System.out.println(temp);
-							ranWeapTF.setText(temp);
-							
-							statsAtt = statsList.item(27);
-							temp = returnNode(statsAtt);
-							char1.setSpWeap(Integer.valueOf(temp));
-							System.out.println(temp);
-							spWeapTF.setText(temp);
-							
-							statsAtt = statsList.item(29);
-							temp = returnNode(statsAtt);
-							char1.setFavAtk(Integer.valueOf(temp));
-							System.out.println(temp);
-							favAtkTF.setText(temp);
-							
-							statsAtt = statsList.item(31);
-							temp = returnNode(statsAtt);
-							char1.setRaAtk(Integer.valueOf(temp));
-							System.out.println(temp);
-							ranAtkTF.setText(temp);
-							
-							statsAtt = statsList.item(33);
-							temp = returnNode(statsAtt);
-							char1.setSpAtk(Integer.valueOf(temp));
-							System.out.println(temp);
-							spAtkTF.setText(temp);
-							
-							statsAtt = statsList.item(35);
-							temp = returnNode(statsAtt);
-							char1.setMaStr(Integer.valueOf(temp));
-							System.out.println(temp);
-							strMTF.setText(temp);
-							
-							
-							statsAtt = statsList.item(37);
-							temp = returnNode(statsAtt);
-							char1.setMaDex(Integer.valueOf(temp));
-							System.out.println(temp);
-							dexMTF.setText(temp);
-							
-							statsAtt = statsList.item(39);
-							temp = returnNode(statsAtt);
-							char1.setMaCon(Integer.valueOf(temp));
-							System.out.println(temp);
-							conMTF.setText(temp);
-							
-							statsAtt = statsList.item(41);
-							temp = returnNode(statsAtt);
-							char1.setMaInt(Integer.valueOf(temp));
-							System.out.println(temp);
-							intMTF.setText(temp);
-							
-							statsAtt = statsList.item(43);
-							temp = returnNode(statsAtt);
-							char1.setMaWis(Integer.valueOf(temp));
-							System.out.println(temp);
-							wisMTF.setText(temp);
-							
-							statsAtt = statsList.item(45);
-							temp = returnNode(statsAtt);
-							char1.setMaCha(Integer.valueOf(temp));
-							System.out.println(temp);
-							chaMTF.setText(temp);
-							
-							statsAtt = statsList.item(47);
-							temp = returnNode(statsAtt);
-							char1.setLevel(Integer.valueOf(temp));
-							System.out.println(temp);
-							tFLevel.setText(temp);
-							
-							statsAtt = statsList.item(49);
-							temp = returnNode(statsAtt);
-							try {
-								char1.setHitdie(Integer.valueOf(temp));
-							} catch (NumberFormatException e) {
-								e.printStackTrace();
-							}
-							System.out.println(temp);
-							tFHitDie.setText(temp);
-						*/
-							// remove this section later
-							// remove this section later
-							// remove this section later
-							
-							
-							
-//							if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
-//								Element attributes = (Element) statsAtt;
-//								System.out.println(attributes.getTextContent());
-//							}
-							
-//							for(int x = 0;x<statsList.getLength();x++)
-//							{
-//								Node statsAtt = statsList.item(x);
-//								if(statsAtt.getNodeType()==Node.ELEMENT_NODE) {
-//									Element attributes = (Element) statsAtt;
-//									System.out.println(attributes.getTextContent());
-//								}
-//							}
-						}
-		//			}
-		//		}
-//////				catch(ParserConfigurationException | IOException | org.xml.sax.SAXException e)
-				{
-		//			e.printStackTrace();
-				}
+			}
 
-//				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//				try {
-//					DocumentBuilder builder = factory.newDocumentBuilder();
-//					Document doc = builder.parse("Jim.xml");
-//					NodeList adventurerList = doc.getElementsByTagName("adventurers");
-//					
-//					for(int i = 0;i<adventurerList.getLength();i++)
-//					{	System.out.println("got here");
-//						Node c = adventurerList.item(i);
-//						if(c.getNodeType()==Node.ELEMENT_NODE) {
-//							Element character = (Element) c;
-//							String id = character.getAttribute("id");
-//							NodeList statsN = character.getChildNodes();
-//							for(int j =0;j<statsN.getLength();j++) {
-//								Node sec = statsN.item(j);
-//								if(sec.getNodeType()==Node.ELEMENT_NODE) {
-//									Element attributes = (Element) sec;
-//									System.out.println("Character's stats are " + 
-//									attributes.getTagName() + "= " + attributes.getTextContent());
-//								}
-//							}
-//						}
-//					}
-//				}
-//				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e) {
-//					e.printStackTrace();
-//				}
-//			}
 		});
 		
 		
@@ -1856,6 +1579,8 @@ public class DummyDatabaseFrame extends JFrame {
 		return result;
 	}
 	
+	// filters text data prompts user if invalid
+	
 	private static int returnTextData(JTextField tF, int min, int max) { // add calls to each now
 		//String temp = tF.getText();
 		int result = 0;
@@ -1886,6 +1611,8 @@ public class DummyDatabaseFrame extends JFrame {
 		return result;
 	}
 	
+	// just removes the plus signs
+	
 	private static String removePlusSign(String s, JTextField tF)
 	{
 		if(s.substring(0).equalsIgnoreCase("+"));
@@ -1895,6 +1622,8 @@ public class DummyDatabaseFrame extends JFrame {
 		}
 		return s;
 	}
+	
+	// updates data
 	
 	private static void updateFavDam(JTextField tf,CharacterStats char1, JTextField disTF) //maybe this should be polymorphic
 	{
@@ -1906,6 +1635,8 @@ public class DummyDatabaseFrame extends JFrame {
 			disTF.setText(Integer.toString(char1.getFavDam()));
 		}
 	}
+	
+	// this could be more polymorphic to work with all types of damage
 	
 	private static void updateRanDam(JTextField tf, CharacterStats char1, JTextField disTF)
 	{
@@ -1929,6 +1660,8 @@ public class DummyDatabaseFrame extends JFrame {
 		}
 	}
 	
+	// returns XML element node
+	
 	private static String returnNode(Node statsAtt) {
 		String s = "";
 		
@@ -1939,4 +1672,5 @@ public class DummyDatabaseFrame extends JFrame {
 		
 		return s;
 	}
+	
 }
