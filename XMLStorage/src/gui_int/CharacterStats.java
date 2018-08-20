@@ -5,19 +5,12 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name="CharacterStats")
 public class CharacterStats implements Serializable{
-	
-	//private static int CharNumInc;
-	private static int defaultStats;
-	
-	static {
-		defaultStats = 10;
-	}
-	
+
 	private String ChName;
 	//private int defaultStats; use static to save memory
 	private int strength;
 	private int dexterity;
-	private int constituion;
+	private int constitution;
 	private int intelligence;
 	private int wisdom;
 	private int charisma;
@@ -61,18 +54,18 @@ public class CharacterStats implements Serializable{
 	public CharacterStats() { // need to set getters before used
 		//++CharNumInc;
 		this.ChName = "Unamed Character"; // add a static
-		this.strength = defaultStats;
-		this.dexterity = defaultStats;
-		this.constituion = defaultStats;
-		this.intelligence = defaultStats;
-		this.wisdom = defaultStats;
-		this.charisma = defaultStats;
-		this.strMod = (defaultStats - 10) / 2; // should truncate 11 = 0, 12 = 1; 
-		this.dexMod = (defaultStats - 10) / 2; // defaults to zero but shouldn't be hardcoded to zero why it is in a constructor
-		this.conMod = (defaultStats - 10) / 2;
-		this.intMod = (defaultStats - 10) / 2;
-		this.wisMod = (defaultStats - 10) / 2;
-		this.chaMod = (defaultStats - 10) / 2;
+		this.strength = 10;
+		this.dexterity = 10;
+		this.constitution = 10;
+		this.intelligence = 10;
+		this.wisdom = 10;
+		this.charisma = 10;
+		this.strMod = 0; // should truncate 11 = 0, 12 = 1; 
+		this.dexMod = 0; // defaults to zero but shouldn't be hardcoded to zero why it is in a constructor
+		this.conMod = 0;
+		this.intMod = 0;
+		this.wisMod = 0;
+		this.chaMod = 0;
 		this.BAB = 0;
 		this.weight = 165;
 		this.age = 18;
@@ -91,7 +84,7 @@ public class CharacterStats implements Serializable{
 		this.ChName = obj.ChName;
 		this.strength = obj.strength;
 		this.dexterity = obj.dexterity;
-		this.constituion = obj.constituion;
+		this.constitution = obj.constitution;
 		this.intelligence = obj.intelligence;
 		this.wisdom = obj.wisdom;
 		this.charisma = obj.charisma;
@@ -115,7 +108,7 @@ public class CharacterStats implements Serializable{
 		this.hitdice = obj.hitdice;
 		this.strMod = Math.floorDiv(((this.strength + this.maStr)-10), 2); //char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2));
 		this.dexMod = Math.floorDiv(((this.dexterity + this.maDex)-10), 2);
-		this.conMod = Math.floorDiv(((this.constituion + this.maCon)-10), 2);
+		this.conMod = Math.floorDiv(((this.constitution + this.maCon)-10), 2);
 		this.intMod = Math.floorDiv(((this.intelligence + this.maInt)-10), 2);
 		this.wisMod = Math.floorDiv(((this.wisdom + this.maWis)-10), 2);
 		this.chaMod = Math.floorDiv(((this.charisma + this.maCha)-10), 2);
@@ -142,6 +135,12 @@ public class CharacterStats implements Serializable{
 	public int getMaStr() {
 		return maStr;
 	}
+	
+	public String getMaStr(String Dummy)
+	{
+		String s = "MaStr";
+		return s;
+	}
 
 	public void setMaStr(int maStr) {
 		if(maStr < -100)
@@ -154,6 +153,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getMaDex() {
 		return maDex;
+	}
+	
+	public String getMaDex(String Dummy) {
+		String s = "MaDex";
+		return s;
 	}
 
 	public void setMaDex(int maDex) {
@@ -168,6 +172,11 @@ public class CharacterStats implements Serializable{
 	public int getMaCon() {
 		return maCon;
 	}
+	
+	public String getMaCon(String Dummy) {
+		String s = "MaCon";
+		return s;
+	}
 
 	public void setMaCon(int maCon) {
 		if(maCon < -100)
@@ -181,6 +190,12 @@ public class CharacterStats implements Serializable{
 	public int getMaInt() {
 		return maInt;
 	}
+	
+	public String getMaInt(String Dummy)
+	{
+		String s = "MaInt";
+		return s;
+	}
 
 	public void setMaInt(int maInt) {
 		if(maInt < -100)
@@ -193,6 +208,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getMaWis() {
 		return maWis;
+	}
+	
+	public String getMaWis(String Dummy) {
+		String s = "MaWis";
+		return s;
 	}
 
 	public void setMaWis(int maWis) {
@@ -208,7 +228,12 @@ public class CharacterStats implements Serializable{
 	public int getMaCha() {
 		return maCha;
 	}
-
+	
+	public String getMaCha(String Dummy) {
+		String s = "MaCha";
+		return s;
+	}
+			
 	public void setMaCha(int maCha) {
 		if(maCha < -100)
 		{
@@ -216,19 +241,15 @@ public class CharacterStats implements Serializable{
 		}
 		this.maCha = maCha;
 	}
-	// maybe hold off on this one???
-	//@XmlElement
-	public static int getDefaultStats() {
-		return defaultStats;
-	}
-
-	public static void setDefaultStats(int defaultStats) {
-		CharacterStats.defaultStats = defaultStats;
-	}
-	
+		
 	@XmlElement
 	public String getChName() {
 		return ChName;
+	}
+	
+	public String getChName(String dummy) {
+		String s = "ChName";
+		return s;
 	}
 
 	public void setChName(String chName) {
@@ -239,6 +260,12 @@ public class CharacterStats implements Serializable{
 	public int getStrength() {
 		return strength;
 	}
+	
+	public String getStrength(String Dummy)
+	{
+		String s = "Strength";
+		return s;
+	}
 
 	public void setStrength(int strength) {
 		this.strength = strength;
@@ -248,23 +275,38 @@ public class CharacterStats implements Serializable{
 	public int getDexterity() {
 		return dexterity;
 	}
+	
+	public String getDexterity(String Dummy) {
+		String s = "Dexterity";
+		return s;
+	}
 
 	public void setDexterity(int dexterity) {
 		this.dexterity = dexterity;
 	}
 	
 	@XmlElement
-	public int getConstituion() {
-		return constituion;
+	public int getConstitution() {
+		return constitution;
 	}
-
+	
+	public String getConstitution(String Dummy) {
+		String s = "Constitution";
+		return s;
+	}
+	
 	public void setConstituion(int constituion) {
-		this.constituion = constituion;
+		this.constitution = constituion;
 	}
 	
 	@XmlElement
 	public int getIntelligence() {
 		return intelligence;
+	}
+	
+	public String getIntelligence(String Dummy) {
+		String s = "Intelligence";
+		return s;
 	}
 
 	public void setIntelligence(int intelligence) {
@@ -275,6 +317,11 @@ public class CharacterStats implements Serializable{
 	public int getWisdom() {
 		return this.wisdom;
 	}
+	
+	public String getWisdom(String Dummy) {
+		String s = "Wisdom";
+		return s;
+	}
 
 	public void setWisdom(int wisdom) {
 		this.wisdom = wisdom;
@@ -283,6 +330,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getCharisma() {
 		return this.charisma;
+	}
+	
+	public String getCharisma(String Dummy) {
+		String s = "Charisma";
+		return s;
 	}
 
 	public void setCharisma(int charisma) {
@@ -293,6 +345,11 @@ public class CharacterStats implements Serializable{
 	public int getStrMod() {
 		return strMod;
 	}
+	
+	public String getStrMod(String Dummy) {
+		String s = "StrMod";
+		return s;
+	}
 
 	public void setStrMod(int strMod) {
 		this.strMod = strMod;
@@ -301,6 +358,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getDexMod() {
 		return dexMod;
+	}
+	
+	public String getDexMod(String Dummy) {
+		String s = "DexMod";
+		return s;
 	}
 
 	public void setDexMod(int dexMod) {
@@ -311,6 +373,11 @@ public class CharacterStats implements Serializable{
 	public int getConMod() {
 		return conMod;
 	}
+	
+	public String getConMod(String Dummy) {
+		String s = "ConMod";
+		return s;
+	}
 
 	public void setConMod(int conMod) {
 		this.conMod = conMod;
@@ -319,6 +386,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getIntMod() {
 		return intMod;
+	}
+	
+	public String getIntMod(String Dummy) {
+		String s = "IntMod";
+		return s;
 	}
 
 	public void setIntMod(int intMod) {
@@ -329,6 +401,11 @@ public class CharacterStats implements Serializable{
 	public int getWisMod() {
 		return wisMod;
 	}
+	
+	public String getWisMod(String Dummy) {
+		String s = "WisMod";
+		return s;
+	}
 
 	public void setWisMod(int wisMod) {
 		this.wisMod = wisMod;
@@ -337,6 +414,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getChaMod() {
 		return chaMod;
+	}
+	
+	public String getChaMod(String Dummy) {
+		String s = "ChaMod";
+		return s;
 	}
 
 	public void setChaMod(int chaMod) {
@@ -347,6 +429,11 @@ public class CharacterStats implements Serializable{
 	public int getBAB() {
 		return BAB;
 	}
+	
+	public String getBab(String Dummy) {
+		String s ="BAB";
+		return s;
+	}
 
 	public void setBAB(int bAB) {
 		BAB = bAB;
@@ -356,6 +443,12 @@ public class CharacterStats implements Serializable{
 	public double getWeight() {
 		return weight;
 	}
+	
+	public String getWeight(String Dummy)
+	{
+		String s = "Weight";
+		return s;
+	}
 
 	public void setWeight(double weight) {
 		this.weight = weight;
@@ -364,6 +457,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getAge() {
 		return age;
+	}
+	
+	public String getAge(String Dummy) {
+		String s = "Age";
+		return s;
 	}
 
 	public void setAge(int age) {
@@ -378,6 +476,11 @@ public class CharacterStats implements Serializable{
 	public boolean isMale() {
 		return male;
 	}
+	
+	public String isMale(String Dummy) {
+		String s = "Male";
+		return s;
+	}
 
 	public void setMale(boolean male) {
 		this.male = male;
@@ -388,7 +491,10 @@ public class CharacterStats implements Serializable{
 		return favWeap;
 	}
 	
-	// special
+	public String getFavWeap(String Dummy) {
+		String s = "FavWeap";
+		return s;
+	}
 
 	public void setFavWeap(int favWeap) {
 		if(favWeap == 0) {
@@ -400,6 +506,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getRanWeap() {
 		return ranWeap;
+	}
+	
+	public String getRanWeap(String Dummy) {
+		String s = "RanWeap";
+		return s;
 	}
 	
 	// special
@@ -417,6 +528,11 @@ public class CharacterStats implements Serializable{
 		return spWeap;
 	}
 	
+	public String getSpWeap(String Dummy) {
+		String s = "SpWeap";
+		return s;
+	}
+	
 	// special
 
 	public void setSpWeap(int spWeap) {
@@ -431,15 +547,25 @@ public class CharacterStats implements Serializable{
 	public int getFavAtk() {
 		return favAtk;
 	}
+	
+	public String getFavAtk(String Dummy) {
+		String s ="FavAtk";
+		return s;
+	}
 
 	public void setFavAtk(int favAtk) {
-		
 		this.favAtk = favAtk + strMod + BAB;
 	}
 	
 	@XmlElement
 	public int getRaAtk() {
 		return raAtk;
+	}
+	
+	public String getRaAtk(String Dummy)
+	{
+		String s ="RaAtk";
+		return s;
 	}
 
 	public void setRaAtk(int raAtk) {
@@ -450,6 +576,11 @@ public class CharacterStats implements Serializable{
 	public int getSpAtk() {
 		return spAtk;
 	}
+	
+	public String getSpAtk(String Dummy) {
+		String s = "SpAtk";
+		return s;
+	}
 
 	public void setSpAtk(int spAtk) {
 		this.spAtk = spAtk + dexMod + BAB;
@@ -458,6 +589,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getFavDam() {
 		return favDam;
+	}
+	
+	public String getFavDam(String Dummy) {
+		String s = "FavDam";
+		return s;
 	}
 
 	public void calcFavDam() {
@@ -468,6 +604,11 @@ public class CharacterStats implements Serializable{
 	public int getRaDam() {
 		return raDam;
 	}
+	
+	public String getRaDam(String Dummy) {
+		String s = "RaDam";
+		return s;
+	}
 
 	public void calcRaDam() {
 		this.raDam = dexMod + ranWeap;
@@ -477,6 +618,11 @@ public class CharacterStats implements Serializable{
 	public int getSpDam() {
 		return spDam;
 	}
+	
+	public String getSpDam(String Dummy) {
+		String s = "SpDam";
+		return s;
+	}
 
 	public void calcSpDam() {
 		this.spDam = dexMod + spWeap;
@@ -485,6 +631,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getLevel() {
 		return level;
+	}
+	
+	public String getLevel(String Dummy) {
+		String s= "Level";
+		return s;
 	}
 
 	public void setLevel(int level) {
@@ -507,6 +658,11 @@ public class CharacterStats implements Serializable{
 	@XmlElement
 	public int getHitdie() {
 		return hitdie;
+	}
+	
+	public String getHitdie(String Dummy) {
+		String s = "Hitdie";
+		return s;
 	}
 
 	public void setHitdie(int hitdie) {// can't marshall with an exception
