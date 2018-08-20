@@ -142,7 +142,7 @@ public class Login {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							DummyDatabaseFrame dummydbFrame = new DummyDatabaseFrame();
+							DatabaseFrame1 dummydbFrame = new DatabaseFrame1();
 							dummydbFrame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();

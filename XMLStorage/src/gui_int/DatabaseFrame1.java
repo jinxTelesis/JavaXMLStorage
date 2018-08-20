@@ -12,6 +12,8 @@ import javax.swing.event.AncestorListener;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -57,7 +59,7 @@ import javax.swing.JMenuItem;
 
 
 
-public class DummyDatabaseFrame extends JFrame {
+public class DatabaseFrame1 extends JFrame {
 	
 	private int statMaMin = -20;
 	private int statMax = 100;
@@ -106,6 +108,9 @@ public class DummyDatabaseFrame extends JFrame {
 	// refactor this
 	//
 	// 
+	
+	// to do the xml import for timmy file dom does not recalculate modes?
+	
 	CharacterStats char1 = new CharacterStats(); // think it should just be global
 	CharacterStatsJAXB charB = new CharacterStatsJAXB();
 	//
@@ -115,8 +120,9 @@ public class DummyDatabaseFrame extends JFrame {
 			public void run() {
 				try {
 					
-					DummyDatabaseFrame frame = new DummyDatabaseFrame();
+					DatabaseFrame1 frame = new DatabaseFrame1();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -124,7 +130,7 @@ public class DummyDatabaseFrame extends JFrame {
 		});
 	}
 
-	public DummyDatabaseFrame() {
+	public DatabaseFrame1() {
 		//CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,7 +152,7 @@ public class DummyDatabaseFrame extends JFrame {
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnFileMenu.add(mntmSave);
 		
-		JMenuItem mntmSaveAs = new JMenuItem("Save As");
+		JMenuItem mntmSaveAs = new JMenuItem("Save As (JAXB)");
 		mnFileMenu.add(mntmSaveAs);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
@@ -569,214 +575,249 @@ public class DummyDatabaseFrame extends JFrame {
 		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{charNaTF, strTF, strMTF, dexTF, dexMTF, conTF, conMTF, intTF, intMTF, wisTF, wisMTF, chaTF, chaMTF, weightTF, tFLevel, ageTF, tFHitDie, cBHitDice, bBABTF, favWeapTF, favAtkTF, ranWeapTF, ranAtkTF, spWeapTF, spAtkTF, lblName, lblStr, lblDex, lblConstitution, lblIntelligence, lblNewLabel, lblCharisma, lblWeight, lblAge, rdbtnMale, rdbtnFemale, lblFavoriteWeapon, lblRangedWeapon, lblNewLabel_1, lblMod, lblMod_1, lblMod_2, lblMod_3, lblMod_4, lblMod_5, strMod, dexMod, conMod, intMod, wisMod, chaMod, lblTotal, lblTotal_1, lblTotal_2, lblTotal_3, lblTotal_4, lblTotal_5, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4, lblNewLabel_5, lblNewLabel_6, lblNewLabel_7, FavDamDiTF, RanDamDiTF, spDamDiTF, btnResetStats, saveBtn, loadFileBtn, lblBab, lblLevel, lblHitdie, hpTF, lblHitDice, tFHP, btnSaveFileDom, btnNewButton}));
 		btnNewButton.addActionListener(new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				 
+				XmlDomParser domParse = new XmlDomParser();
 				try {
-					DocumentBuilder builder = factory.newDocumentBuilder();
-					Document doc = builder.parse("Timmy.xml");
-					NodeList characterList = doc.getElementsByTagName("character");
-					
-					for(int i = 0;i<characterList.getLength();i++)
-					{
-						
-						// remove this section later
-						// remove this section later
-						// remove this section later
-						
-						System.out.println("got here 1");
-						Node c = characterList.item(i);
-						if(c.getNodeType()==Node.ELEMENT_NODE) {
-							Element stats = (Element) c;
-							String chname = stats.getAttribute("id");
-							NodeList statsList = stats.getChildNodes();
-							
-							
-							Node statsAtt = statsList.item(1); // only every other item has a value
-							String temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setChName(temp);
-							charNaTF.setText(char1.getChName());
-							
-	
-							statsAtt = statsList.item(3);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setStrength(Integer.valueOf(temp));
-							strTF.setText(Integer.toString(char1.getStrength()));
-							
-							
-							statsAtt = statsList.item(5);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setDexterity(Integer.valueOf(temp));
-							dexTF.setText(Integer.toString(char1.getDexterity()));
-							
-							statsAtt = statsList.item(7);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setConstituion(Integer.valueOf(temp));
-							conTF.setText(Integer.toString(char1.getConstituion()));
-							
-							statsAtt = statsList.item(9);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setIntelligence(Integer.valueOf(temp));
-							intTF.setText(Integer.toString(char1.getIntelligence()));
-							
-							statsAtt = statsList.item(11);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setWisdom(Integer.valueOf(temp));
-							wisTF.setText(Integer.toString(char1.getWisdom()));
-							
-							statsAtt = statsList.item(13);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setCharisma(Integer.valueOf(temp));
-							chaTF.setText(Integer.toString(char1.getCharisma()));
-							
-							statsAtt = statsList.item(15);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setBAB(Integer.valueOf(temp));
-							bBABTF.setText(Integer.toString(char1.getBAB()));
-							
-							statsAtt = statsList.item(17);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setWeight(Double.valueOf(temp));
-							weightTF.setText(temp);
-							
-							statsAtt = statsList.item(19);
-							temp = returnNode(statsAtt);
-							System.out.println(temp);
-							char1.setAge(Integer.valueOf(temp));
-							ageTF.setText(temp);
-							
-							statsAtt = statsList.item(21);
-							temp = returnNode(statsAtt);
-							//System.out.println(temp);
-							char1.setMale(Boolean.parseBoolean(temp));
-							if(char1.isMale() == true)
-							{
-								rdbtnMale.setSelected(true);
-							}
-							
-							statsAtt = statsList.item(23);
-							temp = returnNode(statsAtt);
-							char1.setFavWeap(Integer.valueOf(temp));
-							System.out.println(temp);
-							favWeapTF.setText(temp);
-							
-							
-							statsAtt = statsList.item(25);
-							temp = returnNode(statsAtt);
-							char1.setRanWeap(Integer.valueOf(temp));
-							System.out.println(temp);
-							ranWeapTF.setText(temp);
-							
-							statsAtt = statsList.item(27);
-							temp = returnNode(statsAtt);
-							char1.setSpWeap(Integer.valueOf(temp));
-							System.out.println(temp);
-							spWeapTF.setText(temp);
-							
-							statsAtt = statsList.item(29);
-							temp = returnNode(statsAtt);
-							char1.setFavAtk(Integer.valueOf(temp));
-							System.out.println(temp);
-							favAtkTF.setText(temp);
-							
-							statsAtt = statsList.item(31);
-							temp = returnNode(statsAtt);
-							char1.setRaAtk(Integer.valueOf(temp));
-							System.out.println(temp);
-							ranAtkTF.setText(temp);
-							
-							statsAtt = statsList.item(33);
-							temp = returnNode(statsAtt);
-							char1.setSpAtk(Integer.valueOf(temp));
-							System.out.println(temp);
-							spAtkTF.setText(temp);
-							
-							statsAtt = statsList.item(35);
-							temp = returnNode(statsAtt);
-							char1.setMaStr(Integer.valueOf(temp));
-							System.out.println(temp);
-							strMTF.setText(temp);
-							
-							
-							statsAtt = statsList.item(37);
-							temp = returnNode(statsAtt);
-							char1.setMaDex(Integer.valueOf(temp));
-							System.out.println(temp);
-							dexMTF.setText(temp);
-							
-							statsAtt = statsList.item(39);
-							temp = returnNode(statsAtt);
-							char1.setMaCon(Integer.valueOf(temp));
-							System.out.println(temp);
-							conMTF.setText(temp);
-							
-							statsAtt = statsList.item(41);
-							temp = returnNode(statsAtt);
-							char1.setMaInt(Integer.valueOf(temp));
-							System.out.println(temp);
-							intMTF.setText(temp);
-							
-							statsAtt = statsList.item(43);
-							temp = returnNode(statsAtt);
-							char1.setMaWis(Integer.valueOf(temp));
-							System.out.println(temp);
-							wisMTF.setText(temp);
-							
-							statsAtt = statsList.item(45);
-							temp = returnNode(statsAtt);
-							char1.setMaCha(Integer.valueOf(temp));
-							System.out.println(temp);
-							chaMTF.setText(temp);
-							
-							statsAtt = statsList.item(47);
-							temp = returnNode(statsAtt);
-							char1.setLevel(Integer.valueOf(temp));
-							System.out.println(temp);
-							tFLevel.setText(temp);
-							
-							statsAtt = statsList.item(49);
-							temp = returnNode(statsAtt);
-							char1.setHitdie(Integer.valueOf(temp));
-							System.out.println(temp);
-							tFHitDie.setText(temp);
-							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
-							
-							//setting mods
-							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2)); //str
-							char1.setDexMod(Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)); //dex
-							char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2)); //con
-							char1.setIntMod(Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)); //int
-							char1.setWisMod(Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)); //wis
-							char1.setChaMod(Math.floorDiv(((char1.getCharisma() + char1.getMaCha())-10), 2)); //cha
-							//display them
-							refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
-									intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
-									spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
-							
-							// add mod calculations
-							// add mod ca
-
-						}
-					}
+					domParse.XmlDomParse(char1);
+				} catch (org.xml.sax.SAXException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ParserConfigurationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e3) {
-					e3.printStackTrace();
-				}
+				
+				refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+						intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+						spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
+				
+//				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//				try {
+//					
+//					
+//					
+//					DocumentBuilder builder = factory.newDocumentBuilder();
+//					Document doc = builder.parse("C:\\Users\\dremo\\OneDrive\\Desktop\\testXtest.xml");
+//					NodeList characterList = doc.getElementsByTagName("CharacterStats");
+//					
+//					for(int i = 0;i<characterList.getLength();i++)
+//					{
+//						
+//						// remove this section later
+//						// remove this section later
+//						// remove this section later
+//						
+//						System.out.println("got here 1");
+//						Node c = characterList.item(i);
+//						if(c.getNodeType()==Node.ELEMENT_NODE) {
+//							Element stats = (Element) c;
+//							String chname = stats.getAttribute("id");
+//							NodeList statsList = stats.getChildNodes();
+//							
+//							
+//							Node statsAtt = statsList.item(1); // only every other item has a value
+//							String temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setChName(temp);
+//							charNaTF.setText(char1.getChName());
+//							
+//	
+//							statsAtt = statsList.item(3);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setStrength(Integer.valueOf(temp));
+//							strTF.setText(Integer.toString(char1.getStrength()));
+//							
+//							
+//							statsAtt = statsList.item(5);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setDexterity(Integer.valueOf(temp));
+//							dexTF.setText(Integer.toString(char1.getDexterity()));
+//							
+//							statsAtt = statsList.item(7);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setConstituion(Integer.valueOf(temp));
+//							conTF.setText(Integer.toString(char1.getConstitution()));
+//							
+//							statsAtt = statsList.item(9);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setIntelligence(Integer.valueOf(temp));
+//							intTF.setText(Integer.toString(char1.getIntelligence()));
+//							
+//							statsAtt = statsList.item(11);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setWisdom(Integer.valueOf(temp));
+//							wisTF.setText(Integer.toString(char1.getWisdom()));
+//							
+//							statsAtt = statsList.item(13);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setCharisma(Integer.valueOf(temp));
+//							chaTF.setText(Integer.toString(char1.getCharisma()));
+//							
+//							statsAtt = statsList.item(15);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setBAB(Integer.valueOf(temp));
+//							bBABTF.setText(Integer.toString(char1.getBAB()));
+//							
+//							statsAtt = statsList.item(17);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setWeight(Double.valueOf(temp));
+//							weightTF.setText(temp);
+//							
+//							statsAtt = statsList.item(19);
+//							temp = returnNode(statsAtt);
+//							System.out.println(temp);
+//							char1.setAge(Integer.valueOf(temp));
+//							ageTF.setText(temp);
+//							
+//							statsAtt = statsList.item(21);
+//							temp = returnNode(statsAtt);
+//							//System.out.println(temp);
+//							char1.setMale(Boolean.parseBoolean(temp));
+//							if(char1.isMale() == true)
+//							{
+//								rdbtnMale.setSelected(true);
+//							}
+//							
+//							statsAtt = statsList.item(23);
+//							temp = returnNode(statsAtt);
+//							char1.setFavWeap(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							favWeapTF.setText(temp);
+//							
+//							
+//							statsAtt = statsList.item(25);
+//							temp = returnNode(statsAtt);
+//							char1.setRanWeap(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							ranWeapTF.setText(temp);
+//							
+//							statsAtt = statsList.item(27);
+//							temp = returnNode(statsAtt);
+//							char1.setSpWeap(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							spWeapTF.setText(temp);
+//							
+//							statsAtt = statsList.item(29);
+//							temp = returnNode(statsAtt);
+//							char1.setFavAtk(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							favAtkTF.setText(temp);
+//							
+//							statsAtt = statsList.item(31);
+//							temp = returnNode(statsAtt);
+//							char1.setRaAtk(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							ranAtkTF.setText(temp);
+//							
+//							statsAtt = statsList.item(33);
+//							temp = returnNode(statsAtt);
+//							char1.setSpAtk(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							spAtkTF.setText(temp);
+//							
+//							statsAtt = statsList.item(35);
+//							temp = returnNode(statsAtt);
+//							char1.setMaStr(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							strMTF.setText(temp);
+//							
+//							
+//							statsAtt = statsList.item(37);
+//							temp = returnNode(statsAtt);
+//							char1.setMaDex(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							dexMTF.setText(temp);
+//							
+//							statsAtt = statsList.item(39);
+//							temp = returnNode(statsAtt);
+//							char1.setMaCon(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							conMTF.setText(temp);
+//							
+//							statsAtt = statsList.item(41);
+//							temp = returnNode(statsAtt);
+//							char1.setMaInt(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							intMTF.setText(temp);
+//							
+//							statsAtt = statsList.item(43);
+//							temp = returnNode(statsAtt);
+//							char1.setMaWis(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							wisMTF.setText(temp);
+//							
+//							statsAtt = statsList.item(45);
+//							temp = returnNode(statsAtt);
+//							char1.setMaCha(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							chaMTF.setText(temp);
+//							
+//							statsAtt = statsList.item(47);
+//							temp = returnNode(statsAtt);
+//							char1.setLevel(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							tFLevel.setText(temp);
+//							
+//							statsAtt = statsList.item(49);
+//							temp = returnNode(statsAtt);
+//							char1.setHitdie(Integer.valueOf(temp));
+//							System.out.println(temp);
+//							tFHitDie.setText(temp);
+//							tFHP.setText(Integer.toString((char1.getLevel() * char1.getConMod()) + char1.getLevel()));
+//							
+//							//setting mods
+//							char1.setStrMod(Math.floorDiv(((char1.getStrength() + char1.getMaStr())-10), 2)); //str
+//							char1.setDexMod(Math.floorDiv(((char1.getDexterity() + char1.getMaDex())-10), 2)); //dex
+//							char1.setConMod(Math.floorDiv(((char1.getConstitution() + char1.getMaCon())-10), 2)); //con
+//							char1.setIntMod(Math.floorDiv(((char1.getIntelligence() + char1.getMaInt())-10), 2)); //int
+//							char1.setWisMod(Math.floorDiv(((char1.getWisdom() + char1.getMaWis())-10), 2)); //wis
+//							char1.setChaMod(Math.floorDiv(((char1.getCharisma() + char1.getMaCha())-10), 2)); //cha
+//							//display them
+//							refreshDisplay(char1 ,charNaTF, strTF, dexTF, conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,
+//									intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod, wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
+//									spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF, FavDamDiTF, RanDamDiTF,spDamDiTF, tFLevel, tFHitDie, tFHP);
+//							
+//							// add mod calculations
+//							// add mod ca
+//
+//						}
+//					}
+//				}
+//				catch(ParserConfigurationException | IOException |org.xml.sax.SAXException e3) {
+//					e3.printStackTrace();
+//				}
 			}
 		});
 		
 		btnSaveFileDom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// add dom loading
-			}
-		});
+				XmlDomWriter writeDom = new XmlDomWriter();
+				try {
+					writeDom.DresDomWriter(char1);
+				} catch (TransformerConfigurationException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (ParserConfigurationException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (TransformerException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				System.out.println("Worked!");
+				}
+			});
 		
 		rdbtnMale.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent arg0) {
@@ -830,10 +871,10 @@ public class DummyDatabaseFrame extends JFrame {
 			public void focusLost(FocusEvent e) {
 				if(!conTF.getText().equals("")) {
 				char1.setConstituion(returnTextData(conTF));
-				System.out.println("Worked!" + char1.getConstituion());
-				if(!(char1.getConstituion() == 0))
+				System.out.println("Worked!" + char1.getConstitution());
+				if(!(char1.getConstitution() == 0))
 				{
-					char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+					char1.setConMod(Math.floorDiv(((char1.getConstitution() + char1.getMaCon())-10), 2));
 					if(char1.getConMod() > 0)
 					{
 						conMod.setText("+" + Integer.toString(char1.getConMod()));
@@ -1085,9 +1126,9 @@ public class DummyDatabaseFrame extends JFrame {
 				{
 					char1.setMaCon(returnTextData(conMTF,statMaMin,statMax));
 					System.out.println(char1.getMaCon());
-					if(!(char1.getConstituion() == 0))
+					if(!(char1.getConstitution() == 0))
 					{
-						char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+						char1.setConMod(Math.floorDiv(((char1.getConstitution() + char1.getMaCon())-10), 2));
 						if(char1.getConMod() > 0)
 						{
 							conMod.setText("+" + Integer.toString(char1.getConMod()));
@@ -1104,7 +1145,7 @@ public class DummyDatabaseFrame extends JFrame {
 
 					}
 				}
-				char1.setConMod(Math.floorDiv(((char1.getConstituion() + char1.getMaCon())-10), 2));
+				char1.setConMod(Math.floorDiv(((char1.getConstitution() + char1.getMaCon())-10), 2));
 			}
 		});
 		
@@ -1293,7 +1334,7 @@ public class DummyDatabaseFrame extends JFrame {
 		mntmOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+				int option = chooser.showOpenDialog(DatabaseFrame1.this);
 				if(option == JFileChooser.APPROVE_OPTION) {
 					try {
 						String strLine;
@@ -1351,7 +1392,7 @@ public class DummyDatabaseFrame extends JFrame {
 						clearStats(char1, charNaTF,strTF, dexTF,conTF, intTF, wisTF, chaTF, strMTF, dexMTF, conMTF,	
 								intMTF, wisMTF, chaMTF, strMod, dexMod, conMod, intMod,wisMod, chaMod, weightTF, ageTF, favWeapTF, ranWeapTF,
 								spWeapTF, favAtkTF, ranAtkTF, spAtkTF, rdbtnMale, bBABTF,FavDamDiTF, RanDamDiTF, spDamDiTF, tFLevel, tFHitDie,tFHP);
-						int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+						int option = chooser.showOpenDialog(DatabaseFrame1.this);
 						
 						if(option == JFileChooser.APPROVE_OPTION) {
 							try {
@@ -1394,10 +1435,30 @@ public class DummyDatabaseFrame extends JFrame {
 			}
 		});
 		
+//		fileName = selectedFile.getAbsolutePath();
+//		
+//		String extension = "";
+//		int i = fileName.lastIndexOf('.');
+//		int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+//		if (i > p) {
+//		    extension = fileName.substring(i+1);
+//		}
+//		
+//		if(extension.equals("xml"))
+//		{
+//			charB.marshal(char1,fileName);
+//		}
+//		else
+//		{
+//			JOptionPane.showMessageDialog(null, "Invalid extension");
+//		}
+		
 		mntmSaveAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				int option = chooser.showOpenDialog(DummyDatabaseFrame.this);
+				chooser.setApproveButtonText("Save As");
+				chooser.setApproveButtonToolTipText("Save over file with .xml extension");
+				int option = chooser.showOpenDialog(DatabaseFrame1.this);
 				if(option == JFileChooser.APPROVE_OPTION) {
 					try {
 						File selectedFile = chooser.getSelectedFile();
@@ -1506,7 +1567,7 @@ public class DummyDatabaseFrame extends JFrame {
 		charNatTFL.setText(chObj.getChName());
 		strTF.setText(Integer.toString(chObj.getStrength()));
 		dexTF.setText(Integer.toString(chObj.getDexterity()));
-		conTF.setText(Integer.toString(chObj.getConstituion()));
+		conTF.setText(Integer.toString(chObj.getConstitution()));
 		intTF.setText(Integer.toString(chObj.getIntelligence()));
 		wisTF.setText(Integer.toString(chObj.getWisdom()));
 		chaTF.setText(Integer.toString(chObj.getCharisma()));
@@ -1520,7 +1581,7 @@ public class DummyDatabaseFrame extends JFrame {
 		// added mod calculations
 		chObj.setStrMod(Math.floorDiv(((chObj.getStrength() + chObj.getMaStr())-10), 2));
 		chObj.setDexMod(Math.floorDiv(((chObj.getDexterity() + chObj.getMaDex())-10), 2));
-		chObj.setConMod(Math.floorDiv(((chObj.getConstituion() + chObj.getMaCon())-10), 2));
+		chObj.setConMod(Math.floorDiv(((chObj.getConstitution() + chObj.getMaCon())-10), 2)); // didn't refacor here????
 		chObj.setIntMod(Math.floorDiv(((chObj.getIntelligence() + chObj.getMaInt())-10), 2));
 		chObj.setWisMod(Math.floorDiv(((chObj.getWisdom() + chObj.getMaWis())-10), 2));
 		chObj.setChaMod(Math.floorDiv(((chObj.getCharisma() + chObj.getMaCha())-10), 2));
