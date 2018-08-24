@@ -102,16 +102,10 @@ public class DatabaseFrame1 extends JFrame {
 	private JTextField tFHitDie;
 	private JTextField tFHP;
 	
-	
-	// changed these to global, either need to pass these or keep as globa
-	// changed these to global, refactor this
-	// refactor this
-	//
-	// 
-	
 	// to do the xml import for timmy file dom does not recalculate modes?
+	// refactor this so it is not passed around to functions
 	
-	CharacterStats char1 = new CharacterStats(); // think it should just be global
+	CharacterStats char1 = new CharacterStats(); 
 	CharacterStatsJAXB charB = new CharacterStatsJAXB();
 	//
 	//
