@@ -71,6 +71,7 @@ public class DatabaseFrame1 extends JFrame {
 	// testing
 	private String fileName = "";
 	// tesing 
+	// testing
 	private JPanel contentPane;
 	private JTextField charNaTF;
 	private JTextField strTF;
