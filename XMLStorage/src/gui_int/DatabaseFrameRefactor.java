@@ -60,7 +60,8 @@ public class DatabaseFrameRefactor extends JFrame { // 37
 	private static final long serialVersionUID = 7766926757619448060L;
 	
 	private static int TFNUM = 36;
-	private JTextField dynamicSettingTF[]; 
+	private JTextField dynamicSettingTF[] = new JTextField[TFNUM]; // reference array for tfs
+	private String jTFNames[] = new String[TFNUM]; // reference array for tf names
 	
 	// statMaMin are used by functions to determine character stats min and max
 	private int statMaMin = -20;
@@ -103,4 +104,42 @@ public class DatabaseFrameRefactor extends JFrame { // 37
 //	private JTextField tFLevel;
 //	private JTextField tFHitDie;
 //	private JTextField tFHP;
+	
+	CharacterStats char1 = new CharacterStats(); 
+	CharacterStatsJAXB charB = new CharacterStatsJAXB();
+	
+	
+	// main that threads
+	// set as an annoynmous class 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					
+					DatabaseFrame1 frame = new DatabaseFrame1();
+					frame.setVisible(true);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public DatabaseFrameRefactor() {
+		//JTextField dynamicSettingTF = new JTextField();
+		for(int i = 0; i < TFNUM; i++ )
+		{
+			dynamicSettingTF[i] = new JTextField();
+		}
+		
+		for(int i = 0; i < TFNUM; i++)
+		{
+			dynamicSettingTF[i].setName(""); // create a name list
+		}
+		// add dynamic name list to last 
+		
+	}
+	
+	
 }
