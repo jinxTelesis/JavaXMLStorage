@@ -2,20 +2,19 @@ package gui_int;
 
 
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.AncestorListener;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder; // plan to use this don't remove
+import javax.xml.parsers.DocumentBuilderFactory; // plan to use this don't remove
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.w3c.dom.Document;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -61,6 +60,12 @@ import javax.swing.JMenuItem;
 
 public class DatabaseFrame1 extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7766926757619448060L;
+	
+	// statMaMin are used by functions to determine character stats min and max
 	private int statMaMin = -20;
 	private int statMax = 100;
 	// testing
@@ -107,8 +112,7 @@ public class DatabaseFrame1 extends JFrame {
 	
 	CharacterStats char1 = new CharacterStats(); 
 	CharacterStatsJAXB charB = new CharacterStatsJAXB();
-	//
-	//
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -125,11 +129,14 @@ public class DatabaseFrame1 extends JFrame {
 	}
 
 	public DatabaseFrame1() {
-		//CharacterStats char1 = new CharacterStats(); // all methods perhaps should just be passed in a char object
+		
+		// frame properties 
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setTitle("Dre's XML DatabasePro");
+		
+		// start of menu bar 
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -177,6 +184,8 @@ public class DatabaseFrame1 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		// end of menu properties
+		
 		JLabel lblName = new JLabel("Character Name");
 		lblName.setBounds(38, 62, 100, 14);
 		contentPane.add(lblName);
@@ -213,6 +222,9 @@ public class DatabaseFrame1 extends JFrame {
 		lblAge.setBounds(37, 293, 100, 14);
 		contentPane.add(lblAge);
 		
+		// this is for the radio buttons
+		
+		// consider refactoring to set the font with a loop
 		ButtonGroup group = new ButtonGroup();
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
@@ -1605,7 +1617,6 @@ public class DatabaseFrame1 extends JFrame {
 	}
 	
 	private static int returnTextData(JTextField tF) { // add calls to each now // might want to just remove this
-		//String temp = tF.getText();
 		int result = 0;
 		try {
 			result = Integer.parseInt(removePlusSign(tF.getText(),tF));
