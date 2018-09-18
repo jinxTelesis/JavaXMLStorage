@@ -846,6 +846,7 @@ public class DatabaseFrame1 extends JFrame {
 				{
 					char1.setChName(charNaTF.getText());
 					System.out.println("Worked!" + char1.getChName());
+					
 				}
 			}
 		});
@@ -1715,6 +1716,11 @@ public class DatabaseFrame1 extends JFrame {
 			char1.calcRaDam();
 			disTF.setText(Integer.toString(char1.getRaDam()));
 		}
+	}
+	
+	private void clearStats()
+	{
+		charNaTF.setText("");
 	}
 	
 	private static void updateSpDam(JTextField tf, CharacterStats char1, JTextField disTF)
